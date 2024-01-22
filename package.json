@@ -20,5 +20,10 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "typescript": "^5"
+  },
+  "engines": {
+    "pnpm": ">= 6.0.0",
+    "npm": "🔥パッケージマネージャーはnpmではなくpnpmを使用してください。 see https://pnpm.io/installation",
+    "yarn": "🔥パッケージマネージャーはyarnではなくpnpmを使用してください。see https://pnpm.io/installation"
   }
 }

@@ -1,6 +1,8 @@
 {
   "extends": "next/core-web-vitals",
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": "error",
     "semi": ["error", "never"],
     "react/jsx-no-useless-fragment": "error",
     "no-restricted-imports": ["error", { "patterns": ["./", "../"] }],

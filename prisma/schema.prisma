@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,46 +8,46 @@ datasource db {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  username   String
-  role       String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  borrowings Borrowing[]
+  id         Int         @id @default(autoincrement()) // ユーザーを一意に識別するための主キー
+  username   String      // ユーザーのユーザー名
+  role       String      // ユーザーの役割を示す。一般ユーザーまたは管理者
+  createdAt  DateTime    @default(now()) // ユーザーが作成された日時
+  updatedAt  DateTime    @updatedAt      // ユーザー情報が最後に更新された日時
+  borrowings Borrowing[] // ユーザーが借りている資産のリスト
 
   @@map(name: "users")
 }
 
 model Asset {
-  id         Int         @id @default(autoincrement())
-  name       String
-  type       String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  borrowings Borrowing[]
+  id         Int         @id @default(autoincrement()) // 資産を一意に識別するための主キー
+  name       String      // 資産の名前
+  type       String      // 資産のタイプを示す
+  createdAt  DateTime    @default(now()) // 資産が作成された日時
+  updatedAt  DateTime    @updatedAt      // 資産情報が最後に更新された日時
+  borrowings Borrowing[] // この資産が借りられているリスト
 
   @@map(name: "assets")
 }
 
 model Borrowing {
-  id         Int      @id @default(autoincrement())
-  borrowedAt DateTime
-  returnedAt DateTime?
-  deadline   DateTime
-  status     Status
-  userId     Int
-  assetId    Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
-  asset      Asset    @relation(fields: [assetId], references: [id])
+  id         Int      @id @default(autoincrement()) // 貸出を一意に識別するための主キー
+  borrowedAt DateTime // 貸出日時
+  returnedAt DateTime? // 返却日時
+  deadline   DateTime // 返却期限
+  status     Status   // ステータス (enum)
+  userId     Int      // ユーザーID
+  assetId    Int      // 資産ID
+  createdAt  DateTime @default(now()) // 貸出が作成された日時
+  updatedAt  DateTime @updatedAt      // 貸出情報が最後に更新された日時
+  user       User     @relation(fields: [userId], references: [id]) // ユーザーへのリレーション
+  asset      Asset    @relation(fields: [assetId], references: [id]) // 資産へのリレーション
 
   @@map(name: "borrowings")
 }
 
 enum Status {
-  RESERVED
-  LENT
-  RETURNED
-  CANCELLED
+  RESERVED   // 予約済み
+  LENT       // 貸出中
+  AVAILABLE  // 貸出可能
+  SUSPENDED  // 貸出停止
 }

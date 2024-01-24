@@ -26,6 +26,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^10.6.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -35,6 +36,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.2.4",
     "prisma": "^5.8.1",
+    "prisma-erd-generator": "^1.11.2",
     "typescript": "^5"
   },
   "engines": {

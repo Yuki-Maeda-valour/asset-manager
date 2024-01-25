@@ -9,4 +9,4 @@ const rootSchema = gql`
   }
 `
 
-export const schema = [rootSchema, userSchema, assetSchema, borrowingSchema]
+export const typeDefs = [rootSchema, userSchema, assetSchema, borrowingSchema]

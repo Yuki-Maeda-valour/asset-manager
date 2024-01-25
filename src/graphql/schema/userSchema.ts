@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 export const userSchema = gql`
   type User {
-    id: ID!
+    id: Int!
     username: String!
     role: String!
     createdAt: String!
@@ -11,7 +11,7 @@ export const userSchema = gql`
   }
 
   extend type Query {
-    user(id: ID!): User
-    users: [User!]!
+    user(id: Int!): User
+    users: [User!]
   }
 `

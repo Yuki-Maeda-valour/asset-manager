@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 export const assetSchema = gql`
   type Asset {
-    id: ID!
+    id: Int!
     name: String!
     type: String!
     createdAt: String!
@@ -11,7 +11,7 @@ export const assetSchema = gql`
   }
 
   extend type Query {
-    asset(id: ID!): Asset
+    asset(id: Int!): Asset
     assets: [Asset!]
   }
 `

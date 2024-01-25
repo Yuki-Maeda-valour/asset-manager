@@ -9,13 +9,13 @@ export const borrowingSchema = gql`
   }
 
   type Borrowing {
-    id: ID!
+    id: Int!
     borrowedAt: String!
     returnedAt: String
     deadline: String!
     status: Status!
-    userId: ID!
-    assetId: ID!
+    userId: Int!
+    assetId: Int!
     createdAt: String!
     updatedAt: String!
     user: User!
@@ -23,7 +23,7 @@ export const borrowingSchema = gql`
   }
 
   extend type Query {
-    borrowing(id: ID!): Borrowing
+    borrowing(id: Int!): Borrowing
     borrowings: [Borrowing!]
   }
 `

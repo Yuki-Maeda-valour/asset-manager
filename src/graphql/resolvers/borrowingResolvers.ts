@@ -1,6 +1,5 @@
-import { PrismaClient, User, Asset, Borrowing } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { User, Asset, Borrowing } from '@prisma/client'
+import { prisma } from '@/graphql/prisma'
 
 export const borrowingResolvers = {
   Query: {

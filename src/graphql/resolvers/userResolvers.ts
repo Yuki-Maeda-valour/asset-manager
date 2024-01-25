@@ -1,12 +1,11 @@
-import { PrismaClient, User, Borrowing } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { User, Borrowing } from '@prisma/client'
+import { prisma } from '@/graphql/prisma'
 
 export const userResolvers = {
   Query: {
     user: async (
       _parent: unknown,
-      args: { id: string },
+      args: { id: number },
     ): Promise<User | null> => {
       return await prisma.user.findUnique({
         where: { id: Number(args.id) },

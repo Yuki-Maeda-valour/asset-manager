@@ -1,12 +1,11 @@
-import { PrismaClient, Asset, Borrowing } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { Asset, Borrowing } from '@prisma/client'
+import { prisma } from '@/graphql/prisma'
 
 export const assetResolvers = {
   Query: {
     asset: async (
       _parent: unknown,
-      args: { id: string },
+      args: { id: number },
     ): Promise<Asset | null> => {
       return await prisma.asset.findUnique({
         where: { id: Number(args.id) },

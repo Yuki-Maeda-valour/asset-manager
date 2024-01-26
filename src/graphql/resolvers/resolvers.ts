@@ -3,7 +3,9 @@ import { assetResolvers } from '@/graphql/resolvers/assetResolvers'
 import { borrowingResolvers } from '@/graphql/resolvers/borrowingResolvers'
 
 export const resolvers = {
-  ...userResolvers,
-  ...assetResolvers,
-  ...borrowingResolvers,
+  Query: {
+    ...userResolvers.Query,
+    ...assetResolvers.Query,
+    ...borrowingResolvers.Query,
+  },
 }

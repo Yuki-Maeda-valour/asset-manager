@@ -10,8 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx}'",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
+    "db:generate": "prisma generate --schema=./src/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=./src/prisma/schema.prisma",
     "db:show": "prisma studio"
   },
   "dependencies": {

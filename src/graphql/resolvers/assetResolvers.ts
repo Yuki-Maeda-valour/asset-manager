@@ -1,5 +1,5 @@
 import { Asset, Borrowing } from '@prisma/client'
-import { prisma } from '@/graphql/prisma'
+import { prisma } from '@/prisma/prisma'
 
 export const assetResolvers = {
   Query: {

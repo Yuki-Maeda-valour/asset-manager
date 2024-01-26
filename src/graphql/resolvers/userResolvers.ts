@@ -1,5 +1,5 @@
 import { User, Borrowing } from '@prisma/client'
-import { prisma } from '@/graphql/prisma'
+import { prisma } from '@/prisma/prisma'
 
 export const userResolvers = {
   Query: {

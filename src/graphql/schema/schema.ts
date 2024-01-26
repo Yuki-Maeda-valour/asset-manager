@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro'
+import { gql } from 'graphql-tag'
 import { userSchema } from '@/graphql/schema/userSchema'
 import { assetSchema } from '@/graphql/schema/assetSchema'
 import { borrowingSchema } from '@/graphql/schema/borrowingSchema'

@@ -1,11 +1,12 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { typeDefs } from '@/graphql/schema/schema'
-import { resolvers } from '@/graphql/resolvers/resolvers'
+import { schema } from '@/graphql/schema'
+import { createContext } from '@/graphql/context'
 
 const server = new ApolloServer({
-  resolvers,
-  typeDefs,
+  schema,
 })
 
-export default startServerAndCreateNextHandler(server)
+export default startServerAndCreateNextHandler(server, {
+  context: createContext,
+})

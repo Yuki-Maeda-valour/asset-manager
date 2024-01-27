@@ -8,10 +8,17 @@ AVAILABLE AVAILABLE
 SUSPENDED SUSPENDED
         }
     
+
+
+        Role {
+            USER USER
+ADMIN ADMIN
+        }
+    
   "users" {
     Int id "🗝️"
     String username 
-    String role 
+    Role role 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -36,6 +43,7 @@ SUSPENDED SUSPENDED
     DateTime updatedAt 
     }
   
+    "users" o|--|| "Role" : "enum:role"
     "users" o{--}o "borrowings" : "borrowings"
     "assets" o{--}o "borrowings" : "borrowings"
     "borrowings" o|--|| "Status" : "enum:status"

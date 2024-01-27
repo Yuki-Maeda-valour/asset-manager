@@ -8,4 +8,7 @@ export const resolvers = {
     ...assetResolvers.Query,
     ...borrowingResolvers.Query,
   },
+  Mutation: {
+    ...userResolvers.Mutation,
+  },
 }

@@ -9,9 +9,11 @@ export const userSchema = gql`
     updatedAt: String!
     borrowings: [Borrowing]
   }
-
   extend type Query {
     user(id: Int!): User
     users: [User!]
+  }
+  extend type Mutation {
+    createUser(username: String!, role: String!): User
   }
 `

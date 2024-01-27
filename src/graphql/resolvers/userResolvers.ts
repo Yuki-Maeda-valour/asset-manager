@@ -2,6 +2,19 @@ import { User, Borrowing } from '@prisma/client'
 import { prisma } from '@/prisma/prisma'
 
 export const userResolvers = {
+  Mutation: {
+    createUser: async (
+      _parent: unknown,
+      args: { username: string; role: string },
+    ): Promise<User> => {
+      return await prisma.user.create({
+        data: {
+          username: args.username,
+          role: args.role,
+        },
+      })
+    },
+  },
   Query: {
     user: async (
       _parent: unknown,

@@ -2,6 +2,19 @@ import { User, Borrowing, Role } from '@prisma/client'
 import { prisma } from '@/prisma/prisma'
 
 export const userResolvers = {
+  Query: {
+    user: async (
+      _parent: unknown,
+      args: { id: number },
+    ): Promise<User | null> => {
+      return await prisma.user.findUnique({
+        where: { id: Number(args.id) },
+      })
+    },
+    users: async (): Promise<User[]> => {
+      return await prisma.user.findMany()
+    },
+  },
   Mutation: {
     createUser: async (
       _parent: unknown,
@@ -33,19 +46,6 @@ export const userResolvers = {
       return await prisma.user.delete({
         where: { id: Number(args.id) },
       })
-    },
-  },
-  Query: {
-    user: async (
-      _parent: unknown,
-      args: { id: number },
-    ): Promise<User | null> => {
-      return await prisma.user.findUnique({
-        where: { id: Number(args.id) },
-      })
-    },
-    users: async (): Promise<User[]> => {
-      return await prisma.user.findMany()
     },
   },
   User: {

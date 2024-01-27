@@ -7,6 +7,10 @@ const rootSchema = gql`
   type Query {
     _empty: String
   }
+
+  type Mutation {
+    _empty: String
+  }
 `
 
 export const typeDefs = [rootSchema, userSchema, assetSchema, borrowingSchema]

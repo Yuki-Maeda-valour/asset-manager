@@ -26,7 +26,7 @@ model User {
 model Asset {
   id         Int         @id @default(autoincrement()) // 資産を一意に識別するための主キー
   name       String      // 資産の名前
-  type       String      // 資産のタイプを示す
+  type       Type        // 資産のタイプを示す
   createdAt  DateTime    @default(now()) // 資産が作成された日時
   updatedAt  DateTime    @updatedAt      // 資産情報が最後に更新された日時
   borrowings Borrowing[] // この資産が借りられているリスト
@@ -60,4 +60,11 @@ enum Status {
 enum Role {
   USER // 一般ユーザー
   ADMIN   // 管理者
+}
+
+enum Type {
+  PC
+  SP
+  WIFI
+  MONITOR
 }

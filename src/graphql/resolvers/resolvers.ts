@@ -10,5 +10,6 @@ export const resolvers = {
   },
   Mutation: {
     ...userResolvers.Mutation,
+    ...assetResolvers.Mutation,
   },
 }

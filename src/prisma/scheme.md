@@ -15,6 +15,15 @@ SUSPENDED SUSPENDED
 ADMIN ADMIN
         }
     
+
+
+        Type {
+            PC PC
+SP SP
+WIFI WIFI
+MONITOR MONITOR
+        }
+    
   "users" {
     Int id "🗝️"
     String username 
@@ -27,7 +36,7 @@ ADMIN ADMIN
   "assets" {
     Int id "🗝️"
     String name 
-    String type 
+    Type type 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -45,6 +54,7 @@ ADMIN ADMIN
   
     "users" o|--|| "Role" : "enum:role"
     "users" o{--}o "borrowings" : "borrowings"
+    "assets" o|--|| "Type" : "enum:type"
     "assets" o{--}o "borrowings" : "borrowings"
     "borrowings" o|--|| "Status" : "enum:status"
     "borrowings" o|--|| "users" : "user"

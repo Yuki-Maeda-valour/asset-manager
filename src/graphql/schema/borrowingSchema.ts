@@ -26,4 +26,23 @@ export const borrowingSchema = gql`
     borrowing(id: Int!): Borrowing
     borrowings: [Borrowing!]
   }
+
+  extend type Mutation {
+    createBorrowing(
+      borrowedAt: String!
+      deadline: String!
+      status: String!
+      userId: Int!
+      assetId: Int!
+    ): Borrowing
+    updateBorrowing(
+      id: Int!
+      borrowedAt: String
+      deadline: String
+      status: String
+      userId: Int
+      assetId: Int
+    ): Borrowing
+    deleteBorrowing(id: Int!): Borrowing
+  }
 `

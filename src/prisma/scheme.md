@@ -8,10 +8,26 @@ AVAILABLE AVAILABLE
 SUSPENDED SUSPENDED
         }
     
+
+
+        Role {
+            USER USER
+ADMIN ADMIN
+        }
+    
+
+
+        Type {
+            PC PC
+SP SP
+WIFI WIFI
+MONITOR MONITOR
+        }
+    
   "users" {
     Int id "🗝️"
     String username 
-    String role 
+    Role role 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -20,7 +36,7 @@ SUSPENDED SUSPENDED
   "assets" {
     Int id "🗝️"
     String name 
-    String type 
+    Type type 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -36,7 +52,9 @@ SUSPENDED SUSPENDED
     DateTime updatedAt 
     }
   
+    "users" o|--|| "Role" : "enum:role"
     "users" o{--}o "borrowings" : "borrowings"
+    "assets" o|--|| "Type" : "enum:type"
     "assets" o{--}o "borrowings" : "borrowings"
     "borrowings" o|--|| "Status" : "enum:status"
     "borrowings" o|--|| "users" : "user"

@@ -10,17 +10,21 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx}'",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:show": "prisma studio"
+    "db:generate": "prisma generate --schema=./src/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=./src/prisma/schema.prisma",
+    "db:show": "prisma studio --schema=./src/prisma/schema.prisma"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.0",
+    "@as-integrations/next": "^3.0.0",
     "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@prisma/client": "^5.8.1",
     "framer-motion": "^10.18.0",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"

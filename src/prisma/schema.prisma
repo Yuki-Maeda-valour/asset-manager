@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" 
   url      = env("DATABASE_URL")
 }
 
@@ -15,7 +15,7 @@ generator erd {
 model User {
   id         Int         @id @default(autoincrement()) // ユーザーを一意に識別するための主キー
   username   String      // ユーザーのユーザー名
-  role       String      // ユーザーの役割を示す。一般ユーザーまたは管理者
+  role       Role        // ユーザーのロール
   createdAt  DateTime    @default(now()) // ユーザーが作成された日時
   updatedAt  DateTime    @updatedAt      // ユーザー情報が最後に更新された日時
   borrowings Borrowing[] // ユーザーが借りている資産のリスト
@@ -26,7 +26,7 @@ model User {
 model Asset {
   id         Int         @id @default(autoincrement()) // 資産を一意に識別するための主キー
   name       String      // 資産の名前
-  type       String      // 資産のタイプを示す
+  type       Type        // 資産のタイプを示す
   createdAt  DateTime    @default(now()) // 資産が作成された日時
   updatedAt  DateTime    @updatedAt      // 資産情報が最後に更新された日時
   borrowings Borrowing[] // この資産が借りられているリスト
@@ -55,4 +55,16 @@ enum Status {
   LENT       // 貸出中
   AVAILABLE  // 貸出可能
   SUSPENDED  // 貸出停止
+}
+
+enum Role {
+  USER // 一般ユーザー
+  ADMIN   // 管理者
+}
+
+enum Type {
+  PC
+  SP
+  WIFI
+  MONITOR
 }

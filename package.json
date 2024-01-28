@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "init": "pnpm install && pnpm db:generate && pnpm db:push",
-    "dev": "next dev",
-    "initdev": "pnpm install && pnpm db:generate && pnpm db:push && next dev",
-    "build": "next build",
+    "dev": "prettier --write '**/*.{js,jsx,ts,tsx}' &&next dev",
+    "initdev": "pnpm install && prettier --write '**/*.{js,jsx,ts,tsx}' && pnpm db:generate && pnpm db:push && next dev",
+    "build": "prettier --write '**/*.{js,jsx,ts,tsx}' && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx}'",

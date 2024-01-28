@@ -3,22 +3,18 @@
  * Do not make changes to this file directly
  */
 
-
-import type { Context } from "./../context"
-
-
-
+import type { Context } from './../context'
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {
-}
+export interface NexusGenInputs {}
 
 export interface NexusGenEnums {
-  AssetType: "MONITOR" | "PC" | "SP" | "WIFI"
-  Role: "ADMIN" | "USER"
+  AssetType: 'MONITOR' | 'PC' | 'SP' | 'WIFI'
+  BorrowingStatus: 'AVAILABLE' | 'LENT' | 'RESERVED' | 'SUSPENDED'
+  Role: 'ADMIN' | 'USER'
 }
 
 export interface NexusGenScalars {
@@ -30,88 +26,152 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Asset: { // root type
-    createdAt?: string | null; // String
-    id?: number | null; // Int
-    name?: string | null; // String
-    type?: NexusGenEnums['AssetType'] | null; // AssetType
-    updatedAt?: string | null; // String
+  Asset: {
+    // root type
+    createdAt?: string | null // String
+    id?: number | null // Int
+    name?: string | null // String
+    type?: NexusGenEnums['AssetType'] | null // AssetType
+    updatedAt?: string | null // String
   }
-  Mutation: {};
-  Query: {};
-  User: { // root type
-    createdAt?: string | null; // String
-    id?: number | null; // Int
-    role?: NexusGenEnums['Role'] | null; // Role
-    updatedAt?: string | null; // String
-    username?: string | null; // String
+  Borrowing: {
+    // root type
+    assetId?: number | null // Int
+    borrowedAt?: string | null // String
+    createdAt?: string | null // String
+    deadline?: string | null // String
+    id?: number | null // Int
+    returnedAt?: string | null // String
+    status?: NexusGenEnums['BorrowingStatus'] | null // BorrowingStatus
+    updatedAt?: string | null // String
+    userId?: number | null // Int
+  }
+  Mutation: {}
+  Query: {}
+  User: {
+    // root type
+    createdAt?: string | null // String
+    id?: number | null // Int
+    role?: NexusGenEnums['Role'] | null // Role
+    updatedAt?: string | null // String
+    username?: string | null // String
   }
 }
 
-export interface NexusGenInterfaces {
-}
+export interface NexusGenInterfaces {}
 
-export interface NexusGenUnions {
-}
+export interface NexusGenUnions {}
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes &
+  NexusGenScalars &
+  NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  Asset: { // field return type
-    createdAt: string | null; // String
-    id: number | null; // Int
-    name: string | null; // String
-    type: NexusGenEnums['AssetType'] | null; // AssetType
-    updatedAt: string | null; // String
+  Asset: {
+    // field return type
+    borrowings: Array<NexusGenRootTypes['Borrowing'] | null> | null // [Borrowing]
+    createdAt: string | null // String
+    id: number | null // Int
+    name: string | null // String
+    type: NexusGenEnums['AssetType'] | null // AssetType
+    updatedAt: string | null // String
   }
-  Mutation: { // field return type
-    createAsset: NexusGenRootTypes['Asset'] | null; // Asset
-    createUser: NexusGenRootTypes['User'] | null; // User
-    deleteAsset: NexusGenRootTypes['Asset'] | null; // Asset
-    deleteUser: NexusGenRootTypes['User'] | null; // User
-    updateAsset: NexusGenRootTypes['Asset'] | null; // Asset
-    updateUser: NexusGenRootTypes['User'] | null; // User
+  Borrowing: {
+    // field return type
+    asset: NexusGenRootTypes['Asset'] | null // Asset
+    assetId: number | null // Int
+    borrowedAt: string | null // String
+    createdAt: string | null // String
+    deadline: string | null // String
+    id: number | null // Int
+    returnedAt: string | null // String
+    status: NexusGenEnums['BorrowingStatus'] | null // BorrowingStatus
+    updatedAt: string | null // String
+    user: NexusGenRootTypes['User'] | null // User
+    userId: number | null // Int
   }
-  Query: { // field return type
-    asset: NexusGenRootTypes['Asset'] | null; // Asset
-    assets: Array<NexusGenRootTypes['Asset'] | null> | null; // [Asset]
-    user: NexusGenRootTypes['User'] | null; // User
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+  Mutation: {
+    // field return type
+    createAsset: NexusGenRootTypes['Asset'] | null // Asset
+    createBorrowing: NexusGenRootTypes['Borrowing'] | null // Borrowing
+    createUser: NexusGenRootTypes['User'] | null // User
+    deleteAsset: NexusGenRootTypes['Asset'] | null // Asset
+    deleteBorrowing: NexusGenRootTypes['Borrowing'] | null // Borrowing
+    deleteUser: NexusGenRootTypes['User'] | null // User
+    updateAsset: NexusGenRootTypes['Asset'] | null // Asset
+    updateBorrowing: NexusGenRootTypes['Borrowing'] | null // Borrowing
+    updateUser: NexusGenRootTypes['User'] | null // User
   }
-  User: { // field return type
-    createdAt: string | null; // String
-    id: number | null; // Int
-    role: NexusGenEnums['Role'] | null; // Role
-    updatedAt: string | null; // String
-    username: string | null; // String
+  Query: {
+    // field return type
+    asset: NexusGenRootTypes['Asset'] | null // Asset
+    assets: Array<NexusGenRootTypes['Asset'] | null> | null // [Asset]
+    borrowing: NexusGenRootTypes['Borrowing'] | null // Borrowing
+    borrowings: Array<NexusGenRootTypes['Borrowing'] | null> | null // [Borrowing]
+    user: NexusGenRootTypes['User'] | null // User
+    users: Array<NexusGenRootTypes['User'] | null> | null // [User]
+  }
+  User: {
+    // field return type
+    borrowings: Array<NexusGenRootTypes['Borrowing'] | null> | null // [Borrowing]
+    createdAt: string | null // String
+    id: number | null // Int
+    role: NexusGenEnums['Role'] | null // Role
+    updatedAt: string | null // String
+    username: string | null // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Asset: { // field return type name
+  Asset: {
+    // field return type name
+    borrowings: 'Borrowing'
     createdAt: 'String'
     id: 'Int'
     name: 'String'
     type: 'AssetType'
     updatedAt: 'String'
   }
-  Mutation: { // field return type name
+  Borrowing: {
+    // field return type name
+    asset: 'Asset'
+    assetId: 'Int'
+    borrowedAt: 'String'
+    createdAt: 'String'
+    deadline: 'String'
+    id: 'Int'
+    returnedAt: 'String'
+    status: 'BorrowingStatus'
+    updatedAt: 'String'
+    user: 'User'
+    userId: 'Int'
+  }
+  Mutation: {
+    // field return type name
     createAsset: 'Asset'
+    createBorrowing: 'Borrowing'
     createUser: 'User'
     deleteAsset: 'Asset'
+    deleteBorrowing: 'Borrowing'
     deleteUser: 'User'
     updateAsset: 'Asset'
+    updateBorrowing: 'Borrowing'
     updateUser: 'User'
   }
-  Query: { // field return type name
+  Query: {
+    // field return type name
     asset: 'Asset'
     assets: 'Asset'
+    borrowing: 'Borrowing'
+    borrowings: 'Borrowing'
     user: 'User'
     users: 'User'
   }
-  User: { // field return type name
+  User: {
+    // field return type name
+    borrowings: 'Borrowing'
     createdAt: 'String'
     id: 'Int'
     role: 'Role'
@@ -122,62 +182,93 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createAsset: { // args
-      name?: string | null; // String
-      type?: NexusGenEnums['AssetType'] | null; // AssetType
+    createAsset: {
+      // args
+      name?: string | null // String
+      type?: NexusGenEnums['AssetType'] | null // AssetType
     }
-    createUser: { // args
-      role?: NexusGenEnums['Role'] | null; // Role
-      username?: string | null; // String
+    createBorrowing: {
+      // args
+      assetId?: number | null // Int
+      borrowedAt?: string | null // String
+      deadline?: string | null // String
+      status?: NexusGenEnums['BorrowingStatus'] | null // BorrowingStatus
+      userId?: number | null // Int
     }
-    deleteAsset: { // args
-      id?: number | null; // Int
+    createUser: {
+      // args
+      role?: NexusGenEnums['Role'] | null // Role
+      username?: string | null // String
     }
-    deleteUser: { // args
-      id?: number | null; // Int
+    deleteAsset: {
+      // args
+      id?: number | null // Int
     }
-    updateAsset: { // args
-      id?: number | null; // Int
-      name?: string | null; // String
-      type?: NexusGenEnums['AssetType'] | null; // AssetType
+    deleteBorrowing: {
+      // args
+      id?: number | null // Int
     }
-    updateUser: { // args
-      id?: number | null; // Int
-      role?: NexusGenEnums['Role'] | null; // Role
-      username?: string | null; // String
+    deleteUser: {
+      // args
+      id?: number | null // Int
+    }
+    updateAsset: {
+      // args
+      id?: number | null // Int
+      name?: string | null // String
+      type?: NexusGenEnums['AssetType'] | null // AssetType
+    }
+    updateBorrowing: {
+      // args
+      assetId?: number | null // Int
+      borrowedAt?: string | null // String
+      deadline?: string | null // String
+      id?: number | null // Int
+      status?: NexusGenEnums['BorrowingStatus'] | null // BorrowingStatus
+      userId?: number | null // Int
+    }
+    updateUser: {
+      // args
+      id?: number | null // Int
+      role?: NexusGenEnums['Role'] | null // Role
+      username?: string | null // String
     }
   }
   Query: {
-    asset: { // args
-      id?: number | null; // Int
+    asset: {
+      // args
+      id?: number | null // Int
     }
-    user: { // args
-      id?: number | null; // Int
+    borrowing: {
+      // args
+      id?: number | null // Int
+    }
+    user: {
+      // args
+      id?: number | null // Int
     }
   }
 }
 
-export interface NexusGenAbstractTypeMembers {
-}
+export interface NexusGenAbstractTypeMembers {}
 
-export interface NexusGenTypeInterfaces {
-}
+export interface NexusGenTypeInterfaces {}
 
-export type NexusGenObjectNames = keyof NexusGenObjects;
+export type NexusGenObjectNames = keyof NexusGenObjects
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = never
 
-export type NexusGenEnumNames = keyof NexusGenEnums;
+export type NexusGenEnumNames = keyof NexusGenEnums
 
-export type NexusGenInterfaceNames = never;
+export type NexusGenInterfaceNames = never
 
-export type NexusGenScalarNames = keyof NexusGenScalars;
+export type NexusGenScalarNames = keyof NexusGenScalars
 
-export type NexusGenUnionNames = never;
+export type NexusGenUnionNames = never
 
-export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
+export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never
 
-export type NexusGenAbstractsUsingStrategyResolveType = never;
+export type NexusGenAbstractsUsingStrategyResolveType = never
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
@@ -188,43 +279,52 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: Context;
-  inputTypes: NexusGenInputs;
-  rootTypes: NexusGenRootTypes;
-  inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
-  argTypes: NexusGenArgTypes;
-  fieldTypes: NexusGenFieldTypes;
-  fieldTypeNames: NexusGenFieldTypeNames;
-  allTypes: NexusGenAllTypes;
-  typeInterfaces: NexusGenTypeInterfaces;
-  objectNames: NexusGenObjectNames;
-  inputNames: NexusGenInputNames;
-  enumNames: NexusGenEnumNames;
-  interfaceNames: NexusGenInterfaceNames;
-  scalarNames: NexusGenScalarNames;
-  unionNames: NexusGenUnionNames;
-  allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
-  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
-  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
-  abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
-  abstractTypeMembers: NexusGenAbstractTypeMembers;
-  objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
-  abstractsUsingStrategyResolveType: NexusGenAbstractsUsingStrategyResolveType;
-  features: NexusGenFeaturesConfig;
+  context: Context
+  inputTypes: NexusGenInputs
+  rootTypes: NexusGenRootTypes
+  inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars
+  argTypes: NexusGenArgTypes
+  fieldTypes: NexusGenFieldTypes
+  fieldTypeNames: NexusGenFieldTypeNames
+  allTypes: NexusGenAllTypes
+  typeInterfaces: NexusGenTypeInterfaces
+  objectNames: NexusGenObjectNames
+  inputNames: NexusGenInputNames
+  enumNames: NexusGenEnumNames
+  interfaceNames: NexusGenInterfaceNames
+  scalarNames: NexusGenScalarNames
+  unionNames: NexusGenUnionNames
+  allInputTypes:
+    | NexusGenTypes['inputNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['scalarNames']
+  allOutputTypes:
+    | NexusGenTypes['objectNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['unionNames']
+    | NexusGenTypes['interfaceNames']
+    | NexusGenTypes['scalarNames']
+  allNamedTypes:
+    | NexusGenTypes['allInputTypes']
+    | NexusGenTypes['allOutputTypes']
+  abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames']
+  abstractTypeMembers: NexusGenAbstractTypeMembers
+  objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf
+  abstractsUsingStrategyResolveType: NexusGenAbstractsUsingStrategyResolveType
+  features: NexusGenFeaturesConfig
 }
 
-
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginSchemaConfig {
-  }
-  interface NexusGenPluginArgConfig {
-  }
+  interface NexusGenPluginTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginFieldConfig<
+    TypeName extends string,
+    FieldName extends string,
+  > {}
+  interface NexusGenPluginInputFieldConfig<
+    TypeName extends string,
+    FieldName extends string,
+  > {}
+  interface NexusGenPluginSchemaConfig {}
+  interface NexusGenPluginArgConfig {}
 }

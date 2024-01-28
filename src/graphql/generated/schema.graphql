@@ -3,6 +3,7 @@
 
 
 type Asset {
+  borrowings: [Borrowing]
   createdAt: String
   id: Int
   name: String
@@ -17,18 +18,44 @@ enum AssetType {
   WIFI
 }
 
+type Borrowing {
+  asset: Asset
+  assetId: Int
+  borrowedAt: String
+  createdAt: String
+  deadline: String
+  id: Int
+  returnedAt: String
+  status: BorrowingStatus
+  updatedAt: String
+  user: User
+  userId: Int
+}
+
+enum BorrowingStatus {
+  AVAILABLE
+  LENT
+  RESERVED
+  SUSPENDED
+}
+
 type Mutation {
   createAsset(name: String, type: AssetType): Asset
+  createBorrowing(assetId: Int, borrowedAt: String, deadline: String, status: BorrowingStatus, userId: Int): Borrowing
   createUser(role: Role, username: String): User
   deleteAsset(id: Int): Asset
+  deleteBorrowing(id: Int): Borrowing
   deleteUser(id: Int): User
   updateAsset(id: Int, name: String, type: AssetType): Asset
+  updateBorrowing(assetId: Int, borrowedAt: String, deadline: String, id: Int, status: BorrowingStatus, userId: Int): Borrowing
   updateUser(id: Int, role: Role, username: String): User
 }
 
 type Query {
   asset(id: Int): Asset
   assets: [Asset]
+  borrowing(id: Int): Borrowing
+  borrowings: [Borrowing]
   user(id: Int): User
   users: [User]
 }
@@ -39,6 +66,7 @@ enum Role {
 }
 
 type User {
+  borrowings: [Borrowing]
   createdAt: String
   id: Int
   role: Role

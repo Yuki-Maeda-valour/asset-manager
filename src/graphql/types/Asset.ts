@@ -1,4 +1,5 @@
 import { objectType, extendType, enumType } from 'nexus'
+import { Borrowing } from '@/graphql/types/Borrowing'
 
 export const AssetType = enumType({
   name: 'AssetType',
@@ -13,6 +14,29 @@ export const Asset = objectType({
     t.field('type', { type: AssetType })
     t.string('createdAt')
     t.string('updatedAt')
+    t.list.field('borrowings', {
+      type: Borrowing,
+      resolve: async (_parent, _args, ctx) => {
+        if (!_parent.id) {
+          throw new Error('ID is required')
+        }
+        const borrowings = await ctx.prisma.borrowing.findMany({
+          where: {
+            assetId: _parent.id,
+          },
+        })
+        return borrowings.map((borrowing) => ({
+          ...borrowing,
+          borrowedAt: borrowing.borrowedAt.toISOString(),
+          returnedAt: borrowing.returnedAt
+            ? borrowing.returnedAt.toISOString()
+            : null,
+          deadline: borrowing.deadline.toISOString(),
+          createdAt: borrowing?.createdAt.toISOString(),
+          updatedAt: borrowing?.updatedAt.toISOString(),
+        }))
+      },
+    })
   },
 })
 
@@ -20,7 +44,7 @@ export const AssetQuery = extendType({
   type: 'Query',
   definition(t) {
     t.list.field('assets', {
-      type: 'Asset',
+      type: Asset,
       resolve: async (_parent, _args, ctx) => {
         const assets = await ctx.prisma.asset.findMany()
         return assets.map((asset) => ({
@@ -31,7 +55,7 @@ export const AssetQuery = extendType({
       },
     }),
       t.field('asset', {
-        type: 'Asset',
+        type: Asset,
         args: {
           id: 'Int',
         },
@@ -58,7 +82,7 @@ export const AssetMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('createAsset', {
-      type: 'Asset',
+      type: Asset,
       args: {
         name: 'String',
         type: AssetType,
@@ -84,7 +108,7 @@ export const AssetMutation = extendType({
       },
     }),
       t.field('updateAsset', {
-        type: 'Asset',
+        type: Asset,
         args: {
           id: 'Int',
           name: 'String',
@@ -117,7 +141,7 @@ export const AssetMutation = extendType({
         },
       }),
       t.field('deleteAsset', {
-        type: 'Asset',
+        type: Asset,
         args: {
           id: 'Int',
         },

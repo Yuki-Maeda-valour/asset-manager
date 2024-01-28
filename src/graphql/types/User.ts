@@ -1,4 +1,5 @@
 import { objectType, extendType, enumType } from 'nexus'
+import { Borrowing } from '@/graphql/types/Borrowing'
 
 export const Role = enumType({
   name: 'Role',
@@ -13,6 +14,29 @@ export const User = objectType({
     t.field('role', { type: Role })
     t.string('createdAt')
     t.string('updatedAt')
+    t.list.field('borrowings', {
+      type: Borrowing,
+      resolve: async (_parent, _args, ctx) => {
+        if (!_parent.id) {
+          throw new Error('ID is required')
+        }
+        const borrowings = await ctx.prisma.borrowing.findMany({
+          where: {
+            userId: _parent.id,
+          },
+        })
+        return borrowings.map((borrowing) => ({
+          ...borrowing,
+          borrowedAt: borrowing.borrowedAt.toISOString(),
+          returnedAt: borrowing.returnedAt
+            ? borrowing.returnedAt.toISOString()
+            : null,
+          deadline: borrowing.deadline.toISOString(),
+          createdAt: borrowing?.createdAt.toISOString(),
+          updatedAt: borrowing?.updatedAt.toISOString(),
+        }))
+      },
+    })
   },
 })
 
@@ -20,7 +44,7 @@ export const UserQuery = extendType({
   type: 'Query',
   definition(t) {
     t.list.field('users', {
-      type: 'User',
+      type: User,
       resolve: async (_parent, _args, ctx) => {
         const users = await ctx.prisma.user.findMany()
         return users.map((user) => ({
@@ -31,7 +55,7 @@ export const UserQuery = extendType({
       },
     }),
       t.field('user', {
-        type: 'User',
+        type: User,
         args: {
           id: 'Int',
         },
@@ -58,7 +82,7 @@ export const UserMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('createUser', {
-      type: 'User',
+      type: User,
       args: {
         username: 'String',
         role: Role,
@@ -84,7 +108,7 @@ export const UserMutation = extendType({
       },
     }),
       t.field('updateUser', {
-        type: 'User',
+        type: User,
         args: {
           id: 'Int',
           username: 'String',
@@ -117,7 +141,7 @@ export const UserMutation = extendType({
         },
       }),
       t.field('deleteUser', {
-        type: 'User',
+        type: User,
         args: {
           id: 'Int',
         },

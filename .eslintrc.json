@@ -10,5 +10,17 @@
     "prefer-const": "error",
     "no-unused-vars": "error",
     "no-console": "warn"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "./src/graphql/generated/nexus.ts",
+        "./src/graphql/context.ts"
+      ],
+      "rules": {
+        "no-unused-vars": "off",
+        "no-restricted-imports": "off"
+      }
+    }
+  ]
 }

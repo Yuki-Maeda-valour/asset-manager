@@ -24,7 +24,7 @@ export const Borrowing = objectType({
       resolve: async (parent, _args, ctx) => {
         return await ctx.prisma.user
           .findUnique({
-            where: { id: parent.id || undefined },
+            where: { id: parent.userId || undefined },
           })
           .then((user) => {
             return {

@@ -2,13 +2,33 @@
 ### Do not make changes to this file directly
 
 
+type Asset {
+  createdAt: String
+  id: Int
+  name: String
+  type: AssetType
+  updatedAt: String
+}
+
+enum AssetType {
+  MONITOR
+  PC
+  SP
+  WIFI
+}
+
 type Mutation {
+  createAsset(name: String, type: AssetType): Asset
   createUser(role: Role, username: String): User
+  deleteAsset(id: Int): Asset
   deleteUser(id: Int): User
+  updateAsset(id: Int, name: String, type: AssetType): Asset
   updateUser(id: Int, role: Role, username: String): User
 }
 
 type Query {
+  asset(id: Int): Asset
+  assets: [Asset]
   user(id: Int): User
   users: [User]
 }

@@ -17,6 +17,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  AssetType: "MONITOR" | "PC" | "SP" | "WIFI"
   Role: "ADMIN" | "USER"
 }
 
@@ -29,6 +30,13 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Asset: { // root type
+    createdAt?: string | null; // String
+    id?: number | null; // Int
+    name?: string | null; // String
+    type?: NexusGenEnums['AssetType'] | null; // AssetType
+    updatedAt?: string | null; // String
+  }
   Mutation: {};
   Query: {};
   User: { // root type
@@ -51,12 +59,24 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Asset: { // field return type
+    createdAt: string | null; // String
+    id: number | null; // Int
+    name: string | null; // String
+    type: NexusGenEnums['AssetType'] | null; // AssetType
+    updatedAt: string | null; // String
+  }
   Mutation: { // field return type
+    createAsset: NexusGenRootTypes['Asset'] | null; // Asset
     createUser: NexusGenRootTypes['User'] | null; // User
+    deleteAsset: NexusGenRootTypes['Asset'] | null; // Asset
     deleteUser: NexusGenRootTypes['User'] | null; // User
+    updateAsset: NexusGenRootTypes['Asset'] | null; // Asset
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
+    asset: NexusGenRootTypes['Asset'] | null; // Asset
+    assets: Array<NexusGenRootTypes['Asset'] | null> | null; // [Asset]
     user: NexusGenRootTypes['User'] | null; // User
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
@@ -70,12 +90,24 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Asset: { // field return type name
+    createdAt: 'String'
+    id: 'Int'
+    name: 'String'
+    type: 'AssetType'
+    updatedAt: 'String'
+  }
   Mutation: { // field return type name
+    createAsset: 'Asset'
     createUser: 'User'
+    deleteAsset: 'Asset'
     deleteUser: 'User'
+    updateAsset: 'Asset'
     updateUser: 'User'
   }
   Query: { // field return type name
+    asset: 'Asset'
+    assets: 'Asset'
     user: 'User'
     users: 'User'
   }
@@ -90,12 +122,24 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createAsset: { // args
+      name?: string | null; // String
+      type?: NexusGenEnums['AssetType'] | null; // AssetType
+    }
     createUser: { // args
       role?: NexusGenEnums['Role'] | null; // Role
       username?: string | null; // String
     }
+    deleteAsset: { // args
+      id?: number | null; // Int
+    }
     deleteUser: { // args
       id?: number | null; // Int
+    }
+    updateAsset: { // args
+      id?: number | null; // Int
+      name?: string | null; // String
+      type?: NexusGenEnums['AssetType'] | null; // AssetType
     }
     updateUser: { // args
       id?: number | null; // Int
@@ -104,6 +148,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    asset: { // args
+      id?: number | null; // Int
+    }
     user: { // args
       id?: number | null; // Int
     }

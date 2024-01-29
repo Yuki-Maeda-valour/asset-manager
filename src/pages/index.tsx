@@ -1,10 +1,35 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { Button } from '@chakra-ui/react'
+import { gql, useQuery } from '@apollo/client'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const getAllUsers = gql`
+  query Users {
+    users {
+      id
+      username
+      role
+      borrowings {
+        userId
+        assetId
+        asset {
+          name
+        }
+        user {
+          id
+          username
+        }
+      }
+    }
+  }
+`
+
 export default function Home() {
+  const { data } = useQuery(getAllUsers)
+  // eslint-disable-next-line no-console
+  console.log(data)
   return (
     <>
       <Head>

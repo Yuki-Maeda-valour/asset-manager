@@ -15,6 +15,7 @@
     "db:show": "prisma studio --schema=./src/prisma/schema.prisma"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.10",
     "@apollo/server": "^4.10.0",
     "@as-integrations/next": "^3.0.0",
     "@chakra-ui/next-js": "^2.2.0",

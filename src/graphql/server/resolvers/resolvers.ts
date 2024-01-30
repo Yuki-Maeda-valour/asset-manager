@@ -1,6 +1,6 @@
-import { userResolvers } from '@/graphql/resolvers/userResolvers'
-import { assetResolvers } from '@/graphql/resolvers/assetResolvers'
-import { borrowingResolvers } from '@/graphql/resolvers/borrowingResolvers'
+import { userResolvers } from '@/graphql/server/resolvers/userResolvers'
+import { assetResolvers } from '@/graphql/server/resolvers/assetResolvers'
+import { borrowingResolvers } from '@/graphql/server/resolvers/borrowingResolvers'
 
 export const resolvers = {
   Query: {

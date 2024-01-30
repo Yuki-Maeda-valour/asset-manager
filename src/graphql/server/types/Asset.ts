@@ -1,17 +1,17 @@
 import { objectType, extendType, enumType } from 'nexus'
-import { Borrowing } from '@/graphql/types/Borrowing'
+import { Borrowing } from '@/graphql/server/types/Borrowing'
 
-export const Role = enumType({
-  name: 'Role',
-  members: ['ADMIN', 'USER'],
+export const AssetType = enumType({
+  name: 'AssetType',
+  members: ['PC', 'SP', 'WIFI', 'MONITOR'],
 })
 
-export const User = objectType({
-  name: 'User',
+export const Asset = objectType({
+  name: 'Asset',
   definition(t) {
     t.int('id')
-    t.string('username')
-    t.field('role', { type: Role })
+    t.string('name')
+    t.field('type', { type: AssetType })
     t.string('createdAt')
     t.string('updatedAt')
     t.list.field('borrowings', {
@@ -22,7 +22,7 @@ export const User = objectType({
         }
         const borrowings = await ctx.prisma.borrowing.findMany({
           where: {
-            userId: _parent.id,
+            assetId: _parent.id,
           },
         })
         return borrowings.map((borrowing) => ({
@@ -40,22 +40,22 @@ export const User = objectType({
   },
 })
 
-export const UserQuery = extendType({
+export const AssetQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.list.field('users', {
-      type: User,
+    t.list.field('assets', {
+      type: Asset,
       resolve: async (_parent, _args, ctx) => {
-        const users = await ctx.prisma.user.findMany()
-        return users.map((user) => ({
-          ...user,
-          createdAt: user.createdAt.toISOString(),
-          updatedAt: user.updatedAt.toISOString(),
+        const assets = await ctx.prisma.asset.findMany()
+        return assets.map((asset) => ({
+          ...asset,
+          createdAt: asset?.createdAt.toISOString(),
+          updatedAt: asset?.updatedAt.toISOString(),
         }))
       },
     }),
-      t.field('user', {
-        type: User,
+      t.field('asset', {
+        type: Asset,
         args: {
           id: 'Int',
         },
@@ -63,85 +63,85 @@ export const UserQuery = extendType({
           if (args.id === null || args.id === undefined) {
             throw new Error('ID is required')
           }
-          const user = await ctx.prisma.user.findUnique({
+          const asset = await ctx.prisma.asset.findUnique({
             where: {
               id: args.id,
             },
           })
           return {
-            ...user,
-            createdAt: user?.createdAt.toISOString(),
-            updatedAt: user?.updatedAt.toISOString(),
+            ...asset,
+            createdAt: asset?.createdAt.toISOString(),
+            updatedAt: asset?.updatedAt.toISOString(),
           }
         },
       })
   },
 })
 
-export const UserMutation = extendType({
+export const AssetMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.field('createUser', {
-      type: User,
+    t.field('createAsset', {
+      type: Asset,
       args: {
-        username: 'String',
-        role: Role,
+        name: 'String',
+        type: AssetType,
       },
       resolve: async (_parent, args, ctx) => {
-        if (!args.username) {
-          throw new Error('ユーザー名が必要です')
+        if (!args.name) {
+          throw new Error('名前が必要です')
         }
-        if (!args.role) {
-          throw new Error('Role is required')
+        if (!args.type) {
+          throw new Error('Type is required')
         }
-        const user = await ctx.prisma.user.create({
+        const asset = await ctx.prisma.asset.create({
           data: {
-            username: args.username,
-            role: args.role,
+            name: args.name,
+            type: args.type,
           },
         })
         return {
-          ...user,
-          createdAt: user?.createdAt.toISOString(),
-          updatedAt: user?.updatedAt.toISOString(),
+          ...asset,
+          createdAt: asset?.createdAt.toISOString(),
+          updatedAt: asset?.updatedAt.toISOString(),
         }
       },
     }),
-      t.field('updateUser', {
-        type: User,
+      t.field('updateAsset', {
+        type: Asset,
         args: {
           id: 'Int',
-          username: 'String',
-          role: Role,
+          name: 'String',
+          type: AssetType,
         },
         resolve: async (_parent, args, ctx) => {
           if (args.id === null || args.id === undefined) {
             throw new Error('ID is required')
           }
-          if (!args.username) {
-            throw new Error('ユーザー名が必要です')
+          if (!args.name) {
+            throw new Error('名前が必要です')
           }
-          if (!args.role) {
-            throw new Error('Role is required')
+          if (!args.type) {
+            throw new Error('Type is required')
           }
-          const user = await ctx.prisma.user.update({
+          const asset = await ctx.prisma.asset.update({
             where: {
               id: args.id,
             },
             data: {
-              username: args.username,
-              role: args.role,
+              name: args.name,
+              type: args.type,
             },
           })
           return {
-            ...user,
-            createdAt: user?.createdAt.toISOString(),
-            updatedAt: user?.updatedAt.toISOString(),
+            ...asset,
+            createdAt: asset?.createdAt.toISOString(),
+            updatedAt: asset?.updatedAt.toISOString(),
           }
         },
       }),
-      t.field('deleteUser', {
-        type: User,
+      t.field('deleteAsset', {
+        type: Asset,
         args: {
           id: 'Int',
         },
@@ -149,15 +149,15 @@ export const UserMutation = extendType({
           if (args.id === null || args.id === undefined) {
             throw new Error('ID is required')
           }
-          const user = await ctx.prisma.user.delete({
+          const asset = await ctx.prisma.asset.delete({
             where: {
               id: args.id,
             },
           })
           return {
-            ...user,
-            createdAt: user?.createdAt.toISOString(),
-            updatedAt: user?.updatedAt.toISOString(),
+            ...asset,
+            createdAt: asset?.createdAt.toISOString(),
+            updatedAt: asset?.updatedAt.toISOString(),
           }
         },
       })

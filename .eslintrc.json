@@ -14,8 +14,7 @@
   "overrides": [
     {
       "files": [
-        "./src/graphql/generated/nexus.ts",
-        "./src/graphql/context.ts"
+        "./src/graphql/client/gqlhooks.ts"
       ],
       "rules": {
         "no-unused-vars": "off",

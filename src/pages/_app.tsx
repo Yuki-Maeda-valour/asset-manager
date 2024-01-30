@@ -3,7 +3,7 @@ import { theme } from '@/lib/theme'
 import { fonts } from '@/lib/font'
 import '@/styles/globals.css'
 import { ApolloProvider } from '@apollo/client'
-import { apolloClient } from '@/lib/apollo'
+import { apolloClient } from '@/graphql/client/apollo'
 import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {

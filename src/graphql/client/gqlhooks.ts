@@ -1,5 +1,3 @@
-import * as Types from '../../generated/types'
-
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 export type Maybe<T> = T | null
@@ -172,7 +170,7 @@ export type User = {
   username?: Maybe<Scalars['String']['output']>
 }
 
-export type UsersQueryVariables = Types.Exact<{ [key: string]: never }>
+export type UsersQueryVariables = Exact<{ [key: string]: never }>
 
 export type UsersQuery = {
   __typename?: 'Query'

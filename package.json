@@ -5,7 +5,7 @@
   "scripts": {
     "init": "pnpm install && pnpm db:generate && pnpm db:push",
     "dev": "prettier --write '**/*.{js,jsx,ts,tsx}' &&next dev",
-    "initdev": "pnpm install && prettier --write '**/*.{js,jsx,ts,tsx}' && pnpm db:generate && pnpm db:push && next dev",
+    "initdev": "pnpm install && graphql-codegen --config ./src/graphql/client/codegen.ts && prettier --write '**/*.{js,jsx,ts,tsx}' && pnpm db:generate && pnpm db:push && next dev",
     "build": "prettier --write '**/*.{js,jsx,ts,tsx}' && next build",
     "start": "next start",
     "lint": "next lint",

@@ -5,11 +5,7 @@ const config: CodegenConfig = {
   schema: './src/graphql/server/schema.graphql',
   documents: ['./src/graphql/client/operations/*.ts'],
   generates: {
-    './src/graphql/generated': {
-      preset: 'near-operation-file',
-      presetConfig: {
-        baseTypesPath: 'types.ts',
-      },
+    './src/graphql/client/gqlhooks.ts': {
       plugins: [
         'typescript',
         'typescript-operations',

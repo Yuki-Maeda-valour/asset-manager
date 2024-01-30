@@ -2,8 +2,8 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: './src/graphql/generated/schema.graphql',
-  documents: ['./src/graphql/query/*.ts'],
+  schema: './src/graphql/server/schema.graphql',
+  documents: ['./src/graphql/client/operations/*.ts'],
   generates: {
     './src/graphql/generated': {
       preset: 'near-operation-file',
@@ -19,7 +19,7 @@ const config: CodegenConfig = {
         withHooks: true,
       },
     },
-    './graphql.schema.json': {
+    './src/graphql/client/graphql.schema.json': {
       plugins: ['introspection'],
     },
   },

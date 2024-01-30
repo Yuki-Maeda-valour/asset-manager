@@ -1,6 +1,6 @@
 import { objectType, extendType, enumType } from 'nexus'
-import { User } from '@/graphql/types/User'
-import { Asset } from '@/graphql/types/Asset'
+import { User } from '@/graphql/server/types/User'
+import { Asset } from '@/graphql/server/types/Asset'
 
 export const BorrowingStatus = enumType({
   name: 'BorrowingStatus',

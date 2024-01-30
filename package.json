@@ -13,7 +13,7 @@
     "db:generate": "prisma generate --schema=./src/prisma/schema.prisma",
     "db:push": "prisma db push --schema=./src/prisma/schema.prisma",
     "db:show": "prisma studio --schema=./src/prisma/schema.prisma",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config ./src/graphql/client/codegen.ts && pnpm run format"
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",

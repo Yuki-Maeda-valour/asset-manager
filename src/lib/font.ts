@@ -8,3 +8,9 @@ const rubik = Rubik({
 export const fonts = {
   rubik,
 }
+
+export const globalStyles = `
+  :root {
+    --font-rubik: ${fonts.rubik.style.fontFamily};
+  }
+`

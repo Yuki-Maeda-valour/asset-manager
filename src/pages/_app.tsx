@@ -5,8 +5,21 @@ import '@/styles/globals.css'
 import { ApolloProvider } from '@apollo/client'
 import { apolloClient } from '@/graphql/client/apollo'
 import type { AppProps } from 'next/app'
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
 
-export default function App({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  // eslint-disable-next-line no-unused-vars
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page)
+
   return (
     <>
       <style jsx global>
@@ -14,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </style>
       <ApolloProvider client={apolloClient}>
         <ChakraProvider theme={theme}>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </ChakraProvider>
       </ApolloProvider>
     </>

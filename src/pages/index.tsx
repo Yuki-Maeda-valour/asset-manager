@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { Button } from '@chakra-ui/react'
+import { MainLayout } from '@/pages/components/layout/MainLayout'
 
 export default function Home() {
   return (
@@ -10,9 +11,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Button colorScheme="primary">Button</Button>
-      </main>
+      <Button colorScheme="primary">Button</Button>
     </>
   )
 }
+
+Home.getLayout = (page: React.ReactNode) => <MainLayout>{page}</MainLayout>

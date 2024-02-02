@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
-import { useTheme } from '@chakra-ui/react'
+import { useTheme, Container } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,7 +14,8 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
+      <main
+        className={inter.className}
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -22,22 +23,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundColor: theme.colors.base[500],
         }}
       >
-        <main
-          className={inter.className}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            maxWidth: '640px',
-            padding: '16px',
-            backgroundColor: theme.colors.base[50],
-          }}
+        <Container
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          maxWidth="640px"
+          padding="16px"
+          backgroundColor={theme.colors.base[50]}
         >
           {children}
-        </main>
-      </div>
+        </Container>
+      </main>
     </>
   )
 }

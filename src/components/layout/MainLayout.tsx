@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
-import { useTheme, Container } from '@chakra-ui/react'
+import { useTheme, Box } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +23,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundColor: theme.colors.base[500],
         }}
       >
-        <Container
+        <Box
           display="flex"
           flexDirection="column"
           alignItems="center"
@@ -34,7 +34,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundColor={theme.colors.base[50]}
         >
           {children}
-        </Container>
+        </Box>
       </main>
     </>
   )

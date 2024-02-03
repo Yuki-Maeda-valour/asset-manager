@@ -1,8 +1,8 @@
-import { Button } from '@chakra-ui/react'
-import { MainLayout } from '@/components/layout/MainLayout'
+import { MainLayout } from '@/components/layouts/MainLayout'
+import MainContents from '@/pages/MainContents'
 
 export default function Home() {
-  return <Button colorScheme="primary">Button</Button>
+  return <MainContents />
 }
 
 Home.getLayout = (page: React.ReactNode) => <MainLayout>{page}</MainLayout>

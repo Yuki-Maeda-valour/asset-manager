@@ -1,5 +1,5 @@
 import { MainLayout } from '@/components/layouts/MainLayout'
-import MainContents from '@/pages/MainContents'
+import MainContents from '@/components/MainContents'
 
 export default function Home() {
   return <MainContents />

@@ -1,4 +1,4 @@
-import Head from '@/components/Head'
+import Head from '@/components/layouts/Head'
 import { Inter } from 'next/font/google'
 import { useTheme, Box } from '@chakra-ui/react'
 

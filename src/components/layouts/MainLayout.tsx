@@ -4,6 +4,11 @@ import { useTheme, Box } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+/**
+ * メインレイアウト
+ * @param children
+ * @returns ReactNode > Head, Main > Box, children
+ */
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme()
   return (

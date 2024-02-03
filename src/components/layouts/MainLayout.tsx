@@ -27,6 +27,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           maxWidth="640px"
           padding="16px"
           backgroundColor={theme.colors.base[50]}
+          gap="16px"
         >
           {children}
         </Box>

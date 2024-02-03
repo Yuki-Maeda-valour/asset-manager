@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from '@/components/Head'
 import { Inter } from 'next/font/google'
 import { useTheme, Box } from '@chakra-ui/react'
 
@@ -8,12 +8,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme()
   return (
     <>
-      <Head>
-        <title>資産管理アプリ</title>
-        <meta name="description" content="資産管理アプリ" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head />
       <main
         className={inter.className}
         style={{

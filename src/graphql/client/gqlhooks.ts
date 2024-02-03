@@ -170,6 +170,18 @@ export type User = {
   username?: Maybe<Scalars['String']['output']>
 }
 
+export type AssetsQueryVariables = Exact<{ [key: string]: never }>
+
+export type AssetsQuery = {
+  __typename?: 'Query'
+  assets?: Array<{
+    __typename?: 'Asset'
+    id?: number | null
+    name?: string | null
+    type?: AssetType | null
+  } | null> | null
+}
+
 export type UsersQueryVariables = Exact<{ [key: string]: never }>
 
 export type UsersQuery = {
@@ -181,6 +193,70 @@ export type UsersQuery = {
   } | null> | null
 }
 
+export const AssetsDocument = gql`
+  query Assets {
+    assets {
+      id
+      name
+      type
+    }
+  }
+`
+
+/**
+ * __useAssetsQuery__
+ *
+ * To run a query within a React component, call `useAssetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAssetsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAssetsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAssetsQuery(
+  baseOptions?: Apollo.QueryHookOptions<AssetsQuery, AssetsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<AssetsQuery, AssetsQueryVariables>(
+    AssetsDocument,
+    options,
+  )
+}
+export function useAssetsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<AssetsQuery, AssetsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<AssetsQuery, AssetsQueryVariables>(
+    AssetsDocument,
+    options,
+  )
+}
+export function useAssetsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AssetsQuery,
+    AssetsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<AssetsQuery, AssetsQueryVariables>(
+    AssetsDocument,
+    options,
+  )
+}
+export type AssetsQueryHookResult = ReturnType<typeof useAssetsQuery>
+export type AssetsLazyQueryHookResult = ReturnType<typeof useAssetsLazyQuery>
+export type AssetsSuspenseQueryHookResult = ReturnType<
+  typeof useAssetsSuspenseQuery
+>
+export type AssetsQueryResult = Apollo.QueryResult<
+  AssetsQuery,
+  AssetsQueryVariables
+>
 export const UsersDocument = gql`
   query Users {
     users {

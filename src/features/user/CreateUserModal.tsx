@@ -1,6 +1,6 @@
 import { useModal } from '@/features/hooks/useModal'
 import { Button } from '@chakra-ui/react'
-export const UserCreateModal = () => {
+export const CreateUserModal = () => {
   const { onOpen, ModalContainer } = useModal()
 
   return (

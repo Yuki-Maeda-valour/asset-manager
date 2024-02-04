@@ -5,7 +5,7 @@ import { Button } from '@chakra-ui/react'
  * 資産の登録モーダル
  * @returns Button, ModalContainer
  */
-export const AssetCreateModal = () => {
+export const CreateAssetModal = () => {
   const { onOpen, ModalContainer } = useModal()
   return (
     <>

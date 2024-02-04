@@ -1,15 +1,7 @@
-import { AssetCreateModal } from '@/features/asset/AssetCreateModal'
-import { AssetListContainer } from '@/features/asset/AssetListContainer'
-
 /**
  * メインコンテンツ
- * @returns AssetCreateModal, AssetListContainer
+ * @returns reactfragment
  */
 export default function MainContents() {
-  return (
-    <>
-      <AssetCreateModal />
-      <AssetListContainer />
-    </>
-  )
+  return <>main</>
 }

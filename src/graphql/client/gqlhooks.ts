@@ -182,6 +182,23 @@ export type AssetsQuery = {
   } | null> | null
 }
 
+export type CreateAssetMutationVariables = Exact<{
+  name?: InputMaybe<Scalars['String']['input']>
+  type?: InputMaybe<AssetType>
+}>
+
+export type CreateAssetMutation = {
+  __typename?: 'Mutation'
+  createAsset?: {
+    __typename?: 'Asset'
+    id?: number | null
+    name?: string | null
+    type?: AssetType | null
+    createdAt?: string | null
+    updatedAt?: string | null
+  } | null
+}
+
 export type UsersQueryVariables = Exact<{ [key: string]: never }>
 
 export type UsersQuery = {
@@ -256,6 +273,61 @@ export type AssetsSuspenseQueryHookResult = ReturnType<
 export type AssetsQueryResult = Apollo.QueryResult<
   AssetsQuery,
   AssetsQueryVariables
+>
+export const CreateAssetDocument = gql`
+  mutation CreateAsset($name: String, $type: AssetType) {
+    createAsset(name: $name, type: $type) {
+      id
+      name
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`
+export type CreateAssetMutationFn = Apollo.MutationFunction<
+  CreateAssetMutation,
+  CreateAssetMutationVariables
+>
+
+/**
+ * __useCreateAssetMutation__
+ *
+ * To run a mutation, you first call `useCreateAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAssetMutation, { data, loading, error }] = useCreateAssetMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useCreateAssetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateAssetMutation,
+    CreateAssetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateAssetMutation, CreateAssetMutationVariables>(
+    CreateAssetDocument,
+    options,
+  )
+}
+export type CreateAssetMutationHookResult = ReturnType<
+  typeof useCreateAssetMutation
+>
+export type CreateAssetMutationResult =
+  Apollo.MutationResult<CreateAssetMutation>
+export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<
+  CreateAssetMutation,
+  CreateAssetMutationVariables
 >
 export const UsersDocument = gql`
   query Users {

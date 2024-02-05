@@ -9,3 +9,14 @@ export const AssetQuery = gql`
     }
   }
 `
+export const AssetMutation = gql`
+  mutation CreateAsset($name: String, $type: AssetType) {
+    createAsset(name: $name, type: $type) {
+      id
+      name
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`

@@ -25,7 +25,6 @@ export const CreateAssetForm = () => {
   const [, formAction] = useFormState(action, initialState)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
     const formData = new FormData(e.currentTarget)
     formAction(formData)
   }

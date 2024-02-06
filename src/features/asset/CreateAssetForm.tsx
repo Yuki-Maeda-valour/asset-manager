@@ -7,27 +7,15 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
+import { assetCreateAction } from '@/features/asset/action'
 
-type FormDataType = {
-  name: FormDataEntryValue | null
-  type: FormDataEntryValue | null
+const initialState = {
+  name: '',
+  type: 'PC',
 }
 
 export const CreateAssetForm = () => {
-  const initialState = {
-    name: '',
-    type: 'PC',
-  }
-
-  const action = (state: FormDataType, formData: FormData) => {
-    const newState = {
-      name: formData.get('name'),
-      type: formData.get('type'),
-    }
-    // console.log(newState)
-    return newState
-  }
-  const [state, formAction] = useFormState(action, initialState)
+  const [state, formAction] = useFormState(assetCreateAction, initialState)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

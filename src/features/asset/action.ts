@@ -5,9 +5,9 @@ export type FormDataType = {
 
 export const assetCreateAction = (state: FormDataType, formData: FormData) => {
   const newState = {
+    ...state,
     name: formData.get('name'),
     type: formData.get('type'),
   }
-  console.log(newState)
   return newState
 }

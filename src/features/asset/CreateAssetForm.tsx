@@ -8,18 +8,30 @@ import {
 } from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
 import { assetCreateAction } from '@/features/asset/action'
+import { useCreateAssetMutation } from '@/graphql/client/gqlhooks'
+import { AssetType } from '@/graphql/client/gqlhooks'
 
 const initialState = {
   name: '',
-  type: 'PC',
+  type: '',
 }
 
 export const CreateAssetForm = () => {
   const [state, formAction] = useFormState(assetCreateAction, initialState)
+  const [createAssetMutation] = useCreateAssetMutation()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    const rawType = formData.get('type')
+    const type = Object.values(AssetType).includes(rawType as AssetType)
+      ? (rawType as AssetType)
+      : undefined
+    createAssetMutation({
+      variables: {
+        name: formData.get('name')?.toString(),
+        type: type,
+      },
+    })
     formAction(formData)
   }
 

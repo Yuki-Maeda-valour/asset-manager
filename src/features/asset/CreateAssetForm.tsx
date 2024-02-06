@@ -43,7 +43,7 @@ export const CreateAssetForm = () => {
           name="type"
           defaultValue={state.type ? state.type.toString() : ''}
         >
-          <Stack direction="row">
+          <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value="PC">PC</Radio>
             <Radio value="SP">SP</Radio>
             <Radio value="WIFI">WIFI</Radio>

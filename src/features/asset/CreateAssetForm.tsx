@@ -39,7 +39,10 @@ export const CreateAssetForm = () => {
     <form onSubmit={handleSubmit}>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
         <Input type="text" name="name" placeholder="資産名" isRequired={true} />
-        <RadioGroup name="type" defaultValue={state.type as string}>
+        <RadioGroup
+          name="type"
+          defaultValue={state.type ? state.type.toString() : ''}
+        >
           <Stack direction="row">
             <Radio value="PC">PC</Radio>
             <Radio value="SP">SP</Radio>

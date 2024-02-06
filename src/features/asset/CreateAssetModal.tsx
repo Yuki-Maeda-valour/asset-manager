@@ -11,7 +11,7 @@ export const CreateAssetModal = () => {
 
   return (
     <>
-      <Button colorScheme="teal" onClick={onOpen}>
+      <Button colorScheme="primary" onClick={onOpen}>
         資産の登録
       </Button>
       <ModalContainer title="資産の登録">

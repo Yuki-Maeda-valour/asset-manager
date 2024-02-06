@@ -1,4 +1,4 @@
-import { Card, CardBody, Text } from '@chakra-ui/react'
+import { Button, Card, CardBody, Container, Text } from '@chakra-ui/react'
 import type { Asset } from '@/graphql/client/gqlhooks'
 
 type AssetCardProps = {
@@ -14,12 +14,26 @@ type AssetCardProps = {
 export const AssetCard = ({ asset }: AssetCardProps) => {
   if (!asset) return null
 
+  const handleClick = () => {
+    console.log(asset.id)
+  }
+
   return (
-    <Card w="full">
-      <CardBody>
-        <Text>{asset.id}</Text>
-        <Text>{asset.name}</Text>
-        <Text>{asset.type}</Text>
+    <Card w="full" onClick={handleClick}>
+      <CardBody display="flex" justifyContent="space-between" gap={2}>
+        <Container
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Text>{asset.id}</Text>
+          <Text>{asset.name}</Text>
+          <Text>{asset.type}</Text>
+        </Container>
+        <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
+          <Button colorScheme="teal">編集</Button>
+          <Button colorScheme="red">削除</Button>
+        </Container>
       </CardBody>
     </Card>
   )

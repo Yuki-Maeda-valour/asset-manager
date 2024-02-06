@@ -8,7 +8,6 @@
     "no-restricted-imports": ["error", { "patterns": ["./", "../"] }],
     "no-var": "error",
     "prefer-const": "error",
-    "no-unused-vars": "error",
     "no-console": "warn"
   },
   "overrides": [

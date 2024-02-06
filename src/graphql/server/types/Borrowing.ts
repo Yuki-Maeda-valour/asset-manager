@@ -60,7 +60,11 @@ export const BorrowingQuery = extendType({
     t.list.field('borrowings', {
       type: Borrowing,
       resolve: async (_parent, _args, ctx) => {
-        const borrowings = await ctx.prisma.borrowing.findMany()
+        const borrowings = await ctx.prisma.borrowing.findMany({
+          orderBy: {
+            createdAt: 'desc',
+          },
+        })
         return borrowings.map((borrowing) => ({
           ...borrowing,
           borrowedAt: borrowing.borrowedAt.toISOString(),

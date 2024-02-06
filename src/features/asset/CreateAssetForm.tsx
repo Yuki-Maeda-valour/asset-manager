@@ -1,30 +1,36 @@
-import { Button, Container } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+} from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
 
 type FormDataType = {
-  id: FormDataEntryValue | null
   name: FormDataEntryValue | null
   type: FormDataEntryValue | null
 }
 
 export const CreateAssetForm = () => {
   const initialState = {
-    id: '',
     name: '',
-    type: '',
+    type: 'PC',
   }
 
   const action = (state: FormDataType, formData: FormData) => {
     const newState = {
-      id: formData.get('id'),
       name: formData.get('name'),
       type: formData.get('type'),
     }
+    // console.log(newState)
     return newState
   }
-  const [, formAction] = useFormState(action, initialState)
+  const [state, formAction] = useFormState(action, initialState)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const formData = new FormData(e.currentTarget)
     formAction(formData)
   }
@@ -32,9 +38,15 @@ export const CreateAssetForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <input type="text" name="id" placeholder="資産ID" />
-        <input type="text" name="name" placeholder="資産名" />
-        <input type="text" name="type" placeholder="資産タイプ" />
+        <Input type="text" name="name" placeholder="資産名" isRequired={true} />
+        <RadioGroup name="type" defaultValue={state.type as string}>
+          <Stack direction="row">
+            <Radio value="PC">PC</Radio>
+            <Radio value="SP">SP</Radio>
+            <Radio value="WIFI">WIFI</Radio>
+            <Radio value="MONITOR">MONITOR</Radio>
+          </Stack>
+        </RadioGroup>
         <Button type="submit">Submit</Button>
       </Container>
     </form>

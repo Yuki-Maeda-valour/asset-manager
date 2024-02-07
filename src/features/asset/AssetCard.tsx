@@ -1,6 +1,7 @@
 import { Button, Card, CardBody, Container, Text } from '@chakra-ui/react'
 import type { Asset } from '@/graphql/client/gqlhooks'
 import { DeleteAssetButton } from '@/features/asset/DeleteAssetButton'
+import { EditAssetModalButton } from '@/features/asset'
 
 type AssetCardProps = {
   // 資産オブジェクト
@@ -28,7 +29,7 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
           <Text>{asset.type}</Text>
         </Container>
         <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
-          <Button colorScheme="teal">編集</Button>
+          <EditAssetModalButton asset={asset} />
           <DeleteAssetButton assetId={asset.id} />
         </Container>
       </CardBody>

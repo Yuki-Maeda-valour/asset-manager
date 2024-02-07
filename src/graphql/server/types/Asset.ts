@@ -46,7 +46,11 @@ export const AssetQuery = extendType({
     t.list.field('assets', {
       type: Asset,
       resolve: async (_parent, _args, ctx) => {
-        const assets = await ctx.prisma.asset.findMany()
+        const assets = await ctx.prisma.asset.findMany({
+          orderBy: {
+            id: 'desc',
+          },
+        })
         return assets.map((asset) => ({
           ...asset,
           createdAt: asset?.createdAt.toISOString(),

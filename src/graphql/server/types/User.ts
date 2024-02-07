@@ -46,7 +46,11 @@ export const UserQuery = extendType({
     t.list.field('users', {
       type: User,
       resolve: async (_parent, _args, ctx) => {
-        const users = await ctx.prisma.user.findMany()
+        const users = await ctx.prisma.user.findMany({
+          orderBy: {
+            id: 'asc',
+          },
+        })
         return users.map((user) => ({
           ...user,
           createdAt: user.createdAt.toISOString(),

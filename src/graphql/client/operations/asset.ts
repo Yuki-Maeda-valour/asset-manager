@@ -20,6 +20,15 @@ export const AssetMutation = gql`
     }
   }
 
+  mutation UpdateAsset($updateAssetId: Int, $name: String, $type: AssetType) {
+    updateAsset(id: $updateAssetId, name: $name, type: $type) {
+      id
+      name
+      type
+      updatedAt
+    }
+  }
+
   mutation DeleteAsset($deleteAssetId: Int) {
     deleteAsset(id: $deleteAssetId) {
       id

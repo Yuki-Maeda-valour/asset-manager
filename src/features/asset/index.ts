@@ -1,5 +1,7 @@
 export { AssetListContainer } from '@/features/asset/AssetListContainer'
-export { CreateAssetModal } from '@/features/asset/CreateAssetModal'
+export { CreateAssetModalButton } from '@/features/asset/CreateAssetModalButton'
 export { CreateAssetForm } from '@/features/asset/CreateAssetForm'
+export { EditAssetModalButton } from '@/features/asset/EditAssetModalButton'
+export { EditAssetForm } from '@/features/asset/EditAssetForm'
 export { AssetCardList } from '@/features/asset/AssetCardList'
 export { AssetCard } from '@/features/asset/AssetCard'

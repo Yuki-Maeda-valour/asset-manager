@@ -36,5 +36,5 @@ export const useModal = () => {
     </Modal>
   )
 
-  return { onOpen, ModalContainer }
+  return { onOpen, onClose, ModalContainer }
 }

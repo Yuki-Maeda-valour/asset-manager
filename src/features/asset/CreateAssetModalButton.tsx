@@ -6,7 +6,7 @@ import { CreateAssetForm } from '@/features/asset'
  * 資産の登録モーダル
  * @returns Button, ModalContainer
  */
-export const CreateAssetModal = () => {
+export const CreateAssetModalButton = () => {
   const { onOpen, ModalContainer } = useModal()
 
   return (

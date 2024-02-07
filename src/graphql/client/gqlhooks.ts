@@ -199,6 +199,20 @@ export type CreateAssetMutation = {
   } | null
 }
 
+export type DeleteAssetMutationVariables = Exact<{
+  deleteAssetId?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type DeleteAssetMutation = {
+  __typename?: 'Mutation'
+  deleteAsset?: {
+    __typename?: 'Asset'
+    id?: number | null
+    name?: string | null
+    type?: AssetType | null
+  } | null
+}
+
 export type UsersQueryVariables = Exact<{ [key: string]: never }>
 
 export type UsersQuery = {
@@ -328,6 +342,58 @@ export type CreateAssetMutationResult =
 export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<
   CreateAssetMutation,
   CreateAssetMutationVariables
+>
+export const DeleteAssetDocument = gql`
+  mutation DeleteAsset($deleteAssetId: Int) {
+    deleteAsset(id: $deleteAssetId) {
+      id
+      name
+      type
+    }
+  }
+`
+export type DeleteAssetMutationFn = Apollo.MutationFunction<
+  DeleteAssetMutation,
+  DeleteAssetMutationVariables
+>
+
+/**
+ * __useDeleteAssetMutation__
+ *
+ * To run a mutation, you first call `useDeleteAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAssetMutation, { data, loading, error }] = useDeleteAssetMutation({
+ *   variables: {
+ *      deleteAssetId: // value for 'deleteAssetId'
+ *   },
+ * });
+ */
+export function useDeleteAssetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteAssetMutation,
+    DeleteAssetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<DeleteAssetMutation, DeleteAssetMutationVariables>(
+    DeleteAssetDocument,
+    options,
+  )
+}
+export type DeleteAssetMutationHookResult = ReturnType<
+  typeof useDeleteAssetMutation
+>
+export type DeleteAssetMutationResult =
+  Apollo.MutationResult<DeleteAssetMutation>
+export type DeleteAssetMutationOptions = Apollo.BaseMutationOptions<
+  DeleteAssetMutation,
+  DeleteAssetMutationVariables
 >
 export const UsersDocument = gql`
   query Users {

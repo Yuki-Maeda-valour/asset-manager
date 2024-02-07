@@ -19,4 +19,12 @@ export const AssetMutation = gql`
       updatedAt
     }
   }
+
+  mutation DeleteAsset($deleteAssetId: Int) {
+    deleteAsset(id: $deleteAssetId) {
+      id
+      name
+      type
+    }
+  }
 `

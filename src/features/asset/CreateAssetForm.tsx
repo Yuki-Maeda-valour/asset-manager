@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 
 const initialState = {
   name: '',
-  type: '',
+  type: 'PC',
 }
 
 export const CreateAssetForm = () => {

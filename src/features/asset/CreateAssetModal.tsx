@@ -1,5 +1,5 @@
 import { useModal } from '@/features/hooks/useModal'
-import { Button } from '@chakra-ui/react'
+import { Button, Container } from '@chakra-ui/react'
 import { CreateAssetForm } from '@/features/asset'
 
 /**
@@ -11,9 +11,11 @@ export const CreateAssetModal = () => {
 
   return (
     <>
-      <Button colorScheme="primary" onClick={onOpen}>
-        資産の登録
-      </Button>
+      <Container display="flex" justifyContent="flex-end">
+        <Button colorScheme="primary" onClick={onOpen}>
+          資産の登録
+        </Button>
+      </Container>
       <ModalContainer title="資産の登録">
         <CreateAssetForm />
       </ModalContainer>

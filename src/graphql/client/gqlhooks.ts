@@ -199,6 +199,23 @@ export type CreateAssetMutation = {
   } | null
 }
 
+export type UpdateAssetMutationVariables = Exact<{
+  updateAssetId?: InputMaybe<Scalars['Int']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  type?: InputMaybe<AssetType>
+}>
+
+export type UpdateAssetMutation = {
+  __typename?: 'Mutation'
+  updateAsset?: {
+    __typename?: 'Asset'
+    id?: number | null
+    name?: string | null
+    type?: AssetType | null
+    updatedAt?: string | null
+  } | null
+}
+
 export type DeleteAssetMutationVariables = Exact<{
   deleteAssetId?: InputMaybe<Scalars['Int']['input']>
 }>
@@ -342,6 +359,61 @@ export type CreateAssetMutationResult =
 export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<
   CreateAssetMutation,
   CreateAssetMutationVariables
+>
+export const UpdateAssetDocument = gql`
+  mutation UpdateAsset($updateAssetId: Int, $name: String, $type: AssetType) {
+    updateAsset(id: $updateAssetId, name: $name, type: $type) {
+      id
+      name
+      type
+      updatedAt
+    }
+  }
+`
+export type UpdateAssetMutationFn = Apollo.MutationFunction<
+  UpdateAssetMutation,
+  UpdateAssetMutationVariables
+>
+
+/**
+ * __useUpdateAssetMutation__
+ *
+ * To run a mutation, you first call `useUpdateAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateAssetMutation, { data, loading, error }] = useUpdateAssetMutation({
+ *   variables: {
+ *      updateAssetId: // value for 'updateAssetId'
+ *      name: // value for 'name'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useUpdateAssetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateAssetMutation,
+    UpdateAssetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<UpdateAssetMutation, UpdateAssetMutationVariables>(
+    UpdateAssetDocument,
+    options,
+  )
+}
+export type UpdateAssetMutationHookResult = ReturnType<
+  typeof useUpdateAssetMutation
+>
+export type UpdateAssetMutationResult =
+  Apollo.MutationResult<UpdateAssetMutation>
+export type UpdateAssetMutationOptions = Apollo.BaseMutationOptions<
+  UpdateAssetMutation,
+  UpdateAssetMutationVariables
 >
 export const DeleteAssetDocument = gql`
   mutation DeleteAsset($deleteAssetId: Int) {

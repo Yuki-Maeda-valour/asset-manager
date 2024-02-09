@@ -1,28 +1,26 @@
 import { PopoverButton } from '@/components/button/PopoverButton'
 import { Button, Container, Text } from '@chakra-ui/react'
-import {
-  AssetsDocument,
-  useDeleteAssetMutation,
-} from '@/graphql/client/gqlhooks'
-import type { Asset } from '@/graphql/client/gqlhooks'
+import { UsersDocument, useDeleteUserMutation } from '@/graphql/client/gqlhooks'
+import type { User } from '@/graphql/client/gqlhooks'
 
-type DeleteAssetButtonProps = {
-  // 資産ID
-  assetId: Asset['id']
+type DeleteUserButtonProps = {
+  // ユーザーID
+  userId: User['id']
 }
 
 /**
- * 資産を削除するボタンコンポーネント
- * @param assetId - 削除対象の資産ID
+ * ユーザーを削除するボタンコンポーネント
+ * @param userId - 削除対象ユーザーID
  * @returns 削除ボタンを含むコンポーネント
  */
-export const DeleteAssetButton = ({ assetId }: DeleteAssetButtonProps) => {
-  const [deleteAsset] = useDeleteAssetMutation({
-    refetchQueries: [AssetsDocument],
+export const DeleteUserButton = ({ userId }: DeleteUserButtonProps) => {
+  const [deleteUser] = useDeleteUserMutation({
+    refetchQueries: [UsersDocument],
   })
   const handleClick = async () => {
-    await deleteAsset({ variables: { deleteAssetId: assetId } })
+    await deleteUser({ variables: { deleteUserId: userId } })
   }
+
   return (
     <PopoverButton buttonLabel="削除" placement="left-start">
       <Container

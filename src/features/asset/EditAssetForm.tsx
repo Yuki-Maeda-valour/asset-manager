@@ -11,19 +11,26 @@ import { useFormState } from 'react-dom'
 import { assetEditAction } from '@/features/asset/action'
 import { useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
 import { AssetType } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
 
 type EditAssetFormProps = {
+  // 編集する資産の情報
   asset: Asset
+  // フォームを閉じる際に呼び出される関数
+  onClose: () => void
 }
-export const EditAssetForm = ({ asset }: EditAssetFormProps) => {
+
+/**
+ * 資産編集フォームコンポーネントです。
+ * @param {EditAssetFormProps} props - コンポーネントに渡されるプロパティ。
+ * @returns form > Container > Input,RadioGroup > Radio
+ */
+export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
   const { name, type } = asset
   const initialState = {
     id: asset.id as FormDataEntryValue | null,
     name: name as FormDataEntryValue | null,
     type: type as FormDataEntryValue | null,
   }
-  const router = useRouter()
   const [state, formAction] = useFormState(assetEditAction, initialState)
   const [updateAssetMutation] = useUpdateAssetMutation()
 
@@ -42,7 +49,7 @@ export const EditAssetForm = ({ asset }: EditAssetFormProps) => {
       },
     })
     formAction(formData)
-    router.reload()
+    onClose()
   }
 
   return (

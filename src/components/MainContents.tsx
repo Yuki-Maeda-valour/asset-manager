@@ -1,6 +1,6 @@
 /**
  * メインコンテンツ
- * @returns reactfragment
+ * @returns div
  */
 export default function MainContents() {
   return <>main</>

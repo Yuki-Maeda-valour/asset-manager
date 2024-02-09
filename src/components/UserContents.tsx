@@ -1,4 +1,4 @@
-import { UserListContainer } from '@/features/user'
+import { CreateUserModalButton, UserListContainer } from '@/features/user'
 import { Text } from '@chakra-ui/react'
 
 /**
@@ -11,6 +11,7 @@ export default function UserContents() {
       <Text fontWeight="bold" fontSize="2xl">
         ユーザー一覧
       </Text>
+      <CreateUserModalButton />
       <UserListContainer />
     </>
   )

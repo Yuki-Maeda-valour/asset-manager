@@ -5,6 +5,7 @@ export const UserQuery = gql`
     users {
       id
       username
+      role
     }
   }
 `

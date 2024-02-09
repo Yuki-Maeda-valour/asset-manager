@@ -238,6 +238,7 @@ export type UsersQuery = {
     __typename?: 'User'
     id?: number | null
     username?: string | null
+    role?: Role | null
   } | null> | null
 }
 
@@ -472,6 +473,7 @@ export const UsersDocument = gql`
     users {
       id
       username
+      role
     }
   }
 `

@@ -8,19 +8,26 @@ import {
 } from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
 import { assetCreateAction } from '@/features/asset/action'
-import { useCreateAssetMutation } from '@/graphql/client/gqlhooks'
+import {
+  AssetsDocument,
+  useCreateAssetMutation,
+} from '@/graphql/client/gqlhooks'
 import { AssetType } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
 
 const initialState = {
   name: '',
   type: 'PC',
 }
 
-export const CreateAssetForm = () => {
-  const router = useRouter()
+/**
+ * 資産作成フォームコンポーネントです。
+ * @param {CreateAssetFormProps} props - コンポーネントに渡されるプロパティ。
+ */
+export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
   const [state, formAction] = useFormState(assetCreateAction, initialState)
-  const [createAssetMutation] = useCreateAssetMutation()
+  const [createAssetMutation] = useCreateAssetMutation({
+    refetchQueries: [AssetsDocument],
+  })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -36,7 +43,7 @@ export const CreateAssetForm = () => {
       },
     })
     formAction(formData)
-    router.reload()
+    onClose()
   }
 
   return (

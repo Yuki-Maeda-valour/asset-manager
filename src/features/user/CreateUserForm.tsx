@@ -27,20 +27,7 @@ const initialState = {
 export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
   const [state, formAction] = useFormState(userCreateAction, initialState)
   const [CreateUserMutation] = useCreateUserMutation({
-    update(cache, { data }) {
-      const newUser = data?.createUser
-      const existingUsers: UsersQuery | null = cache.readQuery({
-        query: UsersDocument,
-      })
-      if (newUser && existingUsers && existingUsers.users) {
-        cache.writeQuery({
-          query: UsersDocument,
-          data: {
-            users: [...existingUsers.users, newUser],
-          },
-        })
-      }
-    },
+    refetchQueries: [UsersDocument],
   })
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

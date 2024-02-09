@@ -17,7 +17,7 @@ type EditAssetModalButtonProps = {
  * @returns Button, ModalContainer > EditAssetForm
  */
 export const EditAssetModalButton = ({ asset }: EditAssetModalButtonProps) => {
-  const { onOpen, ModalContainer } = useModal()
+  const { onOpen, onClose, ModalContainer } = useModal()
 
   return (
     <>
@@ -25,7 +25,7 @@ export const EditAssetModalButton = ({ asset }: EditAssetModalButtonProps) => {
         編集
       </Button>
       <ModalContainer title="資産の編集">
-        <EditAssetForm asset={asset} />
+        <EditAssetForm asset={asset} onClose={onClose} />
       </ModalContainer>
     </>
   )

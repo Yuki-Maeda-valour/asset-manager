@@ -7,7 +7,7 @@ import { CreateAssetForm } from '@/features/asset'
  * @returns Button, ModalContainer
  */
 export const CreateAssetModalButton = () => {
-  const { onOpen, ModalContainer } = useModal()
+  const { onOpen, onClose, ModalContainer } = useModal()
 
   return (
     <>
@@ -17,7 +17,7 @@ export const CreateAssetModalButton = () => {
         </Button>
       </Container>
       <ModalContainer title="資産の登録">
-        <CreateAssetForm />
+        <CreateAssetForm onClose={onClose} />
       </ModalContainer>
     </>
   )

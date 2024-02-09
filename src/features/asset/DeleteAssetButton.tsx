@@ -1,8 +1,10 @@
 import { PopoverButton } from '@/components/button/PopoverButton'
 import { Button, Container, Text } from '@chakra-ui/react'
-import { useDeleteAssetMutation } from '@/graphql/client/gqlhooks'
+import {
+  AssetsDocument,
+  useDeleteAssetMutation,
+} from '@/graphql/client/gqlhooks'
 import type { Asset } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
 
 type DeleteAssetButtonProps = {
   // 資産ID
@@ -15,11 +17,11 @@ type DeleteAssetButtonProps = {
  * @returns 削除ボタンを含むコンポーネント
  */
 export const DeleteAssetButton = ({ assetId }: DeleteAssetButtonProps) => {
-  const router = useRouter()
-  const [deleteAsset] = useDeleteAssetMutation()
+  const [deleteAsset] = useDeleteAssetMutation({
+    refetchQueries: [AssetsDocument],
+  })
   const handleClick = async () => {
     await deleteAsset({ variables: { deleteAssetId: assetId } })
-    router.reload()
   }
   return (
     <PopoverButton buttonLabel="削除" placement="left-start">

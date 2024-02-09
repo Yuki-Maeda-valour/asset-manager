@@ -15,22 +15,7 @@ type DeleteUserButtonProps = {
  */
 export const DeleteUserButton = ({ userId }: DeleteUserButtonProps) => {
   const [deleteUser] = useDeleteUserMutation({
-    variables: { deleteUserId: userId },
-    update(cache) {
-      const existingUsers = cache.readQuery<{ users: User[] }>({
-        query: UsersDocument,
-      })
-      if (existingUsers && existingUsers.users) {
-        cache.writeQuery({
-          query: UsersDocument,
-          data: {
-            users: existingUsers.users.filter(
-              (user: User) => user.id !== userId,
-            ),
-          },
-        })
-      }
-    },
+    refetchQueries: [UsersDocument],
   })
   const handleClick = async () => {
     await deleteUser({ variables: { deleteUserId: userId } })

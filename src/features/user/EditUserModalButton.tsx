@@ -17,7 +17,7 @@ type EditUserModalButtonProps = {
  * @returns Button, ModalContainer > EditUserForm
  */
 export const EditUserModalButton = ({ user }: EditUserModalButtonProps) => {
-  const { onOpen, ModalContainer } = useModal()
+  const { onOpen, onClose, ModalContainer } = useModal()
 
   return (
     <>
@@ -25,8 +25,7 @@ export const EditUserModalButton = ({ user }: EditUserModalButtonProps) => {
         編集
       </Button>
       <ModalContainer title="資産の編集">
-        {/* <EditUserForm user={user} /> */}
-        <div>テスト</div>
+        <EditUserForm user={user} onClose={onClose} />
       </ModalContainer>
     </>
   )

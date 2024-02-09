@@ -1,4 +1,4 @@
-import type { Asset } from '@/graphql/client/gqlhooks'
+import type { User } from '@/graphql/client/gqlhooks'
 import {
   Button,
   Container,
@@ -8,41 +8,47 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
-import { assetEditAction } from '@/features/asset/action'
-import { useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
-import { AssetType } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
+import { userEditAction } from '@/features/user/action'
+import { useUpdateUserMutation } from '@/graphql/client/gqlhooks'
+import { Role } from '@/graphql/client/gqlhooks'
 
-type EditAssetFormProps = {
-  asset: Asset
+type EditUserFormProps = {
+  //  編集するユーザーの情報
+  user: User
+  // モーダルを閉じる処理
+  onClose: () => void
 }
-export const EditUserForm = ({ asset }: EditAssetFormProps) => {
-  const { name, type } = asset
+
+/**
+ * ユーザー編集フォームコンポーネントです。
+ * @param {EditUserFormProps} props - コンポーネントに渡されるプロパティ。
+ */
+export const EditUserForm = ({ user, onClose }: EditUserFormProps) => {
+  const { id, username, role } = user
+
   const initialState = {
-    id: asset.id as FormDataEntryValue | null,
-    name: name as FormDataEntryValue | null,
-    type: type as FormDataEntryValue | null,
+    username: username as FormDataEntryValue | null,
+    role: role as FormDataEntryValue | null,
   }
-  const router = useRouter()
-  const [state, formAction] = useFormState(assetEditAction, initialState)
-  const [updateAssetMutation] = useUpdateAssetMutation()
+  const [state, formAction] = useFormState(userEditAction, initialState)
+  const [updateUserMutation] = useUpdateUserMutation()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    const rawType = formData.get('type')
-    const type = Object.values(AssetType).includes(rawType as AssetType)
-      ? (rawType as AssetType)
+    const rawType = formData.get('role')
+    const role = Object.values(Role).includes(rawType as Role)
+      ? (rawType as Role)
       : undefined
-    updateAssetMutation({
+    updateUserMutation({
       variables: {
-        updateAssetId: asset.id,
-        name: formData.get('name')?.toString(),
-        type: type,
+        updateUserId: id,
+        username: formData.get('username')?.toString(),
+        role: role,
       },
     })
     formAction(formData)
-    router.reload()
+    onClose()
   }
 
   return (
@@ -53,10 +59,11 @@ export const EditUserForm = ({ asset }: EditAssetFormProps) => {
           name="username"
           placeholder="ユーザー名"
           isRequired={true}
+          defaultValue={state.username ? state.username.toString() : ''}
         />
         <RadioGroup
-          name="type"
-          defaultValue={state.type ? state.type.toString() : ''}
+          name="role"
+          defaultValue={state.role ? state.role.toString() : ''}
         >
           <Stack display="flex" gap={2} direction="row">
             <Radio value="USER">USER</Radio>

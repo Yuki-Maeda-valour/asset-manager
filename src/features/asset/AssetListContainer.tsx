@@ -8,7 +8,6 @@ import { Spinner } from '@chakra-ui/react'
  */
 export const AssetListContainer = () => {
   const { data, loading } = useAssetsQuery()
-  // TODO: fetchの処理を追加する
   if (loading) {
     return <Spinner />
   }

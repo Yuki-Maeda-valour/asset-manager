@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Container, Text } from '@chakra-ui/react'
+import { Card, CardBody, Container, Text } from '@chakra-ui/react'
 import type { Asset } from '@/graphql/client/gqlhooks'
 import { DeleteAssetButton } from '@/features/asset/DeleteAssetButton'
 import { EditAssetModalButton } from '@/features/asset'

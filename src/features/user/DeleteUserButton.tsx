@@ -1,8 +1,7 @@
 import { PopoverButton } from '@/components/button/PopoverButton'
 import { Button, Container, Text } from '@chakra-ui/react'
-import { useDeleteUserMutation } from '@/graphql/client/gqlhooks'
+import { UsersDocument, useDeleteUserMutation } from '@/graphql/client/gqlhooks'
 import type { User } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
 
 type DeleteUserButtonProps = {
   // ユーザーID
@@ -15,12 +14,28 @@ type DeleteUserButtonProps = {
  * @returns 削除ボタンを含むコンポーネント
  */
 export const DeleteUserButton = ({ userId }: DeleteUserButtonProps) => {
-  const router = useRouter()
-  const [deleteUser] = useDeleteUserMutation()
+  const [deleteUser] = useDeleteUserMutation({
+    variables: { deleteUserId: userId },
+    update(cache) {
+      const existingUsers = cache.readQuery<{ users: User[] }>({
+        query: UsersDocument,
+      })
+      if (existingUsers && existingUsers.users) {
+        cache.writeQuery({
+          query: UsersDocument,
+          data: {
+            users: existingUsers.users.filter(
+              (user: User) => user.id !== userId,
+            ),
+          },
+        })
+      }
+    },
+  })
   const handleClick = async () => {
     await deleteUser({ variables: { deleteUserId: userId } })
-    router.reload()
   }
+
   return (
     <PopoverButton buttonLabel="削除" placement="left-start">
       <Container

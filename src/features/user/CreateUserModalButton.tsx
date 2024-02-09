@@ -7,8 +7,7 @@ import { CreateUserForm } from '@/features/user'
  * @returns Button, ModalContainer
  */
 export const CreateUserModalButton = () => {
-  const { onOpen, ModalContainer } = useModal()
-
+  const { onOpen, ModalContainer, onClose } = useModal()
   return (
     <>
       <Container display="flex" justifyContent="flex-end">
@@ -17,7 +16,7 @@ export const CreateUserModalButton = () => {
         </Button>
       </Container>
       <ModalContainer title="ユーザーの登録">
-        <CreateUserForm />
+        <CreateUserForm onClose={onClose} />
       </ModalContainer>
     </>
   )

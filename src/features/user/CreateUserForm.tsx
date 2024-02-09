@@ -8,35 +8,55 @@ import {
 } from '@chakra-ui/react'
 import { useFormState } from 'react-dom'
 import { userCreateAction } from '@/features/user/action'
-import { useCreateUserMutation } from '@/graphql/client/gqlhooks'
+import {
+  UsersDocument,
+  UsersQuery,
+  useCreateUserMutation,
+} from '@/graphql/client/gqlhooks'
 import { Role } from '@/graphql/client/gqlhooks'
-import { useRouter } from 'next/router'
 
 const initialState = {
   username: '',
-  type: 'USER',
+  role: 'USER',
 }
 
-export const CreateUserForm = () => {
-  const router = useRouter()
+/**
+ * ユーザー作成フォームコンポーネントです。
+ * @param {CreateUserFormProps} props - コンポーネントに渡されるプロパティ。
+ */
+export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
   const [state, formAction] = useFormState(userCreateAction, initialState)
-  const [CreateUserMutation] = useCreateUserMutation()
-
+  const [CreateUserMutation] = useCreateUserMutation({
+    update(cache, { data }) {
+      const newUser = data?.createUser
+      const existingUsers: UsersQuery | null = cache.readQuery({
+        query: UsersDocument,
+      })
+      if (newUser && existingUsers && existingUsers.users) {
+        cache.writeQuery({
+          query: UsersDocument,
+          data: {
+            users: [...existingUsers.users, newUser],
+          },
+        })
+      }
+    },
+  })
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    const rawType = formData.get('type')
-    const type = Object.values(Role).includes(rawType as Role)
-      ? (rawType as Role)
+    const rawRole = formData.get('role')
+    const role = Object.values(Role).includes(rawRole as Role)
+      ? (rawRole as Role)
       : undefined
     CreateUserMutation({
       variables: {
         username: formData.get('username')?.toString(),
-        role: type,
+        role: role,
       },
     })
     formAction(formData)
-    router.reload()
+    onClose()
   }
 
   return (
@@ -49,8 +69,8 @@ export const CreateUserForm = () => {
           isRequired={true}
         />
         <RadioGroup
-          name="type"
-          defaultValue={state.type ? state.type.toString() : ''}
+          name="role"
+          defaultValue={state.role ? state.role.toString() : ''}
         >
           <Stack display="flex" gap={2} direction="row">
             <Radio value="USER">USER</Radio>

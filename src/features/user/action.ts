@@ -1,6 +1,6 @@
 type CreateFormDataType = {
   username: FormDataEntryValue | null
-  type: FormDataEntryValue | null
+  role: FormDataEntryValue | null
 }
 
 export const userCreateAction = (
@@ -10,23 +10,21 @@ export const userCreateAction = (
   const newState = {
     ...state,
     username: formData.get('username'),
-    type: formData.get('type'),
+    role: formData.get('role'),
   }
   return newState
 }
 
 type EditFormDataType = {
-  id: FormDataEntryValue | null
   username: FormDataEntryValue | null
-  type: FormDataEntryValue | null
+  role: FormDataEntryValue | null
 }
 
 export const userEditAction = (state: EditFormDataType, formData: FormData) => {
   const newState = {
     ...state,
-    id: formData.get('id'),
     username: formData.get('username'),
-    type: formData.get('type'),
+    role: formData.get('role'),
   }
   return newState
 }

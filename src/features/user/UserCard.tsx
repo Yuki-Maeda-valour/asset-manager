@@ -1,6 +1,7 @@
 import { Card, CardBody, Container, Text } from '@chakra-ui/react'
 import type { User } from '@/graphql/client/gqlhooks'
 import { DeleteUserButton } from '@/features/user/DeleteUserButton'
+import { EditUserModalButton } from '@/features/user/EditUserModalButton'
 
 type UserCardProps = {
   // ユーザーオブジェクト
@@ -28,7 +29,7 @@ export const UserCard = ({ user }: UserCardProps) => {
           <Text>{user.role}</Text>
         </Container>
         <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
-          {/* <EditUserModalButton user={user} /> */}
+          <EditUserModalButton user={user} />
           <DeleteUserButton userId={user.id} />
         </Container>
       </CardBody>

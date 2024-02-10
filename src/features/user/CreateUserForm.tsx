@@ -64,7 +64,7 @@ export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
             <Radio value="ADMIN">ADMIN</Radio>
           </Stack>
         </RadioGroup>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">登録</Button>
       </Container>
     </form>
   )

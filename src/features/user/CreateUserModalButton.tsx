@@ -12,7 +12,7 @@ export const CreateUserModalButton = () => {
     <>
       <Container display="flex" justifyContent="flex-end">
         <Button colorScheme="primary" onClick={onOpen}>
-          ユーザーの登録
+          登録
         </Button>
       </Container>
       <ModalContainer title="ユーザーの登録">

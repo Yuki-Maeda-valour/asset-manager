@@ -1,6 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react'
 import AssetContents from '@/components/AssetContents'
 import UserContents from '@/components/UserContents'
+import BorrowingContents from '@/components/BorrowingContents'
 
 /**
  * メインコンテンツ
@@ -20,7 +21,7 @@ export default function MainContents() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <AssetContents />
+            <BorrowingContents />
           </TabPanel>
           <TabPanel>
             <AssetContents />

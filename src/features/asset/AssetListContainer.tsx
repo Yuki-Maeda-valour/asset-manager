@@ -1,6 +1,6 @@
 import { useAssetsQuery } from '@/graphql/client/gqlhooks'
 import { AssetCardList } from '@/features/asset'
-import { Spinner } from '@chakra-ui/react'
+import { Container, Spinner } from '@chakra-ui/react'
 
 /**
  * 資産一覧コンポーネント
@@ -9,7 +9,11 @@ import { Spinner } from '@chakra-ui/react'
 export const AssetListContainer = () => {
   const { data, loading } = useAssetsQuery()
   if (loading) {
-    return <Spinner />
+    return (
+      <Container centerContent>
+        <Spinner />
+      </Container>
+    )
   }
   if (!data) {
     return <div>No data</div>

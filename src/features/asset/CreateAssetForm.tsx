@@ -61,7 +61,7 @@ export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
             <Radio value="MONITOR">MONITOR</Radio>
           </Stack>
         </RadioGroup>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">登録</Button>
       </Container>
     </form>
   )

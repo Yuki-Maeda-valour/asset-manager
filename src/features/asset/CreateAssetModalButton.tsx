@@ -13,7 +13,7 @@ export const CreateAssetModalButton = () => {
     <>
       <Container display="flex" justifyContent="flex-end">
         <Button colorScheme="primary" onClick={onOpen}>
-          資産の登録
+          登録
         </Button>
       </Container>
       <ModalContainer title="資産の登録">

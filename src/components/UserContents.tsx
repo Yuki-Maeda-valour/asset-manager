@@ -1,5 +1,5 @@
 import { CreateUserModalButton, UserListContainer } from '@/features/user'
-import { Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 /**
  * ユーザーコンテンツ
@@ -7,12 +7,9 @@ import { Text } from '@chakra-ui/react'
  */
 export default function UserContents() {
   return (
-    <>
-      <Text fontWeight="bold" fontSize="2xl">
-        ユーザー一覧
-      </Text>
+    <Box display={'flex'} flexFlow={'column'} gap={4}>
       <CreateUserModalButton />
       <UserListContainer />
-    </>
+    </Box>
   )
 }

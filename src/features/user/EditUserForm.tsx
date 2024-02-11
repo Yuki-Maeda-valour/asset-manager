@@ -1,4 +1,4 @@
-import type { User } from '@/graphql/client/gqlhooks'
+import React, { useState } from 'react'
 import {
   Button,
   Container,
@@ -7,47 +7,40 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react'
-import { useFormState } from 'react-dom'
-import { userEditAction } from '@/features/user/action'
-import { useUpdateUserMutation } from '@/graphql/client/gqlhooks'
-import { Role } from '@/graphql/client/gqlhooks'
+import { useUpdateUserMutation, Role, User } from '@/graphql/client/gqlhooks'
 
 type EditUserFormProps = {
-  //  編集するユーザーの情報
   user: User
-  // モーダルを閉じる処理
   onClose: () => void
 }
 
-/**
- * ユーザー編集フォームコンポーネントです。
- * @param {EditUserFormProps} props - コンポーネントに渡されるプロパティ。
- */
 export const EditUserForm = ({ user, onClose }: EditUserFormProps) => {
-  const { id, username, role } = user
+  const { id } = user
 
-  const initialState = {
-    username: username as FormDataEntryValue | null,
-    role: role as FormDataEntryValue | null,
-  }
-  const [state, formAction] = useFormState(userEditAction, initialState)
+  const [state, setState] = useState({
+    username: user.username || '',
+    role: user.role ? (user.role as Role) : undefined,
+  })
   const [updateUserMutation] = useUpdateUserMutation()
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, username: e.target.value })
+  }
+
+  const handleRoleChange = (roleValue: Role) => {
+    setState({ ...state, role: roleValue as Role })
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const rawType = formData.get('role')
-    const role = Object.values(Role).includes(rawType as Role)
-      ? (rawType as Role)
-      : undefined
+    const { username, role } = state
     updateUserMutation({
       variables: {
         updateUserId: id,
-        username: formData.get('username')?.toString(),
-        role: role,
+        username: username,
+        role: role ? (role as Role) : undefined,
       },
     })
-    formAction(formData)
     onClose()
   }
 
@@ -59,12 +52,10 @@ export const EditUserForm = ({ user, onClose }: EditUserFormProps) => {
           name="username"
           placeholder="ユーザー名"
           isRequired={true}
-          defaultValue={state.username ? state.username.toString() : ''}
+          value={state.username}
+          onChange={handleUsernameChange}
         />
-        <RadioGroup
-          name="role"
-          defaultValue={state.role ? state.role.toString() : ''}
-        >
+        <RadioGroup name="role" value={state.role} onChange={handleRoleChange}>
           <Stack display="flex" gap={2} direction="row">
             <Radio value="USER">USER</Radio>
             <Radio value="ADMIN">ADMIN</Radio>

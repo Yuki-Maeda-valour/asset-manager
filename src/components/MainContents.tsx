@@ -15,9 +15,9 @@ export default function MainContents() {
       </Text>
       <Tabs isFitted width="full">
         <TabList>
-          <Tab>予約管理一覧</Tab>
-          <Tab>資産一覧</Tab>
-          <Tab>ユーザー一覧</Tab>
+          <Tab>予約</Tab>
+          <Tab>資産</Tab>
+          <Tab>ユーザー</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

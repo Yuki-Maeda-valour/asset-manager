@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   Button,
   Container,
@@ -12,33 +11,26 @@ import {
   UsersDocument,
   Role,
 } from '@/graphql/client/gqlhooks'
-
-const initialState = {
-  username: '',
-  role: 'USER',
-}
+import { useUserForm } from '@/features/hooks/useUserForm'
 
 /**
  * ユーザー作成フォームコンポーネントです。
  * @param {CreateUserFormProps} props - コンポーネントに渡されるプロパティ。
  */
 export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
-  const [state, setState] = useState(initialState)
+  const { formState, handleUsernameChange, handleRoleChange } = useUserForm({
+    initialState: {
+      username: '',
+      role: Role.User,
+    },
+  })
   const [CreateUserMutation] = useCreateUserMutation({
     refetchQueries: [UsersDocument],
   })
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, username: e.target.value })
-  }
-
-  const handleRoleChange = (roleValue: Role) => {
-    setState({ ...state, role: roleValue as Role })
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { username, role } = state
+    const { username, role } = formState
     CreateUserMutation({
       variables: {
         username: username,
@@ -56,10 +48,14 @@ export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
           name="username"
           placeholder="ユーザー名"
           isRequired={true}
-          value={state.username}
+          value={formState.username}
           onChange={handleUsernameChange}
         />
-        <RadioGroup name="role" value={state.role} onChange={handleRoleChange}>
+        <RadioGroup
+          name="role"
+          value={formState.role}
+          onChange={handleRoleChange}
+        >
           <Stack display="flex" gap={2} direction="row">
             <Radio value="USER">USER</Radio>
             <Radio value="ADMIN">ADMIN</Radio>

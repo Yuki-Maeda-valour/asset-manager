@@ -8,6 +8,7 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useUpdateUserMutation, Role, User } from '@/graphql/client/gqlhooks'
+import { useUserForm } from '@/features/hooks/useUserForm'
 
 type EditUserFormProps = {
   user: User
@@ -15,25 +16,18 @@ type EditUserFormProps = {
 }
 
 export const EditUserForm = ({ user, onClose }: EditUserFormProps) => {
-  const { id } = user
-
-  const [state, setState] = useState({
-    username: user.username || '',
-    role: user.role ? (user.role as Role) : undefined,
+  const { id, username, role } = user
+  const { formState, handleUsernameChange, handleRoleChange } = useUserForm({
+    initialState: {
+      username: username || '',
+      role: role || undefined,
+    },
   })
   const [updateUserMutation] = useUpdateUserMutation()
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, username: e.target.value })
-  }
-
-  const handleRoleChange = (roleValue: Role) => {
-    setState({ ...state, role: roleValue as Role })
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { username, role } = state
+    const { username, role } = formState
     updateUserMutation({
       variables: {
         updateUserId: id,
@@ -52,16 +46,20 @@ export const EditUserForm = ({ user, onClose }: EditUserFormProps) => {
           name="username"
           placeholder="ユーザー名"
           isRequired={true}
-          value={state.username}
+          value={formState.username}
           onChange={handleUsernameChange}
         />
-        <RadioGroup name="role" value={state.role} onChange={handleRoleChange}>
+        <RadioGroup
+          name="role"
+          value={formState.role}
+          onChange={handleRoleChange}
+        >
           <Stack display="flex" gap={2} direction="row">
             <Radio value="USER">USER</Radio>
             <Radio value="ADMIN">ADMIN</Radio>
           </Stack>
         </RadioGroup>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">更新</Button>
       </Container>
     </form>
   )

@@ -60,10 +60,10 @@ export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
           onChange={(e) => handleTypeChange(e as AssetType)}
         >
           <Stack display="flex" justifyContent="space-between" direction="row">
-            <Radio value="PC">PC</Radio>
-            <Radio value="SP">SP</Radio>
-            <Radio value="WIFI">WIFI</Radio>
-            <Radio value="MONITOR">MONITOR</Radio>
+            <Radio value={AssetType.Pc}>PC</Radio>
+            <Radio value={AssetType.Sp}>SP</Radio>
+            <Radio value={AssetType.Wifi}>WIFI</Radio>
+            <Radio value={AssetType.Monitor}>MONITOR</Radio>
           </Stack>
         </RadioGroup>
         <Button type="submit">更新</Button>

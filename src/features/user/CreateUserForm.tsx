@@ -57,8 +57,8 @@ export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
           onChange={handleRoleChange}
         >
           <Stack display="flex" gap={2} direction="row">
-            <Radio value="USER">USER</Radio>
-            <Radio value="ADMIN">ADMIN</Radio>
+            <Radio value={Role.User}>USER</Radio>
+            <Radio value={Role.Admin}>ADMIN</Radio>
           </Stack>
         </RadioGroup>
         <Button type="submit">登録</Button>

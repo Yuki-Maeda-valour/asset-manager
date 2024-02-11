@@ -16,7 +16,7 @@ export const AssetListContainer = () => {
     )
   }
   if (!data) {
-    return <div>No data</div>
+    return <Container centerContent>No data</Container>
   }
   return <AssetCardList assets={data.assets} />
 }

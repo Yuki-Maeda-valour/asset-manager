@@ -53,10 +53,10 @@ export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
           onChange={handleTypeChange}
         >
           <Stack display="flex" justifyContent="space-between" direction="row">
-            <Radio value="PC">PC</Radio>
-            <Radio value="SP">SP</Radio>
-            <Radio value="WIFI">WIFI</Radio>
-            <Radio value="MONITOR">MONITOR</Radio>
+            <Radio value={AssetType.Pc}>PC</Radio>
+            <Radio value={AssetType.Sp}>SP</Radio>
+            <Radio value={AssetType.Wifi}>WIFI</Radio>
+            <Radio value={AssetType.Monitor}>MONITOR</Radio>
           </Stack>
         </RadioGroup>
         <Button type="submit">登録</Button>

@@ -16,7 +16,7 @@ export const UserListContainer = () => {
     )
   }
   if (!data) {
-    return <div>No data</div>
+    return <Container centerContent>No data</Container>
   }
   return <UserCardList users={data.users} />
 }

@@ -12,32 +12,16 @@ import {
   useCreateAssetMutation,
 } from '@/graphql/client/gqlhooks'
 import { AssetType } from '@/graphql/client/gqlhooks'
-
-const initialState = {
-  name: '',
-  type: 'PC',
-}
+import { useAssetForm } from '@/features/hooks/useAssetForm'
 
 export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
-  const [formState, setFormState] = useState(initialState)
+  const initialState = { name: '', type: 'PC' }
+  const { formState, handleChange, handleTypeChange } = useAssetForm({
+    initialState,
+  })
   const [createAssetMutation] = useCreateAssetMutation({
     refetchQueries: [AssetsDocument],
   })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
-
-  const handleTypeChange = (nextValue: string) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      type: nextValue,
-    }))
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

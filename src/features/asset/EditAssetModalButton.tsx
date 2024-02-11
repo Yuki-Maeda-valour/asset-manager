@@ -2,12 +2,10 @@ import { useModal } from '@/features/hooks/useModal'
 import { Button } from '@chakra-ui/react'
 import { EditAssetForm } from '@/features/asset'
 import type { Asset } from '@/graphql/client/gqlhooks'
-
 type EditAssetModalButtonProps = {
   //  編集する資産の情報
   asset: Asset
 }
-
 /**
  * EditAssetModalButton
  * 資産を編集するためのモーダルを開くボタンコンポーネント

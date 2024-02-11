@@ -15,7 +15,7 @@ import { AssetType } from '@/graphql/client/gqlhooks'
 import { useAssetForm } from '@/features/hooks/useAssetForm'
 
 export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
-  const initialState = { name: '', type: 'PC' }
+  const initialState = { name: '', type: AssetType.Pc }
   const { formState, handleChange, handleTypeChange } = useAssetForm({
     initialState,
   })

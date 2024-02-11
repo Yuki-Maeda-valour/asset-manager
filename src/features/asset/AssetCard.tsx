@@ -4,7 +4,6 @@ import { DeleteAssetButton } from '@/features/asset/DeleteAssetButton'
 import { EditAssetModalButton } from '@/features/asset'
 
 type AssetCardProps = {
-  // 資産オブジェクト
   asset: Asset | null
 }
 
@@ -14,8 +13,7 @@ type AssetCardProps = {
  * @returns Card > CardBody > Text
  */
 export const AssetCard = ({ asset }: AssetCardProps) => {
-  if (!asset) return null
-
+  if (!asset || asset.id === undefined) return null
   return (
     <Card w="full">
       <CardBody display="flex" justifyContent="space-between" gap={2}>

@@ -8,19 +8,22 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useAssetForm } from '@/features/hooks/useAssetForm'
-import { AssetType, useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
+import {
+  Asset,
+  AssetType,
+  useUpdateAssetMutation,
+} from '@/graphql/client/gqlhooks'
 
 type EditAssetFormProps = {
-  asset: {
-    id: string
-    name: string
-    type: AssetType
-  }
+  asset: Asset
   onClose: () => void
 }
 
 export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
-  const initialState = { name: asset.name, type: asset.type }
+  const initialState = {
+    name: asset.name || '',
+    type: asset.type || AssetType.Pc,
+  }
   const { formState, handleChange, handleTypeChange } = useAssetForm({
     initialState,
   })
@@ -54,7 +57,7 @@ export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
         <RadioGroup
           name="type"
           value={formState.type}
-          onChange={(e) => handleTypeChange(e)}
+          onChange={(e) => handleTypeChange(e as AssetType)}
         >
           <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value="PC">PC</Radio>

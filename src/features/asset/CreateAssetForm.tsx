@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   Button,
   Container,
@@ -6,8 +7,6 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react'
-import { useFormState } from 'react-dom'
-import { assetCreateAction } from '@/features/asset/action'
 import {
   AssetsDocument,
   useCreateAssetMutation,
@@ -19,40 +18,55 @@ const initialState = {
   type: 'PC',
 }
 
-/**
- * 資産作成フォームコンポーネントです。
- * @param {CreateAssetFormProps} props - コンポーネントに渡されるプロパティ。
- */
 export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
-  const [state, formAction] = useFormState(assetCreateAction, initialState)
+  const [formState, setFormState] = useState(initialState)
   const [createAssetMutation] = useCreateAssetMutation({
     refetchQueries: [AssetsDocument],
   })
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const handleTypeChange = (nextValue: string) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      type: nextValue,
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const rawType = formData.get('type')
-    const type = Object.values(AssetType).includes(rawType as AssetType)
-      ? (rawType as AssetType)
-      : undefined
+    const { name, type } = formState
+    const isValidType = Object.values(AssetType).includes(type as AssetType)
     createAssetMutation({
       variables: {
-        name: formData.get('name')?.toString(),
-        type: type,
+        name: name,
+        type: isValidType ? (type as AssetType) : undefined,
       },
     })
-    formAction(formData)
     onClose()
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <Input type="text" name="name" placeholder="資産名" isRequired={true} />
+        <Input
+          type="text"
+          name="name"
+          placeholder="資産名"
+          isRequired={true}
+          value={formState.name}
+          onChange={handleChange}
+        />
         <RadioGroup
           name="type"
-          defaultValue={state.type ? state.type.toString() : ''}
+          value={formState.type}
+          onChange={handleTypeChange}
         >
           <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value="PC">PC</Radio>

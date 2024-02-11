@@ -7,8 +7,7 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react'
-import { useFormState } from 'react-dom'
-import { assetEditAction } from '@/features/asset/action'
+import { useState } from 'react'
 import { useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
 import { AssetType } from '@/graphql/client/gqlhooks'
 
@@ -25,30 +24,37 @@ type EditAssetFormProps = {
  * @returns form > Container > Input,RadioGroup > Radio
  */
 export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
-  const { name, type } = asset
-  const initialState = {
-    id: asset.id as FormDataEntryValue | null,
+  const { id, name, type } = asset
+  const [formData, setFormData] = useState({
+    id: id as FormDataEntryValue | null,
     name: name as FormDataEntryValue | null,
     type: type as FormDataEntryValue | null,
-  }
-  const [state, formAction] = useFormState(assetEditAction, initialState)
+  })
+
   const [updateAssetMutation] = useUpdateAssetMutation()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const rawType = formData.get('type')
+    const form = new FormData(e.currentTarget)
+    const rawType = form.get('type')
     const type = Object.values(AssetType).includes(rawType as AssetType)
       ? (rawType as AssetType)
       : undefined
+
     updateAssetMutation({
       variables: {
         updateAssetId: asset.id,
-        name: formData.get('name')?.toString(),
+        name: form.get('name')?.toString(),
         type: type,
       },
     })
-    formAction(formData)
+
+    setFormData({
+      id: asset.id as FormDataEntryValue | null,
+      name: form.get('name') as FormDataEntryValue | null,
+      type: type as FormDataEntryValue | null,
+    })
+
     onClose()
   }
 
@@ -60,11 +66,11 @@ export const EditAssetForm = ({ asset, onClose }: EditAssetFormProps) => {
           name="name"
           placeholder="資産名"
           isRequired={true}
-          defaultValue={state.name ? state.name.toString() : ''}
+          defaultValue={formData.name ? formData.name.toString() : ''}
         />
         <RadioGroup
           name="type"
-          defaultValue={state.type ? state.type.toString() : ''}
+          defaultValue={formData.type ? formData.type.toString() : ''}
         >
           <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value="PC">PC</Radio>

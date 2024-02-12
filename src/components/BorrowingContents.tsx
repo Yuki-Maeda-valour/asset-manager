@@ -1,3 +1,7 @@
+import {
+  BorrowingListContainer,
+  CreateBorrowingModalButton,
+} from '@/features/borrowing'
 import { Box } from '@chakra-ui/react'
 
 /**
@@ -7,7 +11,8 @@ import { Box } from '@chakra-ui/react'
 export default function BorrowingContents() {
   return (
     <Box display={'flex'} flexFlow={'column'} gap={4}>
-      <div>BorrowingContents</div>
+      <CreateBorrowingModalButton />
+      <BorrowingListContainer />
     </Box>
   )
 }

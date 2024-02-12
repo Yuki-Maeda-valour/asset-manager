@@ -1,13 +1,13 @@
-import { useAssetsQuery } from '@/graphql/client/gqlhooks'
-import { AssetCardList } from '@/features/asset'
+import { useBorrowingsQuery } from '@/graphql/client/gqlhooks'
 import { Container, Spinner } from '@chakra-ui/react'
+import { BorrowingCardList } from '@/features/borrowing'
 
 /**
  * 予約一覧コンポーネント
  * @returns AssetCardList
  */
 export const BorrowingListContainer = () => {
-  const { data, loading } = useAssetsQuery()
+  const { data, loading } = useBorrowingsQuery()
   if (loading) {
     return (
       <Container centerContent>
@@ -18,5 +18,5 @@ export const BorrowingListContainer = () => {
   if (!data) {
     return <Container centerContent>No data</Container>
   }
-  return <AssetCardList assets={data.assets} />
+  return <BorrowingCardList borrowings={data.borrowings} />
 }

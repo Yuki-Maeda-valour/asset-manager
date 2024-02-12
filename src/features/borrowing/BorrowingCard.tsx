@@ -1,19 +1,19 @@
 import { Card, CardBody, Container, Text } from '@chakra-ui/react'
-import type { Asset } from '@/graphql/client/gqlhooks'
+import type { Borrowing } from '@/graphql/client/gqlhooks'
 import { DeleteAssetButton } from '@/features/asset/DeleteAssetButton'
 import { EditAssetModalButton } from '@/features/asset'
 
-type AssetCardProps = {
-  asset: Asset | null
+type BorrowingCardProps = {
+  borrowing: Borrowing | null
 }
 
 /**
  * 予約カードコンポーネント
- * @param asset 予約オブジェクト
+ * @param borrowing 予約オブジェクト
  * @returns Card > CardBody > Text
  */
-export const BorrowingCard = ({ asset }: AssetCardProps) => {
-  if (!asset || asset.id === undefined) return null
+export const BorrowingCard = ({ borrowing }: BorrowingCardProps) => {
+  if (!borrowing || borrowing.id === undefined) return null
   return (
     <Card w="full">
       <CardBody display="flex" justifyContent="space-between" gap={2}>
@@ -22,14 +22,17 @@ export const BorrowingCard = ({ asset }: AssetCardProps) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Text>{asset.id}</Text>
-          <Text>{asset.name}</Text>
-          <Text>{asset.type}</Text>
+          <Text>{borrowing.id}</Text>
+          <Text>{borrowing.borrowedAt}</Text>
+          <Text>{borrowing.returnedAt}</Text>
+          <Text>{borrowing.deadline}</Text>
+          <Text>{borrowing.user?.username}</Text>
+          <Text>{borrowing.asset?.name}</Text>
         </Container>
-        <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
+        {/* <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
           <EditAssetModalButton asset={asset} />
           <DeleteAssetButton assetId={asset.id} />
-        </Container>
+        </Container> */}
       </CardBody>
     </Card>
   )

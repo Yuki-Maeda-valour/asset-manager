@@ -1,19 +1,21 @@
 import { VStack } from '@chakra-ui/react'
-import type { Asset } from '@/graphql/client/gqlhooks'
-import { AssetCard } from '@/features/asset/AssetCard'
+import type { Borrowing } from '@/graphql/client/gqlhooks'
+import { BorrowingCard } from '@/features/borrowing'
 
-type AssetCardListProps = {
-  assets: (Asset | null)[] | null | undefined
+type BorrowingCardListProps = {
+  borrowings: (Borrowing | null)[] | null | undefined
 }
 /**
  * 予約カードリストコンポーネント
- * @param assets 予約オブジェクト
- * @returns VStack > AssetCard
+ * @param borrowings 予約オブジェクト
+ * @returns VStack > BorrowingCard
  */
-export const BorrowingCardList = ({ assets }: AssetCardListProps) => {
+export const BorrowingCardList = ({ borrowings }: BorrowingCardListProps) => {
   return (
     <VStack w="full">
-      {assets?.map((asset) => <AssetCard key={asset?.id} asset={asset} />)}
+      {borrowings?.map((borrowing) => (
+        <BorrowingCard key={borrowing?.id} borrowing={borrowing} />
+      ))}
     </VStack>
   )
 }

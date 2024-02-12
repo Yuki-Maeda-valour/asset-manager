@@ -15,43 +15,32 @@ import { AssetType } from '@/graphql/client/gqlhooks'
 import { useAssetForm } from '@/features/hooks/useAssetForm'
 
 export const CreateBorrowingForm = ({ onClose }: { onClose: () => void }) => {
-  const initialState = { name: '', type: AssetType.Pc }
-  const { formState, handleChange, handleTypeChange } = useAssetForm({
-    initialState,
-  })
-  const [createAssetMutation] = useCreateAssetMutation({
-    refetchQueries: [AssetsDocument],
-  })
+  // const initialState = { name: '', type: AssetType.Pc }
+  // const { formState, handleChange, handleTypeChange } = useAssetForm({
+  //   initialState,
+  // })
+  // const [createAssetMutation] = useCreateAssetMutation({
+  //   refetchQueries: [AssetsDocument],
+  // })
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const { name, type } = formState
-    const isValidType = Object.values(AssetType).includes(type as AssetType)
-    createAssetMutation({
-      variables: {
-        name: name,
-        type: isValidType ? (type as AssetType) : undefined,
-      },
-    })
-    onClose()
-  }
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
+  //   const { name, type } = formState
+  //   const isValidType = Object.values(AssetType).includes(type as AssetType)
+  //   createAssetMutation({
+  //     variables: {
+  //       name: name,
+  //       type: isValidType ? (type as AssetType) : undefined,
+  //     },
+  //   })
+  //   onClose()
+  // }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <Input
-          type="text"
-          name="name"
-          placeholder="資産名"
-          isRequired={true}
-          value={formState.name}
-          onChange={handleChange}
-        />
-        <RadioGroup
-          name="type"
-          value={formState.type}
-          onChange={handleTypeChange}
-        >
+        <Input type="text" name="name" placeholder="資産名" isRequired={true} />
+        <RadioGroup name="type">
           <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value={AssetType.Pc}>PC</Radio>
             <Radio value={AssetType.Sp}>SP</Radio>

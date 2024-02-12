@@ -20,45 +20,34 @@ type EditAssetFormProps = {
 }
 
 export const EditBorrowingForm = ({ asset, onClose }: EditAssetFormProps) => {
-  const initialState = {
-    name: asset.name || '',
-    type: asset.type || AssetType.Pc,
-  }
-  const { formState, handleChange, handleTypeChange } = useAssetForm({
-    initialState,
-  })
-  const [updateAssetMutation] = useUpdateAssetMutation()
+  // const initialState = {
+  //   name: asset.name || '',
+  //   type: asset.type || AssetType.Pc,
+  // }
+  // const { formState, handleChange, handleTypeChange } = useAssetForm({
+  //   initialState,
+  // })
+  // const [updateAssetMutation] = useUpdateAssetMutation()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const { name, type } = formState
-    const isValidType = Object.values(AssetType).includes(type as AssetType)
-    updateAssetMutation({
-      variables: {
-        updateAssetId: Number(asset.id),
-        name: name,
-        type: isValidType ? (type as AssetType) : undefined,
-      },
-    })
-    onClose()
-  }
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
+  //   const { name, type } = formState
+  //   const isValidType = Object.values(AssetType).includes(type as AssetType)
+  //   updateAssetMutation({
+  //     variables: {
+  //       updateAssetId: Number(asset.id),
+  //       name: name,
+  //       type: isValidType ? (type as AssetType) : undefined,
+  //     },
+  //   })
+  //   onClose()
+  // }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <Input
-          type="text"
-          name="name"
-          placeholder="予約名"
-          isRequired={true}
-          value={formState.name}
-          onChange={handleChange}
-        />
-        <RadioGroup
-          name="type"
-          value={formState.type}
-          onChange={(e) => handleTypeChange(e as AssetType)}
-        >
+        <Input type="text" name="name" placeholder="予約名" isRequired={true} />
+        <RadioGroup name="type">
           <Stack display="flex" justifyContent="space-between" direction="row">
             <Radio value={AssetType.Pc}>PC</Radio>
             <Radio value={AssetType.Sp}>SP</Radio>

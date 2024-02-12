@@ -3,10 +3,10 @@ import { AssetCardList } from '@/features/asset'
 import { Container, Spinner } from '@chakra-ui/react'
 
 /**
- * 資産一覧コンポーネント
+ * 予約一覧コンポーネント
  * @returns AssetCardList
  */
-export const AssetListContainer = () => {
+export const BorrowingListContainer = () => {
   const { data, loading } = useAssetsQuery()
   if (loading) {
     return (

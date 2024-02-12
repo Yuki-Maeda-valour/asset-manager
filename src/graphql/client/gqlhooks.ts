@@ -36,8 +36,16 @@ export type Asset = {
   createdAt?: Maybe<Scalars['String']['output']>
   id?: Maybe<Scalars['Int']['output']>
   name?: Maybe<Scalars['String']['output']>
+  status?: Maybe<AssetStatus>
   type?: Maybe<AssetType>
   updatedAt?: Maybe<Scalars['String']['output']>
+}
+
+export enum AssetStatus {
+  Available = 'AVAILABLE',
+  Lent = 'LENT',
+  Reserved = 'RESERVED',
+  Suspended = 'SUSPENDED',
 }
 
 export enum AssetType {
@@ -56,17 +64,9 @@ export type Borrowing = {
   deadline?: Maybe<Scalars['String']['output']>
   id?: Maybe<Scalars['Int']['output']>
   returnedAt?: Maybe<Scalars['String']['output']>
-  status?: Maybe<BorrowingStatus>
   updatedAt?: Maybe<Scalars['String']['output']>
   user?: Maybe<User>
   userId?: Maybe<Scalars['Int']['output']>
-}
-
-export enum BorrowingStatus {
-  Available = 'AVAILABLE',
-  Lent = 'LENT',
-  Reserved = 'RESERVED',
-  Suspended = 'SUSPENDED',
 }
 
 export type Mutation = {
@@ -84,6 +84,7 @@ export type Mutation = {
 
 export type MutationCreateAssetArgs = {
   name?: InputMaybe<Scalars['String']['input']>
+  status?: InputMaybe<AssetStatus>
   type?: InputMaybe<AssetType>
 }
 
@@ -91,7 +92,6 @@ export type MutationCreateBorrowingArgs = {
   assetId?: InputMaybe<Scalars['Int']['input']>
   borrowedAt?: InputMaybe<Scalars['String']['input']>
   deadline?: InputMaybe<Scalars['String']['input']>
-  status?: InputMaybe<BorrowingStatus>
   userId?: InputMaybe<Scalars['Int']['input']>
 }
 
@@ -115,6 +115,7 @@ export type MutationDeleteUserArgs = {
 export type MutationUpdateAssetArgs = {
   id?: InputMaybe<Scalars['Int']['input']>
   name?: InputMaybe<Scalars['String']['input']>
+  status?: InputMaybe<AssetStatus>
   type?: InputMaybe<AssetType>
 }
 
@@ -123,7 +124,6 @@ export type MutationUpdateBorrowingArgs = {
   borrowedAt?: InputMaybe<Scalars['String']['input']>
   deadline?: InputMaybe<Scalars['String']['input']>
   id?: InputMaybe<Scalars['Int']['input']>
-  status?: InputMaybe<BorrowingStatus>
   userId?: InputMaybe<Scalars['Int']['input']>
 }
 
@@ -179,12 +179,14 @@ export type AssetsQuery = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
   } | null> | null
 }
 
 export type CreateAssetMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>
   type?: InputMaybe<AssetType>
+  status?: InputMaybe<AssetStatus>
 }>
 
 export type CreateAssetMutation = {
@@ -194,15 +196,17 @@ export type CreateAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
     createdAt?: string | null
     updatedAt?: string | null
   } | null
 }
 
 export type UpdateAssetMutationVariables = Exact<{
-  updateAssetId?: InputMaybe<Scalars['Int']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   type?: InputMaybe<AssetType>
+  updateAssetId?: InputMaybe<Scalars['Int']['input']>
+  status?: InputMaybe<AssetStatus>
 }>
 
 export type UpdateAssetMutation = {
@@ -212,6 +216,7 @@ export type UpdateAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
     updatedAt?: string | null
   } | null
 }
@@ -227,6 +232,112 @@ export type DeleteAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
+  } | null
+}
+
+export type BorrowingsQueryVariables = Exact<{ [key: string]: never }>
+
+export type BorrowingsQuery = {
+  __typename?: 'Query'
+  borrowings?: Array<{
+    __typename?: 'Borrowing'
+    id?: number | null
+    borrowedAt?: string | null
+    returnedAt?: string | null
+    deadline?: string | null
+    createdAt?: string | null
+    updatedAt?: string | null
+    userId?: number | null
+    assetId?: number | null
+    user?: {
+      __typename?: 'User'
+      username?: string | null
+      role?: Role | null
+    } | null
+    asset?: {
+      __typename?: 'Asset'
+      name?: string | null
+      type?: AssetType | null
+      status?: AssetStatus | null
+    } | null
+  } | null> | null
+}
+
+export type CreateBorrowingMutationVariables = Exact<{
+  borrowedAt?: InputMaybe<Scalars['String']['input']>
+  deadline?: InputMaybe<Scalars['String']['input']>
+  userId?: InputMaybe<Scalars['Int']['input']>
+  assetId?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type CreateBorrowingMutation = {
+  __typename?: 'Mutation'
+  createBorrowing?: {
+    __typename?: 'Borrowing'
+    id?: number | null
+    borrowedAt?: string | null
+    returnedAt?: string | null
+    deadline?: string | null
+    userId?: number | null
+    assetId?: number | null
+    createdAt?: string | null
+    updatedAt?: string | null
+  } | null
+}
+
+export type UpdateBorrowingMutationVariables = Exact<{
+  borrowedAt?: InputMaybe<Scalars['String']['input']>
+  deadline?: InputMaybe<Scalars['String']['input']>
+  userId?: InputMaybe<Scalars['Int']['input']>
+  assetId?: InputMaybe<Scalars['Int']['input']>
+  updateBorrowingId?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type UpdateBorrowingMutation = {
+  __typename?: 'Mutation'
+  updateBorrowing?: {
+    __typename?: 'Borrowing'
+    id?: number | null
+    borrowedAt?: string | null
+    returnedAt?: string | null
+    deadline?: string | null
+    userId?: number | null
+    assetId?: number | null
+    createdAt?: string | null
+    updatedAt?: string | null
+    user?: {
+      __typename?: 'User'
+      id?: number | null
+      username?: string | null
+      role?: Role | null
+    } | null
+    asset?: {
+      __typename?: 'Asset'
+      id?: number | null
+      name?: string | null
+      type?: AssetType | null
+      status?: AssetStatus | null
+    } | null
+  } | null
+}
+
+export type DeleteBorrowingMutationVariables = Exact<{
+  deleteBorrowingId?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type DeleteBorrowingMutation = {
+  __typename?: 'Mutation'
+  deleteBorrowing?: {
+    __typename?: 'Borrowing'
+    id?: number | null
+    borrowedAt?: string | null
+    returnedAt?: string | null
+    deadline?: string | null
+    userId?: number | null
+    assetId?: number | null
+    createdAt?: string | null
+    updatedAt?: string | null
   } | null
 }
 
@@ -299,6 +410,7 @@ export const AssetsDocument = gql`
       id
       name
       type
+      status
     }
   }
 `
@@ -358,11 +470,12 @@ export type AssetsQueryResult = Apollo.QueryResult<
   AssetsQueryVariables
 >
 export const CreateAssetDocument = gql`
-  mutation CreateAsset($name: String, $type: AssetType) {
-    createAsset(name: $name, type: $type) {
+  mutation CreateAsset($name: String, $type: AssetType, $status: AssetStatus) {
+    createAsset(name: $name, type: $type, status: $status) {
       id
       name
       type
+      status
       createdAt
       updatedAt
     }
@@ -388,6 +501,7 @@ export type CreateAssetMutationFn = Apollo.MutationFunction<
  *   variables: {
  *      name: // value for 'name'
  *      type: // value for 'type'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -413,11 +527,17 @@ export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<
   CreateAssetMutationVariables
 >
 export const UpdateAssetDocument = gql`
-  mutation UpdateAsset($updateAssetId: Int, $name: String, $type: AssetType) {
-    updateAsset(id: $updateAssetId, name: $name, type: $type) {
+  mutation UpdateAsset(
+    $name: String
+    $type: AssetType
+    $updateAssetId: Int
+    $status: AssetStatus
+  ) {
+    updateAsset(name: $name, type: $type, id: $updateAssetId, status: $status) {
       id
       name
       type
+      status
       updatedAt
     }
   }
@@ -440,9 +560,10 @@ export type UpdateAssetMutationFn = Apollo.MutationFunction<
  * @example
  * const [updateAssetMutation, { data, loading, error }] = useUpdateAssetMutation({
  *   variables: {
- *      updateAssetId: // value for 'updateAssetId'
  *      name: // value for 'name'
  *      type: // value for 'type'
+ *      updateAssetId: // value for 'updateAssetId'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -473,6 +594,7 @@ export const DeleteAssetDocument = gql`
       id
       name
       type
+      status
     }
   }
 `
@@ -518,6 +640,303 @@ export type DeleteAssetMutationResult =
 export type DeleteAssetMutationOptions = Apollo.BaseMutationOptions<
   DeleteAssetMutation,
   DeleteAssetMutationVariables
+>
+export const BorrowingsDocument = gql`
+  query Borrowings {
+    borrowings {
+      id
+      borrowedAt
+      returnedAt
+      deadline
+      createdAt
+      updatedAt
+      userId
+      assetId
+      user {
+        username
+        role
+      }
+      asset {
+        name
+        type
+        status
+      }
+    }
+  }
+`
+
+/**
+ * __useBorrowingsQuery__
+ *
+ * To run a query within a React component, call `useBorrowingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBorrowingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBorrowingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBorrowingsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    BorrowingsQuery,
+    BorrowingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<BorrowingsQuery, BorrowingsQueryVariables>(
+    BorrowingsDocument,
+    options,
+  )
+}
+export function useBorrowingsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    BorrowingsQuery,
+    BorrowingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<BorrowingsQuery, BorrowingsQueryVariables>(
+    BorrowingsDocument,
+    options,
+  )
+}
+export function useBorrowingsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    BorrowingsQuery,
+    BorrowingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<BorrowingsQuery, BorrowingsQueryVariables>(
+    BorrowingsDocument,
+    options,
+  )
+}
+export type BorrowingsQueryHookResult = ReturnType<typeof useBorrowingsQuery>
+export type BorrowingsLazyQueryHookResult = ReturnType<
+  typeof useBorrowingsLazyQuery
+>
+export type BorrowingsSuspenseQueryHookResult = ReturnType<
+  typeof useBorrowingsSuspenseQuery
+>
+export type BorrowingsQueryResult = Apollo.QueryResult<
+  BorrowingsQuery,
+  BorrowingsQueryVariables
+>
+export const CreateBorrowingDocument = gql`
+  mutation CreateBorrowing(
+    $borrowedAt: String
+    $deadline: String
+    $userId: Int
+    $assetId: Int
+  ) {
+    createBorrowing(
+      borrowedAt: $borrowedAt
+      deadline: $deadline
+      userId: $userId
+      assetId: $assetId
+    ) {
+      id
+      borrowedAt
+      returnedAt
+      deadline
+      userId
+      assetId
+      createdAt
+      updatedAt
+    }
+  }
+`
+export type CreateBorrowingMutationFn = Apollo.MutationFunction<
+  CreateBorrowingMutation,
+  CreateBorrowingMutationVariables
+>
+
+/**
+ * __useCreateBorrowingMutation__
+ *
+ * To run a mutation, you first call `useCreateBorrowingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBorrowingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBorrowingMutation, { data, loading, error }] = useCreateBorrowingMutation({
+ *   variables: {
+ *      borrowedAt: // value for 'borrowedAt'
+ *      deadline: // value for 'deadline'
+ *      userId: // value for 'userId'
+ *      assetId: // value for 'assetId'
+ *   },
+ * });
+ */
+export function useCreateBorrowingMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateBorrowingMutation,
+    CreateBorrowingMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    CreateBorrowingMutation,
+    CreateBorrowingMutationVariables
+  >(CreateBorrowingDocument, options)
+}
+export type CreateBorrowingMutationHookResult = ReturnType<
+  typeof useCreateBorrowingMutation
+>
+export type CreateBorrowingMutationResult =
+  Apollo.MutationResult<CreateBorrowingMutation>
+export type CreateBorrowingMutationOptions = Apollo.BaseMutationOptions<
+  CreateBorrowingMutation,
+  CreateBorrowingMutationVariables
+>
+export const UpdateBorrowingDocument = gql`
+  mutation UpdateBorrowing(
+    $borrowedAt: String
+    $deadline: String
+    $userId: Int
+    $assetId: Int
+    $updateBorrowingId: Int
+  ) {
+    updateBorrowing(
+      borrowedAt: $borrowedAt
+      deadline: $deadline
+      userId: $userId
+      assetId: $assetId
+      id: $updateBorrowingId
+    ) {
+      id
+      borrowedAt
+      returnedAt
+      deadline
+      userId
+      assetId
+      createdAt
+      updatedAt
+      user {
+        id
+        username
+        role
+      }
+      asset {
+        id
+        name
+        type
+        status
+      }
+    }
+  }
+`
+export type UpdateBorrowingMutationFn = Apollo.MutationFunction<
+  UpdateBorrowingMutation,
+  UpdateBorrowingMutationVariables
+>
+
+/**
+ * __useUpdateBorrowingMutation__
+ *
+ * To run a mutation, you first call `useUpdateBorrowingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBorrowingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBorrowingMutation, { data, loading, error }] = useUpdateBorrowingMutation({
+ *   variables: {
+ *      borrowedAt: // value for 'borrowedAt'
+ *      deadline: // value for 'deadline'
+ *      userId: // value for 'userId'
+ *      assetId: // value for 'assetId'
+ *      updateBorrowingId: // value for 'updateBorrowingId'
+ *   },
+ * });
+ */
+export function useUpdateBorrowingMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateBorrowingMutation,
+    UpdateBorrowingMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    UpdateBorrowingMutation,
+    UpdateBorrowingMutationVariables
+  >(UpdateBorrowingDocument, options)
+}
+export type UpdateBorrowingMutationHookResult = ReturnType<
+  typeof useUpdateBorrowingMutation
+>
+export type UpdateBorrowingMutationResult =
+  Apollo.MutationResult<UpdateBorrowingMutation>
+export type UpdateBorrowingMutationOptions = Apollo.BaseMutationOptions<
+  UpdateBorrowingMutation,
+  UpdateBorrowingMutationVariables
+>
+export const DeleteBorrowingDocument = gql`
+  mutation DeleteBorrowing($deleteBorrowingId: Int) {
+    deleteBorrowing(id: $deleteBorrowingId) {
+      id
+      borrowedAt
+      returnedAt
+      deadline
+      userId
+      assetId
+      createdAt
+      updatedAt
+    }
+  }
+`
+export type DeleteBorrowingMutationFn = Apollo.MutationFunction<
+  DeleteBorrowingMutation,
+  DeleteBorrowingMutationVariables
+>
+
+/**
+ * __useDeleteBorrowingMutation__
+ *
+ * To run a mutation, you first call `useDeleteBorrowingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBorrowingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBorrowingMutation, { data, loading, error }] = useDeleteBorrowingMutation({
+ *   variables: {
+ *      deleteBorrowingId: // value for 'deleteBorrowingId'
+ *   },
+ * });
+ */
+export function useDeleteBorrowingMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteBorrowingMutation,
+    DeleteBorrowingMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    DeleteBorrowingMutation,
+    DeleteBorrowingMutationVariables
+  >(DeleteBorrowingDocument, options)
+}
+export type DeleteBorrowingMutationHookResult = ReturnType<
+  typeof useDeleteBorrowingMutation
+>
+export type DeleteBorrowingMutationResult =
+  Apollo.MutationResult<DeleteBorrowingMutation>
+export type DeleteBorrowingMutationOptions = Apollo.BaseMutationOptions<
+  DeleteBorrowingMutation,
+  DeleteBorrowingMutationVariables
 >
 export const UsersDocument = gql`
   query Users {

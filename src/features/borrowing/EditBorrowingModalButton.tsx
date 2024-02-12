@@ -8,13 +8,15 @@ type EditAssetModalButtonProps = {
 }
 /**
  * EditAssetModalButton
- * 資産を編集するためのモーダルを開くボタンコンポーネント
+ * 予約を編集するためのモーダルを開くボタンコンポーネント
  *
  * @component
  * @param {EditAssetModalButtonProps} props - コンポーネントのプロパティ
  * @returns Button, ModalContainer > EditAssetForm
  */
-export const EditAssetModalButton = ({ asset }: EditAssetModalButtonProps) => {
+export const EditBorrowingModalButton = ({
+  asset,
+}: EditAssetModalButtonProps) => {
   const { onOpen, onClose, ModalContainer } = useModal()
 
   return (
@@ -22,7 +24,7 @@ export const EditAssetModalButton = ({ asset }: EditAssetModalButtonProps) => {
       <Button colorScheme="teal" onClick={onOpen}>
         編集
       </Button>
-      <ModalContainer title="資産の編集">
+      <ModalContainer title="予約の編集">
         <EditAssetForm asset={asset} onClose={onClose} />
       </ModalContainer>
     </>

@@ -1,11 +1,6 @@
-import { objectType, extendType, enumType } from 'nexus'
+import { objectType, extendType } from 'nexus'
 import { User } from '@/graphql/server/types/User'
 import { Asset } from '@/graphql/server/types/Asset'
-
-export const BorrowingStatus = enumType({
-  name: 'BorrowingStatus',
-  members: ['RESERVED', 'LENT', 'AVAILABLE', 'SUSPENDED'],
-})
 
 export const Borrowing = objectType({
   name: 'Borrowing',
@@ -14,7 +9,6 @@ export const Borrowing = objectType({
     t.string('borrowedAt')
     t.string('returnedAt')
     t.string('deadline')
-    t.field('status', { type: BorrowingStatus })
     t.int('userId')
     t.int('assetId')
     t.string('createdAt')
@@ -114,7 +108,6 @@ export const BorrowingMutation = extendType({
       args: {
         borrowedAt: 'String',
         deadline: 'String',
-        status: BorrowingStatus,
         userId: 'Int',
         assetId: 'Int',
       },
@@ -124,9 +117,6 @@ export const BorrowingMutation = extendType({
         }
         if (!args.deadline) {
           throw new Error('Deadline is required')
-        }
-        if (!args.status) {
-          throw new Error('Status is required')
         }
         if (!args.userId) {
           throw new Error('UserId is required')
@@ -138,7 +128,6 @@ export const BorrowingMutation = extendType({
           data: {
             borrowedAt: args.borrowedAt,
             deadline: args.deadline,
-            status: args.status,
             userId: args.userId,
             assetId: args.assetId,
           },
@@ -161,7 +150,6 @@ export const BorrowingMutation = extendType({
           id: 'Int',
           borrowedAt: 'String',
           deadline: 'String',
-          status: BorrowingStatus,
           userId: 'Int',
           assetId: 'Int',
         },
@@ -178,7 +166,6 @@ export const BorrowingMutation = extendType({
                 ? new Date(args.borrowedAt)
                 : undefined,
               deadline: args.deadline ? new Date(args.deadline) : undefined,
-              status: args.status || undefined,
               userId: args.userId || undefined,
               assetId: args.assetId || undefined,
             },

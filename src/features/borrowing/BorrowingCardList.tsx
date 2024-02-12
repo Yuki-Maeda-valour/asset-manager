@@ -6,11 +6,11 @@ type AssetCardListProps = {
   assets: (Asset | null)[] | null | undefined
 }
 /**
- * 資産カードリストコンポーネント
- * @param assets 資産オブジェクト
+ * 予約カードリストコンポーネント
+ * @param assets 予約オブジェクト
  * @returns VStack > AssetCard
  */
-export const AssetCardList = ({ assets }: AssetCardListProps) => {
+export const BorrowingCardList = ({ assets }: AssetCardListProps) => {
   return (
     <VStack w="full">
       {assets?.map((asset) => <AssetCard key={asset?.id} asset={asset} />)}

@@ -6,43 +6,37 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react'
-import { useFormState } from 'react-dom'
-import { userCreateAction } from '@/features/user/action'
 import {
-  UsersDocument,
-  UsersQuery,
   useCreateUserMutation,
+  UsersDocument,
+  Role,
 } from '@/graphql/client/gqlhooks'
-import { Role } from '@/graphql/client/gqlhooks'
-
-const initialState = {
-  username: '',
-  role: 'USER',
-}
+import { useUserForm } from '@/features/hooks/useUserForm'
 
 /**
  * ユーザー作成フォームコンポーネントです。
  * @param {CreateUserFormProps} props - コンポーネントに渡されるプロパティ。
  */
 export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
-  const [state, formAction] = useFormState(userCreateAction, initialState)
+  const { formState, handleUsernameChange, handleRoleChange } = useUserForm({
+    initialState: {
+      username: '',
+      role: Role.User,
+    },
+  })
   const [CreateUserMutation] = useCreateUserMutation({
     refetchQueries: [UsersDocument],
   })
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const rawRole = formData.get('role')
-    const role = Object.values(Role).includes(rawRole as Role)
-      ? (rawRole as Role)
-      : undefined
+    const { username, role } = formState
     CreateUserMutation({
       variables: {
-        username: formData.get('username')?.toString(),
-        role: role,
+        username: username,
+        role: role ? (role as Role) : undefined,
       },
     })
-    formAction(formData)
     onClose()
   }
 
@@ -54,14 +48,17 @@ export const CreateUserForm = ({ onClose }: { onClose: () => void }) => {
           name="username"
           placeholder="ユーザー名"
           isRequired={true}
+          value={formState.username}
+          onChange={handleUsernameChange}
         />
         <RadioGroup
           name="role"
-          defaultValue={state.role ? state.role.toString() : ''}
+          value={formState.role}
+          onChange={handleRoleChange}
         >
           <Stack display="flex" gap={2} direction="row">
-            <Radio value="USER">USER</Radio>
-            <Radio value="ADMIN">ADMIN</Radio>
+            <Radio value={Role.User}>USER</Radio>
+            <Radio value={Role.Admin}>ADMIN</Radio>
           </Stack>
         </RadioGroup>
         <Button type="submit">登録</Button>

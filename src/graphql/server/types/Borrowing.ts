@@ -1,11 +1,6 @@
-import { objectType, extendType, enumType } from 'nexus'
+import { objectType, extendType } from 'nexus'
 import { User } from '@/graphql/server/types/User'
 import { Asset } from '@/graphql/server/types/Asset'
-
-export const BorrowingStatus = enumType({
-  name: 'BorrowingStatus',
-  members: ['RESERVED', 'LENT', 'AVAILABLE', 'SUSPENDED'],
-})
 
 export const Borrowing = objectType({
   name: 'Borrowing',
@@ -113,7 +108,6 @@ export const BorrowingMutation = extendType({
       args: {
         borrowedAt: 'String',
         deadline: 'String',
-        status: BorrowingStatus,
         userId: 'Int',
         assetId: 'Int',
       },
@@ -123,9 +117,6 @@ export const BorrowingMutation = extendType({
         }
         if (!args.deadline) {
           throw new Error('Deadline is required')
-        }
-        if (!args.status) {
-          throw new Error('Status is required')
         }
         if (!args.userId) {
           throw new Error('UserId is required')
@@ -159,7 +150,6 @@ export const BorrowingMutation = extendType({
           id: 'Int',
           borrowedAt: 'String',
           deadline: 'String',
-          status: BorrowingStatus,
           userId: 'Int',
           assetId: 'Int',
         },

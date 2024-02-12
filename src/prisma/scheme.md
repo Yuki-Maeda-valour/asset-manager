@@ -37,6 +37,7 @@ MONITOR MONITOR
     Int id "🗝️"
     String name 
     Type type 
+    Status status 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -47,7 +48,6 @@ MONITOR MONITOR
     DateTime borrowedAt 
     DateTime returnedAt "❓"
     DateTime deadline 
-    Status status 
     DateTime createdAt 
     DateTime updatedAt 
     }
@@ -55,8 +55,8 @@ MONITOR MONITOR
     "users" o|--|| "Role" : "enum:role"
     "users" o{--}o "borrowings" : "borrowings"
     "assets" o|--|| "Type" : "enum:type"
+    "assets" o|--|| "Status" : "enum:status"
     "assets" o{--}o "borrowings" : "borrowings"
-    "borrowings" o|--|| "Status" : "enum:status"
     "borrowings" o|--|| "users" : "user"
     "borrowings" o|--|| "assets" : "asset"
 ```

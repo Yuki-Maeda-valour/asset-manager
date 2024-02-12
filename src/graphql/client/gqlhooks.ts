@@ -36,8 +36,16 @@ export type Asset = {
   createdAt?: Maybe<Scalars['String']['output']>
   id?: Maybe<Scalars['Int']['output']>
   name?: Maybe<Scalars['String']['output']>
+  status?: Maybe<AssetStatus>
   type?: Maybe<AssetType>
   updatedAt?: Maybe<Scalars['String']['output']>
+}
+
+export enum AssetStatus {
+  Available = 'AVAILABLE',
+  Lent = 'LENT',
+  Reserved = 'RESERVED',
+  Suspended = 'SUSPENDED',
 }
 
 export enum AssetType {
@@ -56,7 +64,6 @@ export type Borrowing = {
   deadline?: Maybe<Scalars['String']['output']>
   id?: Maybe<Scalars['Int']['output']>
   returnedAt?: Maybe<Scalars['String']['output']>
-  status?: Maybe<BorrowingStatus>
   updatedAt?: Maybe<Scalars['String']['output']>
   user?: Maybe<User>
   userId?: Maybe<Scalars['Int']['output']>
@@ -84,6 +91,7 @@ export type Mutation = {
 
 export type MutationCreateAssetArgs = {
   name?: InputMaybe<Scalars['String']['input']>
+  status?: InputMaybe<AssetStatus>
   type?: InputMaybe<AssetType>
 }
 
@@ -115,6 +123,7 @@ export type MutationDeleteUserArgs = {
 export type MutationUpdateAssetArgs = {
   id?: InputMaybe<Scalars['Int']['input']>
   name?: InputMaybe<Scalars['String']['input']>
+  status?: InputMaybe<AssetStatus>
   type?: InputMaybe<AssetType>
 }
 
@@ -179,12 +188,14 @@ export type AssetsQuery = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
   } | null> | null
 }
 
 export type CreateAssetMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>
   type?: InputMaybe<AssetType>
+  status?: InputMaybe<AssetStatus>
 }>
 
 export type CreateAssetMutation = {
@@ -194,15 +205,17 @@ export type CreateAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
     createdAt?: string | null
     updatedAt?: string | null
   } | null
 }
 
 export type UpdateAssetMutationVariables = Exact<{
-  updateAssetId?: InputMaybe<Scalars['Int']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   type?: InputMaybe<AssetType>
+  updateAssetId?: InputMaybe<Scalars['Int']['input']>
+  status?: InputMaybe<AssetStatus>
 }>
 
 export type UpdateAssetMutation = {
@@ -212,6 +225,7 @@ export type UpdateAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
     updatedAt?: string | null
   } | null
 }
@@ -227,6 +241,7 @@ export type DeleteAssetMutation = {
     id?: number | null
     name?: string | null
     type?: AssetType | null
+    status?: AssetStatus | null
   } | null
 }
 
@@ -299,6 +314,7 @@ export const AssetsDocument = gql`
       id
       name
       type
+      status
     }
   }
 `
@@ -358,11 +374,12 @@ export type AssetsQueryResult = Apollo.QueryResult<
   AssetsQueryVariables
 >
 export const CreateAssetDocument = gql`
-  mutation CreateAsset($name: String, $type: AssetType) {
-    createAsset(name: $name, type: $type) {
+  mutation CreateAsset($name: String, $type: AssetType, $status: AssetStatus) {
+    createAsset(name: $name, type: $type, status: $status) {
       id
       name
       type
+      status
       createdAt
       updatedAt
     }
@@ -388,6 +405,7 @@ export type CreateAssetMutationFn = Apollo.MutationFunction<
  *   variables: {
  *      name: // value for 'name'
  *      type: // value for 'type'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -413,11 +431,17 @@ export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<
   CreateAssetMutationVariables
 >
 export const UpdateAssetDocument = gql`
-  mutation UpdateAsset($updateAssetId: Int, $name: String, $type: AssetType) {
-    updateAsset(id: $updateAssetId, name: $name, type: $type) {
+  mutation UpdateAsset(
+    $name: String
+    $type: AssetType
+    $updateAssetId: Int
+    $status: AssetStatus
+  ) {
+    updateAsset(name: $name, type: $type, id: $updateAssetId, status: $status) {
       id
       name
       type
+      status
       updatedAt
     }
   }
@@ -440,9 +464,10 @@ export type UpdateAssetMutationFn = Apollo.MutationFunction<
  * @example
  * const [updateAssetMutation, { data, loading, error }] = useUpdateAssetMutation({
  *   variables: {
- *      updateAssetId: // value for 'updateAssetId'
  *      name: // value for 'name'
  *      type: // value for 'type'
+ *      updateAssetId: // value for 'updateAssetId'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -473,6 +498,7 @@ export const DeleteAssetDocument = gql`
       id
       name
       type
+      status
     }
   }
 `

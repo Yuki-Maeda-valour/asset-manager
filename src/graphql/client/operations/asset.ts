@@ -6,25 +6,33 @@ export const AssetQuery = gql`
       id
       name
       type
+      status
     }
   }
 `
 export const AssetMutation = gql`
-  mutation CreateAsset($name: String, $type: AssetType) {
-    createAsset(name: $name, type: $type) {
+  mutation CreateAsset($name: String, $type: AssetType, $status: AssetStatus) {
+    createAsset(name: $name, type: $type, status: $status) {
       id
       name
       type
+      status
       createdAt
       updatedAt
     }
   }
 
-  mutation UpdateAsset($updateAssetId: Int, $name: String, $type: AssetType) {
-    updateAsset(id: $updateAssetId, name: $name, type: $type) {
+  mutation UpdateAsset(
+    $name: String
+    $type: AssetType
+    $updateAssetId: Int
+    $status: AssetStatus
+  ) {
+    updateAsset(name: $name, type: $type, id: $updateAssetId, status: $status) {
       id
       name
       type
+      status
       updatedAt
     }
   }
@@ -34,6 +42,7 @@ export const AssetMutation = gql`
       id
       name
       type
+      status
     }
   }
 `

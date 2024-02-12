@@ -14,7 +14,6 @@ export const Borrowing = objectType({
     t.string('borrowedAt')
     t.string('returnedAt')
     t.string('deadline')
-    t.field('status', { type: BorrowingStatus })
     t.int('userId')
     t.int('assetId')
     t.string('createdAt')
@@ -138,7 +137,6 @@ export const BorrowingMutation = extendType({
           data: {
             borrowedAt: args.borrowedAt,
             deadline: args.deadline,
-            status: args.status,
             userId: args.userId,
             assetId: args.assetId,
           },
@@ -178,7 +176,6 @@ export const BorrowingMutation = extendType({
                 ? new Date(args.borrowedAt)
                 : undefined,
               deadline: args.deadline ? new Date(args.deadline) : undefined,
-              status: args.status || undefined,
               userId: args.userId || undefined,
               assetId: args.assetId || undefined,
             },

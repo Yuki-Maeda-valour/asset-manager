@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   Button,
   Container,
@@ -11,26 +10,35 @@ import {
   AssetsDocument,
   useCreateAssetMutation,
 } from '@/graphql/client/gqlhooks'
-import { AssetType } from '@/graphql/client/gqlhooks'
+import { AssetType, AssetStatus } from '@/graphql/client/gqlhooks'
 import { useAssetForm } from '@/features/hooks/useAssetForm'
 
 export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
-  const initialState = { name: '', type: AssetType.Pc }
-  const { formState, handleChange, handleTypeChange } = useAssetForm({
-    initialState,
-  })
+  const initialState = {
+    name: '',
+    type: AssetType.Pc,
+    status: AssetStatus.Available,
+  }
+  const { formState, handleChange, handleTypeChange, handleStatusChange } =
+    useAssetForm({
+      initialState,
+    })
   const [createAssetMutation] = useCreateAssetMutation({
     refetchQueries: [AssetsDocument],
   })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { name, type } = formState
+    const { name, type, status } = formState
     const isValidType = Object.values(AssetType).includes(type as AssetType)
+    const isValidStatus = Object.values(AssetStatus).includes(
+      status as AssetStatus,
+    )
     createAssetMutation({
       variables: {
         name: name,
         type: isValidType ? (type as AssetType) : undefined,
+        status: isValidStatus ? (status as AssetStatus) : undefined,
       },
     })
     onClose()
@@ -57,6 +65,16 @@ export const CreateAssetForm = ({ onClose }: { onClose: () => void }) => {
             <Radio value={AssetType.Sp}>SP</Radio>
             <Radio value={AssetType.Wifi}>WIFI</Radio>
             <Radio value={AssetType.Monitor}>MONITOR</Radio>
+          </Stack>
+        </RadioGroup>
+        <RadioGroup
+          name="status"
+          value={formState.status}
+          onChange={handleStatusChange}
+        >
+          <Stack display="flex" gap="4" direction="row">
+            <Radio value={AssetStatus.Available}>貸出可</Radio>
+            <Radio value={AssetStatus.Suspended}>貸出不可</Radio>
           </Stack>
         </RadioGroup>
         <Button type="submit">登録</Button>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { AssetType } from '@/graphql/client/gqlhooks'
+import { AssetStatus, AssetType } from '@/graphql/client/gqlhooks'
 
 type AssetFormState = {
   id?: number
   name: string
   type: AssetType
+  status: AssetStatus
 }
 
 type UseAssetFormProps = {
@@ -15,6 +16,7 @@ type UseAssetFormReturn = {
   formState: AssetFormState
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleTypeChange: (nextValue: AssetType) => void
+  handleStatusChange: (nextValue: AssetStatus) => void
 }
 
 export const useAssetForm = ({
@@ -37,5 +39,12 @@ export const useAssetForm = ({
     }))
   }
 
-  return { formState, handleChange, handleTypeChange }
+  const handleStatusChange = (nextValue: AssetStatus) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      status: nextValue,
+    }))
+  }
+
+  return { formState, handleChange, handleTypeChange, handleStatusChange }
 }

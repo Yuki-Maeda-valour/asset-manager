@@ -25,6 +25,7 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
           <Text>{asset.id}</Text>
           <Text>{asset.name}</Text>
           <Text>{asset.type}</Text>
+          <Text>{asset.status}</Text>
         </Container>
         <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
           <EditAssetModalButton asset={asset} />

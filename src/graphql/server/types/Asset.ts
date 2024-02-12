@@ -6,12 +6,18 @@ export const AssetType = enumType({
   members: ['PC', 'SP', 'WIFI', 'MONITOR'],
 })
 
+export const AssetStatus = enumType({
+  name: 'AssetStatus',
+  members: ['RESERVED', 'LENT', 'AVAILABLE', 'SUSPENDED'],
+})
+
 export const Asset = objectType({
   name: 'Asset',
   definition(t) {
     t.int('id')
     t.string('name')
     t.field('type', { type: AssetType })
+    t.field('status', { type: AssetStatus })
     t.string('createdAt')
     t.string('updatedAt')
     t.list.field('borrowings', {
@@ -90,6 +96,7 @@ export const AssetMutation = extendType({
       args: {
         name: 'String',
         type: AssetType,
+        status: AssetStatus,
       },
       resolve: async (_parent, args, ctx) => {
         if (!args.name) {
@@ -98,10 +105,14 @@ export const AssetMutation = extendType({
         if (!args.type) {
           throw new Error('Type is required')
         }
+        if (!args.status) {
+          throw new Error('Status is required')
+        }
         const asset = await ctx.prisma.asset.create({
           data: {
             name: args.name,
             type: args.type,
+            status: args.status,
           },
         })
         return {
@@ -117,6 +128,7 @@ export const AssetMutation = extendType({
           id: 'Int',
           name: 'String',
           type: AssetType,
+          status: AssetStatus,
         },
         resolve: async (_parent, args, ctx) => {
           if (args.id === null || args.id === undefined) {
@@ -128,6 +140,9 @@ export const AssetMutation = extendType({
           if (!args.type) {
             throw new Error('Type is required')
           }
+          if (!args.status) {
+            throw new Error('Status is required')
+          }
           const asset = await ctx.prisma.asset.update({
             where: {
               id: args.id,
@@ -135,6 +150,7 @@ export const AssetMutation = extendType({
             data: {
               name: args.name,
               type: args.type,
+              status: args.status,
             },
           })
           return {

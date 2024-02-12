@@ -39,22 +39,15 @@ type Borrowing {
   userId: Int
 }
 
-enum BorrowingStatus {
-  AVAILABLE
-  LENT
-  RESERVED
-  SUSPENDED
-}
-
 type Mutation {
   createAsset(name: String, status: AssetStatus, type: AssetType): Asset
-  createBorrowing(assetId: Int, borrowedAt: String, deadline: String, status: BorrowingStatus, userId: Int): Borrowing
+  createBorrowing(assetId: Int, borrowedAt: String, deadline: String, userId: Int): Borrowing
   createUser(role: Role, username: String): User
   deleteAsset(id: Int): Asset
   deleteBorrowing(id: Int): Borrowing
   deleteUser(id: Int): User
   updateAsset(id: Int, name: String, status: AssetStatus, type: AssetType): Asset
-  updateBorrowing(assetId: Int, borrowedAt: String, deadline: String, id: Int, status: BorrowingStatus, userId: Int): Borrowing
+  updateBorrowing(assetId: Int, borrowedAt: String, deadline: String, id: Int, userId: Int): Borrowing
   updateUser(id: Int, role: Role, username: String): User
 }
 

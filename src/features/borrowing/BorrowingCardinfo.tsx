@@ -4,9 +4,16 @@ import { formatDate } from '@/features/utils/utils'
 import { LabelledValue } from '@/components/label/LabelValue'
 
 type BorrowingCardInfoProps = {
+  // 予約オブジェクト
   borrowing: Borrowing
 }
 
+/**
+ * 予約情報を表示するカードコンポーネント
+ *
+ * @param {BorrowingCardInfoProps} props - コンポーネントに渡されるプロパティ
+ * @returns Container > LabelledValue
+ */
 export const BorrowingCardInfo = ({ borrowing }: BorrowingCardInfoProps) => {
   return (
     <Container

@@ -3,6 +3,7 @@ import type { Borrowing } from '@/graphql/client/gqlhooks'
 import { BorrowingCardInfo, BorrowingCardMenu } from '@/features/borrowing'
 
 type BorrowingCardProps = {
+  // 予約オブジェクト
   borrowing: Borrowing | null
 }
 

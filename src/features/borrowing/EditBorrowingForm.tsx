@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Button,
   Container,
@@ -7,19 +6,18 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react'
-import { useAssetForm } from '@/features/hooks/useAssetForm'
-import {
-  Asset,
-  AssetType,
-  useUpdateAssetMutation,
-} from '@/graphql/client/gqlhooks'
+import { useBorrowingForm } from '@/features/hooks/useBorrowingForm'
+import { Borrowing, useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
 
-type EditAssetFormProps = {
-  asset: Asset
+type EditBorrowingFormProps = {
+  borrowing: Borrowing
   onClose: () => void
 }
 
-export const EditBorrowingForm = ({ asset, onClose }: EditAssetFormProps) => {
+export const EditBorrowingForm = ({
+  borrowing,
+  onClose,
+}: EditBorrowingFormProps) => {
   // const initialState = {
   //   name: asset.name || '',
   //   type: asset.type || AssetType.Pc,
@@ -49,10 +47,10 @@ export const EditBorrowingForm = ({ asset, onClose }: EditAssetFormProps) => {
         <Input type="text" name="name" placeholder="予約名" isRequired={true} />
         <RadioGroup name="type">
           <Stack display="flex" justifyContent="space-between" direction="row">
-            <Radio value={AssetType.Pc}>PC</Radio>
+            {/* <Radio value={AssetType.Pc}>PC</Radio>
             <Radio value={AssetType.Sp}>SP</Radio>
             <Radio value={AssetType.Wifi}>WIFI</Radio>
-            <Radio value={AssetType.Monitor}>MONITOR</Radio>
+            <Radio value={AssetType.Monitor}>MONITOR</Radio> */}
           </Stack>
         </RadioGroup>
         <Button type="submit">更新</Button>

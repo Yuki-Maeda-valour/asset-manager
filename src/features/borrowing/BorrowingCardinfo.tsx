@@ -13,10 +13,8 @@ export const BorrowingCardInfo = ({ borrowing }: BorrowingCardInfoProps) => {
       display="flex"
       flexDirection="column"
       alignItems="start"
-      p={5}
-      boxShadow="md"
-      borderRadius="lg"
       gap={2}
+      p={0}
     >
       <LabelledValue label="予約ID" value={borrowing.id} />
       <LabelledValue label="予約日時" value={formatDate(borrowing.createdAt)} />

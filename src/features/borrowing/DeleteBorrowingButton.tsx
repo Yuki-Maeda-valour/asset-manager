@@ -1,27 +1,29 @@
 import { PopoverButton } from '@/components/button/PopoverButton'
 import { Button, Container, Text } from '@chakra-ui/react'
 import {
-  AssetsDocument,
-  useDeleteAssetMutation,
+  BorrowingsDocument,
+  useDeleteBorrowingMutation,
 } from '@/graphql/client/gqlhooks'
-import type { Asset } from '@/graphql/client/gqlhooks'
+import type { Borrowing } from '@/graphql/client/gqlhooks'
 
-type DeleteAssetButtonProps = {
-  // 資産ID
-  assetId: Asset['id']
+type DeleteBorrowingButtonProps = {
+  // 削除対象の予約ID
+  borrowingId: Borrowing['id']
 }
 
 /**
  * 予約を削除するボタンコンポーネント
- * @param assetId - 削除対象の予約ID
+ * @param borrowingId - 削除対象の予約ID
  * @returns 削除ボタンを含むコンポーネント
  */
-export const DeleteBorrowingButton = ({ assetId }: DeleteAssetButtonProps) => {
-  const [deleteAsset] = useDeleteAssetMutation({
-    refetchQueries: [AssetsDocument],
+export const DeleteBorrowingButton = ({
+  borrowingId,
+}: DeleteBorrowingButtonProps) => {
+  const [deleteBorrowing] = useDeleteBorrowingMutation({
+    refetchQueries: [BorrowingsDocument],
   })
   const handleClick = async () => {
-    await deleteAsset({ variables: { deleteAssetId: assetId } })
+    await deleteBorrowing({ variables: { deleteBorrowingId: borrowingId } })
   }
   return (
     <PopoverButton buttonLabel="削除" placement="left-start">

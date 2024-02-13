@@ -1,22 +1,20 @@
 import { useModal } from '@/features/hooks/useModal'
 import { Button } from '@chakra-ui/react'
-import { EditAssetForm } from '@/features/asset'
-import type { Asset } from '@/graphql/client/gqlhooks'
-type EditAssetModalButtonProps = {
-  //  編集する資産の情報
-  asset: Asset
+import { EditBorrowingForm } from '@/features/borrowing'
+import type { Borrowing } from '@/graphql/client/gqlhooks'
+type EditBorrowingModalButtonProps = {
+  //  編集する予約の情報
+  borrowing: Borrowing
 }
 /**
- * EditAssetModalButton
+ * EditBorrowingModalButton
  * 予約を編集するためのモーダルを開くボタンコンポーネント
- *
- * @component
- * @param {EditAssetModalButtonProps} props - コンポーネントのプロパティ
- * @returns Button, ModalContainer > EditAssetForm
+ * @param borrowing 編集する予約
+ * @returns Button, ModalContainer > EditBorrowingForm
  */
 export const EditBorrowingModalButton = ({
-  asset,
-}: EditAssetModalButtonProps) => {
+  borrowing,
+}: EditBorrowingModalButtonProps) => {
   const { onOpen, onClose, ModalContainer } = useModal()
 
   return (
@@ -25,7 +23,7 @@ export const EditBorrowingModalButton = ({
         編集
       </Button>
       <ModalContainer title="予約の編集">
-        <EditAssetForm asset={asset} onClose={onClose} />
+        <EditBorrowingForm borrowing={borrowing} onClose={onClose} />
       </ModalContainer>
     </>
   )

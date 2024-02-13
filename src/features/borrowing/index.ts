@@ -1,4 +1,5 @@
 export { BorrowingListContainer } from '@/features/borrowing/BorrowingListContainer'
+export { BorrowingCardInfo } from '@/features/borrowing/BorrowingCardinfo'
 export { CreateBorrowingModalButton } from '@/features/borrowing/CreateBorrowingModalButton'
 export { CreateBorrowingForm } from '@/features/borrowing/CreateBorrowingForm'
 export { EditBorrowingModalButton } from '@/features/borrowing/EditBorrowingModalButton'

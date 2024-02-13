@@ -2,6 +2,7 @@ import { Card, CardBody, Container, Text } from '@chakra-ui/react'
 import type { Borrowing } from '@/graphql/client/gqlhooks'
 import { DeleteAssetButton } from '@/features/asset/DeleteAssetButton'
 import { EditAssetModalButton } from '@/features/asset'
+import { BorrowingCardInfo } from '@/features/borrowing'
 
 type BorrowingCardProps = {
   borrowing: Borrowing | null
@@ -17,18 +18,7 @@ export const BorrowingCard = ({ borrowing }: BorrowingCardProps) => {
   return (
     <Card w="full">
       <CardBody display="flex" justifyContent="space-between" gap={2}>
-        <Container
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Text>{borrowing.id}</Text>
-          <Text>{borrowing.borrowedAt}</Text>
-          <Text>{borrowing.returnedAt}</Text>
-          <Text>{borrowing.deadline}</Text>
-          <Text>{borrowing.user?.username}</Text>
-          <Text>{borrowing.asset?.name}</Text>
-        </Container>
+        <BorrowingCardInfo borrowing={borrowing} />
         {/* <Container display="flex" justifyContent="flex-end" gap={2} p={0}>
           <EditAssetModalButton asset={asset} />
           <DeleteAssetButton assetId={asset.id} />

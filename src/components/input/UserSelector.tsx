@@ -3,9 +3,10 @@ import { useUsersQuery } from '@/graphql/client/gqlhooks'
 
 type UserSelectorProps = {
   label: string
+  value?: string
 }
 
-export const UserSelector = ({ label }: UserSelectorProps) => {
+export const UserSelector = ({ label, value }: UserSelectorProps) => {
   const { data } = useUsersQuery()
   const users = data?.users
   const textColor = useColorModeValue('black', 'white')
@@ -14,9 +15,13 @@ export const UserSelector = ({ label }: UserSelectorProps) => {
       <Text color={textColor} fontWeight="bold">
         {label}:
       </Text>
-      <Select>
+      <Select value={value}>
         {users?.map((user) => (
-          <option key={user?.id} value={user?.id?.toString()}>
+          <option
+            key={user?.id}
+            value={user?.id?.toString()}
+            selected={value === user?.id?.toString()}
+          >
             {user?.username}
           </option>
         ))}

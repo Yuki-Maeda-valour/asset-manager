@@ -3,9 +3,10 @@ import { useAssetsQuery } from '@/graphql/client/gqlhooks'
 
 type UserSelectorProps = {
   label: string
+  value?: string
 }
 
-export const AssetSelector = ({ label }: UserSelectorProps) => {
+export const AssetSelector = ({ label, value }: UserSelectorProps) => {
   const { data } = useAssetsQuery()
   const assets = data?.assets
   const textColor = useColorModeValue('black', 'white')
@@ -14,9 +15,13 @@ export const AssetSelector = ({ label }: UserSelectorProps) => {
       <Text color={textColor} fontWeight="bold">
         {label}:
       </Text>
-      <Select>
+      <Select value={value}>
         {assets?.map((asset) => (
-          <option key={asset?.id} value={asset?.id?.toString()}>
+          <option
+            key={asset?.id}
+            value={asset?.id?.toString()}
+            selected={value === asset?.id?.toString()}
+          >
             {asset?.name}
           </option>
         ))}

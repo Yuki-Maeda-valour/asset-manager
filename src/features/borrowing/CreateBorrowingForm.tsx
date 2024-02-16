@@ -1,20 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  Container,
-  Input,
-  Radio,
-  RadioGroup,
-  Stack,
-} from '@chakra-ui/react'
-import {
-  AssetsDocument,
-  useCreateAssetMutation,
-} from '@/graphql/client/gqlhooks'
+import { Button, Container } from '@chakra-ui/react'
 import { AssetType } from '@/graphql/client/gqlhooks'
 import { useAssetForm } from '@/features/hooks/useAssetForm'
 import { LabelDateInput } from '@/components/input/LabelDateInput'
-import { LabelSelectInput } from '@/components/input/LabelSelectInput'
+import { UserSelector } from '@/components/input/UserSelector'
+import { AssetSelector } from '@/components/input/AssetSelector'
 
 export const CreateBorrowingForm = ({ onClose }: { onClose: () => void }) => {
   // const initialState = { name: '', type: AssetType.Pc }
@@ -41,18 +31,10 @@ export const CreateBorrowingForm = ({ onClose }: { onClose: () => void }) => {
   return (
     <form>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <LabelDateInput
-          label="予約日時"
-          value="2022-01-01T00:00:00+09:00"
-          isRequired={true}
-        />
-        <LabelDateInput
-          label="返却期限"
-          value="2022-01-01T00:00:00+09:00"
-          isRequired={true}
-        />
-        <LabelSelectInput label="予約者" value={1} isRequired={true} />
-        <LabelSelectInput label="物品" value={1} isRequired={true} />
+        <LabelDateInput label="予約日時" isRequired={true} />
+        <LabelDateInput label="返却期限" isRequired={true} />
+        <UserSelector label="予約者" />
+        <AssetSelector label="資産" />
         <Button type="submit">登録</Button>
       </Container>
     </form>

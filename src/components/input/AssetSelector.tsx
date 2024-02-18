@@ -1,12 +1,19 @@
 import { Box, Text, Select, useColorModeValue } from '@chakra-ui/react'
 import { useAssetsQuery } from '@/graphql/client/gqlhooks'
 
-type UserSelectorProps = {
+type AssetSelectorProps = {
   label: string
   value?: string
+  name?: string
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const AssetSelector = ({ label, value }: UserSelectorProps) => {
+export const AssetSelector = ({
+  label,
+  name,
+  value,
+  onChange,
+}: AssetSelectorProps) => {
   const { data } = useAssetsQuery()
   const assets = data?.assets
   const textColor = useColorModeValue('black', 'white')
@@ -15,13 +22,12 @@ export const AssetSelector = ({ label, value }: UserSelectorProps) => {
       <Text color={textColor} fontWeight="bold">
         {label}:
       </Text>
-      <Select value={value}>
+      <Select name={name} value={value} onChange={onChange} required>
+        <option value="" selected>
+          選択してください
+        </option>
         {assets?.map((asset) => (
-          <option
-            key={asset?.id}
-            value={asset?.id?.toString()}
-            selected={value === asset?.id?.toString()}
-          >
+          <option key={asset?.id} value={asset?.id?.toString()}>
             {asset?.name}
           </option>
         ))}

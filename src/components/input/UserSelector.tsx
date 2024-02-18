@@ -4,9 +4,16 @@ import { useUsersQuery } from '@/graphql/client/gqlhooks'
 type UserSelectorProps = {
   label: string
   value?: string
+  name?: string
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const UserSelector = ({ label, value }: UserSelectorProps) => {
+export const UserSelector = ({
+  label,
+  name,
+  value,
+  onChange,
+}: UserSelectorProps) => {
   const { data } = useUsersQuery()
   const users = data?.users
   const textColor = useColorModeValue('black', 'white')
@@ -15,13 +22,12 @@ export const UserSelector = ({ label, value }: UserSelectorProps) => {
       <Text color={textColor} fontWeight="bold">
         {label}:
       </Text>
-      <Select value={value}>
+      <Select name={name} value={value} onChange={onChange} required>
+        <option value="" selected>
+          選択してください
+        </option>
         {users?.map((user) => (
-          <option
-            key={user?.id}
-            value={user?.id?.toString()}
-            selected={value === user?.id?.toString()}
-          >
+          <option key={user?.id} value={user?.id?.toString()}>
             {user?.username}
           </option>
         ))}

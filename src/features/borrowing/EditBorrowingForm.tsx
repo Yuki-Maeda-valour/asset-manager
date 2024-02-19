@@ -1,13 +1,13 @@
+import React, { useState } from 'react'
+import { Button, Container } from '@chakra-ui/react'
 import {
-  Button,
-  Container,
-  Input,
-  Radio,
-  RadioGroup,
-  Stack,
-} from '@chakra-ui/react'
-import { useBorrowingForm } from '@/features/hooks/useBorrowingForm'
-import { Borrowing, useUpdateAssetMutation } from '@/graphql/client/gqlhooks'
+  Borrowing,
+  useUpdateBorrowingMutation,
+} from '@/graphql/client/gqlhooks'
+import { LabelDateInput } from '@/components/input/LabelDateInput'
+import { UserSelector } from '@/components/input/UserSelector'
+import { AssetSelector } from '@/components/input/AssetSelector'
+import { toLocalDateTimeStringForInput } from '@/features/utils/utils'
 
 type EditBorrowingFormProps = {
   borrowing: Borrowing
@@ -18,41 +18,77 @@ export const EditBorrowingForm = ({
   borrowing,
   onClose,
 }: EditBorrowingFormProps) => {
-  // const initialState = {
-  //   name: asset.name || '',
-  //   type: asset.type || AssetType.Pc,
-  // }
-  // const { formState, handleChange, handleTypeChange } = useAssetForm({
-  //   initialState,
-  // })
-  // const [updateAssetMutation] = useUpdateAssetMutation()
+  const initialState = {
+    borrowedAt: borrowing.borrowedAt
+      ? toLocalDateTimeStringForInput(borrowing.borrowedAt)
+      : '',
+    deadline: borrowing.deadline
+      ? toLocalDateTimeStringForInput(borrowing.deadline)
+      : '',
+    userId: borrowing.userId,
+    assetId: borrowing.assetId,
+  }
+  const [formState, setFormState] = useState(initialState)
+  const [updateBorrowingMutation] = useUpdateBorrowingMutation()
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   const { name, type } = formState
-  //   const isValidType = Object.values(AssetType).includes(type as AssetType)
-  //   updateAssetMutation({
-  //     variables: {
-  //       updateAssetId: Number(asset.id),
-  //       name: name,
-  //       type: isValidType ? (type as AssetType) : undefined,
-  //     },
-  //   })
-  //   onClose()
-  // }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target
+    const isNumericField = name === 'userId' || name === 'assetId'
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: isNumericField ? (value ? Number(value) : 0) : value,
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await updateBorrowingMutation({
+      variables: {
+        updateBorrowingId: Number(borrowing.id),
+        borrowedAt: formState.borrowedAt
+          ? new Date(formState.borrowedAt).toISOString()
+          : null,
+        deadline: formState.deadline
+          ? new Date(formState.deadline).toISOString()
+          : null,
+        userId: Number(formState.userId),
+        assetId: Number(formState.assetId),
+      },
+    })
+    onClose()
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Container display="flex" flexDirection="column" w={'full'} gap={4}>
-        <Input type="text" name="name" placeholder="予約名" isRequired={true} />
-        <RadioGroup name="type">
-          <Stack display="flex" justifyContent="space-between" direction="row">
-            {/* <Radio value={AssetType.Pc}>PC</Radio>
-            <Radio value={AssetType.Sp}>SP</Radio>
-            <Radio value={AssetType.Wifi}>WIFI</Radio>
-            <Radio value={AssetType.Monitor}>MONITOR</Radio> */}
-          </Stack>
-        </RadioGroup>
+        <LabelDateInput
+          label="予約日時"
+          isRequired={true}
+          value={formState.borrowedAt || ''}
+          onChange={handleChange}
+          name="borrowedAt"
+        />
+        <LabelDateInput
+          label="返却期限"
+          isRequired={true}
+          value={formState.deadline || ''}
+          onChange={handleChange}
+          name="deadline"
+        />
+        <UserSelector
+          label="予約者"
+          value={formState.userId?.toString()}
+          onChange={handleChange}
+          name="userId"
+        />
+        <AssetSelector
+          label="資産"
+          value={formState.assetId?.toString()}
+          onChange={handleChange}
+          name="assetId"
+        />
         <Button type="submit">更新</Button>
       </Container>
     </form>

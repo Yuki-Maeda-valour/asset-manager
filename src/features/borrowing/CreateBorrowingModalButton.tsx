@@ -1,6 +1,6 @@
 import { useModal } from '@/features/hooks/useModal'
 import { Button, Container } from '@chakra-ui/react'
-import { CreateAssetForm } from '@/features/asset'
+import { CreateBorrowingForm } from '@/features/borrowing'
 
 /**
  * 予約の登録モーダル
@@ -17,7 +17,7 @@ export const CreateBorrowingModalButton = () => {
         </Button>
       </Container>
       <ModalContainer title="予約の登録">
-        <CreateAssetForm onClose={onClose} />
+        <CreateBorrowingForm onClose={onClose} />
       </ModalContainer>
     </>
   )

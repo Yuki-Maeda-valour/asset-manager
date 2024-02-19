@@ -24,11 +24,17 @@ export const BorrowingCardInfo = ({ borrowing }: BorrowingCardInfoProps) => {
       p={0}
     >
       <LabelledValue label="予約ID" value={borrowing.id} />
-      <LabelledValue label="予約日時" value={formatDate(borrowing.createdAt)} />
-      <LabelledValue label="返却期限" value={formatDate(borrowing.deadline)} />
+      <LabelledValue
+        label="予約日時"
+        value={formatDate(borrowing.borrowedAt || '')}
+      />
+      <LabelledValue
+        label="返却期限"
+        value={formatDate(borrowing.deadline || '')}
+      />
       <LabelledValue
         label="返却日時"
-        value={formatDate(borrowing.returnedAt)}
+        value={formatDate(borrowing.returnedAt || '')}
       />
       <LabelledValue label="予約者" value={borrowing.user?.username} />
       <LabelledValue label="予約物品" value={borrowing.asset?.name} />

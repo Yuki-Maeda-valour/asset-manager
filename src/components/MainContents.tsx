@@ -4,26 +4,15 @@ import UserContents from '@/components/UserContents'
 import BorrowingContents from '@/components/BorrowingContents'
 import { LoginButton } from '@/components/button/LoginButton'
 import { LogoutButton } from '@/components/button/LogoutButton'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
-import { useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
 
 /**
  * メインコンテンツ
  * @returns div
  */
 export default function MainContents() {
-  // ログイン状態を確認
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        console.log('ログインしていません')
-      } else {
-        console.log(`ログインしました: ${user.email} (${user.uid})`)
-      }
-    })
-  }, [])
-
+  const user = useAuth()
+  console.log('user', user)
   return (
     <>
       <Text fontWeight="bold" fontSize="2xl">

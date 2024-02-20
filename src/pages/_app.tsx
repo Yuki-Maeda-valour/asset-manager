@@ -7,6 +7,7 @@ import { apolloClient } from '@/graphql/client/apollo'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
+import { AuthProvider } from '@/context/AuthContext'
 
 type NextPageWithLayout = NextPage & {
   // eslint-disable-next-line no-unused-vars
@@ -26,9 +27,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         {globalStyles}
       </style>
       <ApolloProvider client={apolloClient}>
-        <ChakraProvider theme={theme}>
-          {getLayout(<Component {...pageProps} />)}
-        </ChakraProvider>
+        <AuthProvider>
+          <ChakraProvider theme={theme}>
+            {getLayout(<Component {...pageProps} />)}
+          </ChakraProvider>
+        </AuthProvider>
       </ApolloProvider>
     </>
   )

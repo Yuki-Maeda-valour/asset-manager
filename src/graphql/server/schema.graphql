@@ -42,13 +42,13 @@ type Borrowing {
 type Mutation {
   createAsset(name: String, status: AssetStatus, type: AssetType): Asset
   createBorrowing(assetId: Int, borrowedAt: String, deadline: String, userId: Int): Borrowing
-  createUser(role: Role, username: String): User
+  createUser(role: Role, uid: String, username: String): User
   deleteAsset(id: Int): Asset
   deleteBorrowing(id: Int): Borrowing
   deleteUser(id: Int): User
   updateAsset(id: Int, name: String, status: AssetStatus, type: AssetType): Asset
   updateBorrowing(assetId: Int, borrowedAt: String, deadline: String, id: Int, userId: Int): Borrowing
-  updateUser(id: Int, role: Role, username: String): User
+  updateUser(id: Int, role: Role, uid: String, username: String): User
 }
 
 type Query {
@@ -70,6 +70,7 @@ type User {
   createdAt: String
   id: Int
   role: Role
+  uid: String
   updatedAt: String
   username: String
 }

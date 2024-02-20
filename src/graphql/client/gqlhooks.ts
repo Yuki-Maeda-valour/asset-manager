@@ -97,6 +97,7 @@ export type MutationCreateBorrowingArgs = {
 
 export type MutationCreateUserArgs = {
   role?: InputMaybe<Role>
+  uid?: InputMaybe<Scalars['String']['input']>
   username?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -130,6 +131,7 @@ export type MutationUpdateBorrowingArgs = {
 export type MutationUpdateUserArgs = {
   id?: InputMaybe<Scalars['Int']['input']>
   role?: InputMaybe<Role>
+  uid?: InputMaybe<Scalars['String']['input']>
   username?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -166,6 +168,7 @@ export type User = {
   createdAt?: Maybe<Scalars['String']['output']>
   id?: Maybe<Scalars['Int']['output']>
   role?: Maybe<Role>
+  uid?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['String']['output']>
   username?: Maybe<Scalars['String']['output']>
 }
@@ -349,12 +352,14 @@ export type UsersQuery = {
     __typename?: 'User'
     id?: number | null
     username?: string | null
+    uid?: string | null
     role?: Role | null
   } | null> | null
 }
 
 export type CreateUserMutationVariables = Exact<{
   username?: InputMaybe<Scalars['String']['input']>
+  uid?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Role>
 }>
 
@@ -364,6 +369,7 @@ export type CreateUserMutation = {
     __typename?: 'User'
     id?: number | null
     username?: string | null
+    uid?: string | null
     role?: Role | null
     createdAt?: string | null
     updatedAt?: string | null
@@ -373,6 +379,7 @@ export type CreateUserMutation = {
 export type UpdateUserMutationVariables = Exact<{
   updateUserId?: InputMaybe<Scalars['Int']['input']>
   username?: InputMaybe<Scalars['String']['input']>
+  uid?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Role>
 }>
 
@@ -382,6 +389,7 @@ export type UpdateUserMutation = {
     __typename?: 'User'
     id?: number | null
     username?: string | null
+    uid?: string | null
     role?: Role | null
     createdAt?: string | null
     updatedAt?: string | null
@@ -398,6 +406,7 @@ export type DeleteUserMutation = {
     __typename?: 'User'
     id?: number | null
     username?: string | null
+    uid?: string | null
     role?: Role | null
     createdAt?: string | null
     updatedAt?: string | null
@@ -943,6 +952,7 @@ export const UsersDocument = gql`
     users {
       id
       username
+      uid
       role
     }
   }
@@ -1003,10 +1013,11 @@ export type UsersQueryResult = Apollo.QueryResult<
   UsersQueryVariables
 >
 export const CreateUserDocument = gql`
-  mutation CreateUser($username: String, $role: Role) {
-    createUser(username: $username, role: $role) {
+  mutation CreateUser($username: String, $uid: String, $role: Role) {
+    createUser(username: $username, uid: $uid, role: $role) {
       id
       username
+      uid
       role
       createdAt
       updatedAt
@@ -1032,6 +1043,7 @@ export type CreateUserMutationFn = Apollo.MutationFunction<
  * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
  *   variables: {
  *      username: // value for 'username'
+ *      uid: // value for 'uid'
  *      role: // value for 'role'
  *   },
  * });
@@ -1057,10 +1069,16 @@ export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
   CreateUserMutationVariables
 >
 export const UpdateUserDocument = gql`
-  mutation UpdateUser($updateUserId: Int, $username: String, $role: Role) {
-    updateUser(id: $updateUserId, username: $username, role: $role) {
+  mutation UpdateUser(
+    $updateUserId: Int
+    $username: String
+    $uid: String
+    $role: Role
+  ) {
+    updateUser(id: $updateUserId, username: $username, uid: $uid, role: $role) {
       id
       username
+      uid
       role
       createdAt
       updatedAt
@@ -1087,6 +1105,7 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<
  *   variables: {
  *      updateUserId: // value for 'updateUserId'
  *      username: // value for 'username'
+ *      uid: // value for 'uid'
  *      role: // value for 'role'
  *   },
  * });
@@ -1116,6 +1135,7 @@ export const DeleteUserDocument = gql`
     deleteUser(id: $deleteUserId) {
       id
       username
+      uid
       role
       createdAt
       updatedAt

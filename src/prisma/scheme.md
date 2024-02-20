@@ -27,6 +27,7 @@ MONITOR MONITOR
   "users" {
     Int id "🗝️"
     String username 
+    String uid 
     Role role 
     DateTime createdAt 
     DateTime updatedAt 

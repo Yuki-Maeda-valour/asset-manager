@@ -12,6 +12,7 @@ export const User = objectType({
     t.int('id')
     t.string('username')
     t.field('role', { type: Role })
+    t.string('uid')
     t.string('createdAt')
     t.string('updatedAt')
     t.list.field('borrowings', {
@@ -89,11 +90,15 @@ export const UserMutation = extendType({
       type: User,
       args: {
         username: 'String',
+        uid: 'String',
         role: Role,
       },
       resolve: async (_parent, args, ctx) => {
         if (!args.username) {
           throw new Error('ユーザー名が必要です')
+        }
+        if (!args.uid) {
+          throw new Error('UID is required')
         }
         if (!args.role) {
           throw new Error('Role is required')
@@ -101,6 +106,7 @@ export const UserMutation = extendType({
         const user = await ctx.prisma.user.create({
           data: {
             username: args.username,
+            uid: args.uid,
             role: args.role,
           },
         })
@@ -116,6 +122,7 @@ export const UserMutation = extendType({
         args: {
           id: 'Int',
           username: 'String',
+          uid: 'String',
           role: Role,
         },
         resolve: async (_parent, args, ctx) => {
@@ -124,6 +131,9 @@ export const UserMutation = extendType({
           }
           if (!args.username) {
             throw new Error('ユーザー名が必要です')
+          }
+          if (!args.uid) {
+            throw new Error('UID is required')
           }
           if (!args.role) {
             throw new Error('Role is required')
@@ -134,6 +144,7 @@ export const UserMutation = extendType({
             },
             data: {
               username: args.username,
+              uid: args.uid,
               role: args.role,
             },
           })

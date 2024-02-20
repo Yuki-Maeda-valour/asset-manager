@@ -5,25 +5,33 @@ export const UserQuery = gql`
     users {
       id
       username
+      uid
       role
     }
   }
 `
 export const UserMutation = gql`
-  mutation CreateUser($username: String, $role: Role) {
-    createUser(username: $username, role: $role) {
+  mutation CreateUser($username: String, $uid: String, $role: Role) {
+    createUser(username: $username, uid: $uid, role: $role) {
       id
       username
+      uid
       role
       createdAt
       updatedAt
     }
   }
 
-  mutation UpdateUser($updateUserId: Int, $username: String, $role: Role) {
-    updateUser(id: $updateUserId, username: $username, role: $role) {
+  mutation UpdateUser(
+    $updateUserId: Int
+    $username: String
+    $uid: String
+    $role: Role
+  ) {
+    updateUser(id: $updateUserId, username: $username, uid: $uid, role: $role) {
       id
       username
+      uid
       role
       createdAt
       updatedAt
@@ -34,6 +42,7 @@ export const UserMutation = gql`
     deleteUser(id: $deleteUserId) {
       id
       username
+      uid
       role
       createdAt
       updatedAt

@@ -12,7 +12,7 @@ import { useAuth } from '@/context/AuthContext'
  */
 export default function MainContents() {
   const user = useAuth()
-  console.log('user', user)
+  // console.log('user', user)
   return (
     <>
       <Text fontWeight="bold" fontSize="2xl">

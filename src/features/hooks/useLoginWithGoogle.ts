@@ -9,7 +9,7 @@ import { loginWithGoogle } from '@/lib/auth'
 /**
  * Google認証を使用してログインまたは新規ユーザー登録を行うカスタムフック。
  * 既存のユーザーが見つかった場合はログインし、見つからない場合は新規登録を行います。
- * @returns {Function} ログインまたは新規登録を実行する非同期関数。
+ * @returns ログインまたは新規登録を実行する非同期関数。
  */
 export const useLoginWithGoogle = () => {
   const { data } = useUsersQuery()

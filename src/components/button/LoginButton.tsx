@@ -1,6 +1,15 @@
 import { Button } from '@chakra-ui/react'
-import { loginWithGoogle } from '@/lib/auth'
+import { useLoginWithGoogle } from '@/features/hooks/useLoginWithGoogle'
 
+/**
+ * Googleを使用してログインまたはユーザーを作成するボタンを提供します。
+ * `useLoginWithGoogle` フックを使用して、Google認証を通じてユーザーのログインまたは新規登録を行います。
+ * @returns {JSX.Element} Googleでログインするためのボタンコンポーネント。
+ */
 export const LoginButton = () => {
-  return <Button onClick={loginWithGoogle}>Googleでログイン</Button>
+  const loginOrCreateUser = useLoginWithGoogle()
+  const handleClick = async () => {
+    await loginOrCreateUser()
+  }
+  return <Button onClick={handleClick}>Googleでログイン</Button>
 }

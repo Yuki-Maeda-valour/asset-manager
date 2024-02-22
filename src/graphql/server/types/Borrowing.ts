@@ -60,7 +60,7 @@ export const BorrowingQuery = extendType({
             createdAt: 'desc',
           },
         })
-        return borrowings.map((borrowing) => ({
+        return borrowings.map((borrowing: Prisma.BorrowingGetPayload<{}>) => ({
           ...borrowing,
           borrowedAt: borrowing.borrowedAt.toISOString(),
           returnedAt: borrowing.returnedAt

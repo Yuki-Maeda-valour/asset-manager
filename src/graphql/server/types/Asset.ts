@@ -32,18 +32,16 @@ export const Asset = objectType({
             assetId: _parent.id,
           },
         })
-        return borrowings.map(
-          (borrowing: Prisma.BorrowingGetPayload<typeof borrowings>) => ({
-            ...borrowing,
-            borrowedAt: borrowing.borrowedAt.toISOString(),
-            returnedAt: borrowing.returnedAt
-              ? borrowing.returnedAt.toISOString()
-              : null,
-            deadline: borrowing.deadline.toISOString(),
-            createdAt: borrowing?.createdAt.toISOString(),
-            updatedAt: borrowing?.updatedAt.toISOString(),
-          }),
-        )
+        return borrowings.map((borrowing: Prisma.BorrowingGetPayload<{}>) => ({
+          ...borrowing,
+          borrowedAt: borrowing.borrowedAt.toISOString(),
+          returnedAt: borrowing.returnedAt
+            ? borrowing.returnedAt.toISOString()
+            : null,
+          deadline: borrowing.deadline.toISOString(),
+          createdAt: borrowing?.createdAt.toISOString(),
+          updatedAt: borrowing?.updatedAt.toISOString(),
+        }))
       },
     })
   },

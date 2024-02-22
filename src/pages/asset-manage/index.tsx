@@ -1,4 +1,4 @@
-import { AssetManageContents } from '@/components/layouts/AssetManageContents'
+import { AssetManageContents } from '@/components/AssetManageContents'
 import { MainLayout } from '@/components/layouts/MainLayout'
 
 export default function AssetManage() {

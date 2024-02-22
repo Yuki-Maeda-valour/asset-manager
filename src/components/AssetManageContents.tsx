@@ -1,8 +1,15 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react'
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Text,
+  Flex,
+} from '@chakra-ui/react'
 import AssetContents from '@/components/AssetContents'
 import UserContents from '@/components/UserContents'
 import BorrowingContents from '@/components/BorrowingContents'
-import { LoginButton } from '@/components/button/LoginButton'
 import { LogoutButton } from '@/components/button/LogoutButton'
 
 export const AssetManageContents = () => {
@@ -11,10 +18,9 @@ export const AssetManageContents = () => {
       <Text fontWeight="bold" fontSize="2xl">
         資産予約管理アプリ
       </Text>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
-        <LoginButton />
+      <Flex flexFlow="row" justifyContent="flex-end" width="full">
         <LogoutButton />
-      </div>
+      </Flex>
       <Tabs isFitted width="full">
         <TabList>
           <Tab>予約</Tab>

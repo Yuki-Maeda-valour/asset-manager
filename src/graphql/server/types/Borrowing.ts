@@ -1,6 +1,7 @@
 import { objectType, extendType } from 'nexus'
 import { User } from '@/graphql/server/types/User'
 import { Asset } from '@/graphql/server/types/Asset'
+import { Prisma } from '@prisma/client'
 
 export const Borrowing = objectType({
   name: 'Borrowing',
@@ -20,7 +21,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.userId || undefined },
           })
-          .then((user) => {
+          .then((user: Prisma.UserGetPayload<{}>) => {
             return {
               ...user,
               createdAt: user?.createdAt.toISOString(),
@@ -36,7 +37,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.assetId || undefined },
           })
-          .then((asset) => {
+          .then((asset: Prisma.AssetGetPayload<{}>) => {
             return {
               ...asset,
               createdAt: asset?.createdAt.toISOString(),
@@ -59,16 +60,18 @@ export const BorrowingQuery = extendType({
             createdAt: 'desc',
           },
         })
-        return borrowings.map((borrowing) => ({
-          ...borrowing,
-          borrowedAt: borrowing.borrowedAt.toISOString(),
-          returnedAt: borrowing.returnedAt
-            ? borrowing.returnedAt.toISOString()
-            : null,
-          deadline: borrowing.deadline.toISOString(),
-          createdAt: borrowing.createdAt.toISOString(),
-          updatedAt: borrowing?.updatedAt.toISOString(),
-        }))
+        return borrowings.map(
+          (borrowing: Prisma.BorrowingGetPayload<typeof borrowings>) => ({
+            ...borrowing,
+            borrowedAt: borrowing.borrowedAt.toISOString(),
+            returnedAt: borrowing.returnedAt
+              ? borrowing.returnedAt.toISOString()
+              : null,
+            deadline: borrowing.deadline.toISOString(),
+            createdAt: borrowing.createdAt.toISOString(),
+            updatedAt: borrowing?.updatedAt.toISOString(),
+          }),
+        )
       },
     }),
       t.field('borrowing', {

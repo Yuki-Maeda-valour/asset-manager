@@ -36,10 +36,8 @@ export const loginWithGoogle = async (): Promise<
 export const logout = async (): Promise<void> => {
   try {
     await signOut(auth)
-    alert('ログアウトしました')
   } catch (error) {
     if (error instanceof Error) {
-      alert('ログアウトに失敗しました')
     } else {
       throw error
     }

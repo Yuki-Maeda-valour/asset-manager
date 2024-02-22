@@ -21,7 +21,6 @@ export const useLoginWithGoogle = () => {
 
     const user = data?.users?.find((u) => u?.uid === result.user?.uid)
     if (user) {
-      alert('ログインしました')
       return user
     } else {
       await createUser({
@@ -31,7 +30,6 @@ export const useLoginWithGoogle = () => {
           role: Role.User,
         },
       })
-      alert('新規登録しました')
       return result.user
     }
   }, [createUser, data?.users])

@@ -1,6 +1,7 @@
 import { objectType, extendType, enumType } from 'nexus'
 import { Borrowing } from '@/graphql/server/types/Borrowing'
 import type { Borrowing as BorrowingType } from '@prisma/client'
+import type { Asset as AssetContext } from '@prisma/client'
 
 export const AssetType = enumType({
   name: 'AssetType',
@@ -58,7 +59,7 @@ export const AssetQuery = extendType({
             id: 'desc',
           },
         })
-        return assets.map((asset) => ({
+        return assets.map((asset: AssetContext) => ({
           ...asset,
           createdAt: asset?.createdAt.toISOString(),
           updatedAt: asset?.updatedAt.toISOString(),

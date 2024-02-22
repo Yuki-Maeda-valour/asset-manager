@@ -1,5 +1,6 @@
 import { objectType, extendType, enumType } from 'nexus'
 import { Borrowing } from '@/graphql/server/types/Borrowing'
+import { Prisma } from '@prisma/client'
 
 export const AssetType = enumType({
   name: 'AssetType',
@@ -31,7 +32,7 @@ export const Asset = objectType({
             assetId: _parent.id,
           },
         })
-        return borrowings.map((borrowing) => ({
+        return borrowings.map((borrowing: Prisma.BorrowingGetPayload<{}>) => ({
           ...borrowing,
           borrowedAt: borrowing.borrowedAt.toISOString(),
           returnedAt: borrowing.returnedAt
@@ -57,7 +58,7 @@ export const AssetQuery = extendType({
             id: 'desc',
           },
         })
-        return assets.map((asset) => ({
+        return assets.map((asset: Prisma.AssetGetPayload<{}>) => ({
           ...asset,
           createdAt: asset?.createdAt.toISOString(),
           updatedAt: asset?.updatedAt.toISOString(),

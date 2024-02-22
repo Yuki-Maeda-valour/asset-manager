@@ -1,4 +1,5 @@
 import { objectType, extendType, enumType } from 'nexus'
+import { Prisma } from '@prisma/client'
 import { Borrowing } from '@/graphql/server/types/Borrowing'
 
 export const Role = enumType({
@@ -26,7 +27,7 @@ export const User = objectType({
             userId: _parent.id,
           },
         })
-        return borrowings.map((borrowing) => ({
+        return borrowings.map((borrowing: Prisma.BorrowingGetPayload<{}>) => ({
           ...borrowing,
           borrowedAt: borrowing.borrowedAt.toISOString(),
           returnedAt: borrowing.returnedAt
@@ -52,7 +53,7 @@ export const UserQuery = extendType({
             id: 'asc',
           },
         })
-        return users.map((user) => ({
+        return users.map((user: Prisma.UserGetPayload<{}>) => ({
           ...user,
           createdAt: user.createdAt.toISOString(),
           updatedAt: user.updatedAt.toISOString(),

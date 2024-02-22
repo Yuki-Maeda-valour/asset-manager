@@ -1,4 +1,5 @@
 import { objectType, extendType } from 'nexus'
+import { Prisma } from '@prisma/client'
 import { User } from '@/graphql/server/types/User'
 import { Asset } from '@/graphql/server/types/Asset'
 
@@ -20,7 +21,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.userId || undefined },
           })
-          .then((user) => {
+          .then((user: Prisma.UserGetPayload<{}> | null) => {
             return {
               ...user,
               createdAt: user?.createdAt.toISOString(),
@@ -36,7 +37,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.assetId || undefined },
           })
-          .then((asset) => {
+          .then((asset: Prisma.AssetGetPayload<{}> | null) => {
             return {
               ...asset,
               createdAt: asset?.createdAt.toISOString(),
@@ -59,7 +60,7 @@ export const BorrowingQuery = extendType({
             createdAt: 'desc',
           },
         })
-        return borrowings.map((borrowing) => ({
+        return borrowings.map((borrowing: Prisma.BorrowingGetPayload<{}>) => ({
           ...borrowing,
           borrowedAt: borrowing.borrowedAt.toISOString(),
           returnedAt: borrowing.returnedAt

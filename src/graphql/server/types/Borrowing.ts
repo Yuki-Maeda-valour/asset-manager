@@ -1,4 +1,5 @@
 import { objectType, extendType } from 'nexus'
+import { Prisma } from '@prisma/client'
 import { User } from '@/graphql/server/types/User'
 import { Asset } from '@/graphql/server/types/Asset'
 
@@ -20,7 +21,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.userId || undefined },
           })
-          .then((user) => {
+          .then((user: Prisma.UserGetPayload<{}> | null) => {
             return {
               ...user,
               createdAt: user?.createdAt.toISOString(),

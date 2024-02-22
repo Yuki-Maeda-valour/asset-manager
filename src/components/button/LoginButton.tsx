@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { useLoginWithGoogle } from '@/features/hooks/useLoginWithGoogle'
+import { FaGoogle } from 'react-icons/fa' // Googleアイコンをインポート
 
 /**
  * Googleを使用してログインまたはユーザーを作成するボタンを提供します。
@@ -11,5 +12,10 @@ export const LoginButton = () => {
   const handleClick = async () => {
     await loginOrCreateUser()
   }
-  return <Button onClick={handleClick}>Googleでログイン</Button>
+  // Button コンポーネントに FaGoogle アイコンを追加
+  return (
+    <Button leftIcon={<FaGoogle />} onClick={handleClick}>
+      ログイン
+    </Button>
+  )
 }

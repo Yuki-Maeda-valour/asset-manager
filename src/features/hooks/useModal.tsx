@@ -25,7 +25,7 @@ export type ModalProps = {
 export const useModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const ModalContainer = ({ title, footer, children }: ModalProps) => (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>

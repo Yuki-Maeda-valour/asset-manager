@@ -37,7 +37,7 @@ export const Borrowing = objectType({
           .findUnique({
             where: { id: parent.assetId || undefined },
           })
-          .then((asset) => {
+          .then((asset: Prisma.AssetGetPayload<{}> | null) => {
             return {
               ...asset,
               createdAt: asset?.createdAt.toISOString(),

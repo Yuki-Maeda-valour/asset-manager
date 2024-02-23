@@ -16,7 +16,7 @@ generator erd {
 model User {
   id         Int         @id @default(autoincrement()) // ユーザーを一意に識別するための主キー
   username   String // ユーザーのユーザー名
-  uid        String // ユーザーのUID
+  uid        String @unique // ユーザーのUID
   role       Role // ユーザーのロール
   createdAt  DateTime    @default(now()) // ユーザーが作成された日時
   updatedAt  DateTime    @updatedAt // ユーザー情報が最後に更新された日時

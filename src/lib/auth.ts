@@ -3,6 +3,7 @@ import {
   signInWithPopup,
   signOut,
   UserCredential,
+  browserPopupRedirectResolver,
 } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 
@@ -17,7 +18,7 @@ export const loginWithGoogle = async (): Promise<
 > => {
   const provider = new GoogleAuthProvider()
   try {
-    return await signInWithPopup(auth, provider)
+    return await signInWithPopup(auth, provider, browserPopupRedirectResolver)
   } catch (error) {
     if (error instanceof Error) {
       alert('ログインをキャンセルしました')

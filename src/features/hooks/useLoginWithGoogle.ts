@@ -33,7 +33,7 @@ export const useLoginWithGoogle = () => {
       })
       return result.user
     }
-  }, [createUser, data?.users])
+  }, [createUser, data?.users, error, loading])
 
   return loginOrCreateUser
 }

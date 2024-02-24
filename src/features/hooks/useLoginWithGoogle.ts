@@ -16,7 +16,7 @@ export const useLoginWithGoogle = () => {
   const [createUser] = useCreateUserMutation()
 
   const loginOrCreateUser = useCallback(async () => {
-    if (loading || error) return null
+    if (loading || error || !data?.users) return null
     const result = await loginWithGoogle()
     if (!result) return null
 

@@ -9,22 +9,17 @@ import { auth } from '@/lib/firebase'
 
 /**
  * Googleの認証プロバイダを使用してログインを試みます。
- * 成功した場合はUserCredentialを返し、失敗した場合はundefinedを返します。
+ * 成功した場合はUserCredentialを返し、失敗した場合はnullを返します。
  * ユーザーがログインプロセスをキャンセルした場合は、アラートで通知します。
- * @returns {Promise<UserCredential | undefined>} ユーザー認証情報またはundefined。
+ * @returns {Promise<UserCredential | null>} ユーザー認証情報またはnull。
  */
-export const loginWithGoogle = async (): Promise<
-  UserCredential | undefined
-> => {
+export const loginWithGoogle = async (): Promise<UserCredential | null> => {
   const provider = new GoogleAuthProvider()
   try {
     return await signInWithPopup(auth, provider, browserPopupRedirectResolver)
   } catch (error) {
-    if (error instanceof Error) {
-      alert('ログインをキャンセルしました')
-    } else {
-      throw error
-    }
+    alert('ログインに失敗しました')
+    return null
   }
 }
 

@@ -11,11 +11,15 @@ import { useRouter } from 'next/router'
 export const LoginButton = () => {
   const loginOrCreateUser = useLoginWithGoogle()
   const router = useRouter()
-
   const handleClick = async () => {
-    await loginOrCreateUser()
-    await router.push('/asset-manage')
+    const result = await loginOrCreateUser()
+    if (result) {
+      await router.push('/asset-manage')
+    } else {
+      alert('ログインに失敗しました。もう一度お試しください。')
+    }
   }
+
   return (
     <Button leftIcon={<FaGoogle />} onClick={handleClick}>
       ログイン

@@ -14,7 +14,7 @@ export const LoginButton = () => {
 
   const handleClick = async () => {
     await loginOrCreateUser()
-    router.push('/asset-manage')
+    await router.push('/asset-manage')
   }
   return (
     <Button leftIcon={<FaGoogle />} onClick={handleClick}>

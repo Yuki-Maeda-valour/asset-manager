@@ -12,10 +12,11 @@ import { loginWithGoogle } from '@/lib/auth'
  * @returns ログインまたは新規登録を実行する非同期関数。
  */
 export const useLoginWithGoogle = () => {
-  const { data } = useUsersQuery()
+  const { data, loading } = useUsersQuery()
   const [createUser] = useCreateUserMutation()
 
   const loginOrCreateUser = useCallback(async () => {
+    if (loading) return null
     const result = await loginWithGoogle()
     if (!result) return null
 
@@ -32,7 +33,7 @@ export const useLoginWithGoogle = () => {
       })
       return result.user
     }
-  }, [createUser, data?.users])
+  }, [createUser, data?.users, loading])
 
   return loginOrCreateUser
 }

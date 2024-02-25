@@ -25,6 +25,12 @@ export const loginWithGoogleWithPopup =
     }
   }
 
+/**
+ * Googleの認証プロバイダを使用してリダイレクトによるログインを試みます。
+ * 成功した場合は、リダイレクト後にユーザー認証情報が利用可能になります。
+ * ポップアップを使用せずにログイン処理を行います。
+ * @returns リダイレクト処理を開始するPromise。
+ */
 export const loginWithGoogleWithoutPopup = async () => {
   const provider = new GoogleAuthProvider()
   signInWithRedirect(auth, provider)

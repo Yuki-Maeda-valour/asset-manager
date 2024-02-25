@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
  * `useLoginWithGoogle` フックを使用して、Google認証を通じてユーザーのログインまたは新規登録を行います。
  * @returns Googleでログインするためのボタンコンポーネント。
  */
-export const LoginButton = () => {
+export const LoginButtonWithPopup = () => {
   const loginOrCreateUser = useLoginWithGoogle()
   const router = useRouter()
   const handleClick = async () => {

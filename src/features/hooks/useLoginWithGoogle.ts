@@ -4,7 +4,7 @@ import {
   useCreateUserMutation,
   Role,
 } from '@/graphql/client/gqlhooks'
-import { loginWithGoogle } from '@/lib/auth'
+import { loginWithGoogleWithPopup } from '@/lib/auth'
 
 /**
  * Google認証を使用してログインまたは新規ユーザー登録を行うカスタムフック。
@@ -17,7 +17,7 @@ export const useLoginWithGoogle = () => {
 
   const loginOrCreateUser = useCallback(async () => {
     if (loading || error || !data?.users) return null
-    const result = await loginWithGoogle()
+    const result = await loginWithGoogleWithPopup()
     if (!result) return null
 
     const user = data?.users?.find((u) => u?.uid === result.user?.uid)

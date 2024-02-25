@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import { LoginButton } from '@/components/button/LoginButton'
+import { LoginButtonWithPopup } from '@/components/button/LoginButtonWithPopup'
 
 /**
  * ログインフォームコンポーネント
@@ -20,7 +20,7 @@ export const LoginForm = () => {
           <Text fontSize="xl" mb={4}>
             資産予約管理アプリ
           </Text>
-          <LoginButton />
+          <LoginButtonWithPopup />
         </Flex>
       </Box>
     </Flex>

@@ -4,6 +4,7 @@ import {
   signOut,
   UserCredential,
   browserPopupRedirectResolver,
+  signInWithRedirect,
 } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 
@@ -13,14 +14,20 @@ import { auth } from '@/lib/firebase'
  * ユーザーがログインプロセスをキャンセルした場合は、アラートで通知します。
  * @returns {Promise<UserCredential | null>} ユーザー認証情報またはnull。
  */
-export const loginWithGoogle = async (): Promise<UserCredential | null> => {
-  const provider = new GoogleAuthProvider()
-  try {
-    return await signInWithPopup(auth, provider, browserPopupRedirectResolver)
-  } catch (error) {
-    alert('ログインに失敗しました')
-    return null
+export const loginWithGoogleWithPopup =
+  async (): Promise<UserCredential | null> => {
+    const provider = new GoogleAuthProvider()
+    try {
+      return await signInWithPopup(auth, provider, browserPopupRedirectResolver)
+    } catch (error) {
+      alert('ログインに失敗しました')
+      return null
+    }
   }
+
+export const loginWithGoogleWithoutPopup = async () => {
+  const provider = new GoogleAuthProvider()
+  signInWithRedirect(auth, provider)
 }
 
 /**
